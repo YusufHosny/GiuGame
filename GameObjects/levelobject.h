@@ -1,0 +1,29 @@
+#ifndef LEVELOBJECT_H
+#define LEVELOBJECT_H
+
+#include "GameObject.h"
+#include "world.h"
+#include <memory>
+#include <vector>
+
+class LevelObject : public GameObject
+{
+
+private:
+    LevelObject(const LevelObject &) = delete;
+    LevelObject &operator=(const LevelObject &) = delete;
+
+    std::vector<std::unique_ptr<Tile>> tiles;
+
+    LevelObject(std::vector<std::unique_ptr<Tile>> tiles);
+
+public:
+    void init() override;
+    void step(qint64 deltaT, std::set<GameInput> inputs) override;
+
+    std::string dumpData() const override;
+
+    friend class WorldLoader;
+};
+
+#endif // LEVELOBJECT_H

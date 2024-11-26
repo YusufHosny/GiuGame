@@ -1,0 +1,79 @@
+{
+	"configurations" : 
+	[
+		{
+			"directories" : 
+			[
+				{
+					"build" : ".",
+					"hasInstallRule" : true,
+					"jsonFile" : "directory-.-Debug-054b6f1220194883d17c.json",
+					"minimumCMakeVersion" : 
+					{
+						"string" : "3.16"
+					},
+					"projectIndex" : 0,
+					"source" : ".",
+					"targetIndexes" : 
+					[
+						0,
+						1,
+						2
+					]
+				}
+			],
+			"name" : "Debug",
+			"projects" : 
+			[
+				{
+					"directoryIndexes" : 
+					[
+						0
+					],
+					"name" : "GIUGAME",
+					"targetIndexes" : 
+					[
+						0,
+						1,
+						2
+					]
+				}
+			],
+			"targets" : 
+			[
+				{
+					"directoryIndex" : 0,
+					"id" : "GIUGAME::@6890427a1f51a3e7e1df",
+					"jsonFile" : "target-GIUGAME-Debug-faed052be1c52e70ed65.json",
+					"name" : "GIUGAME",
+					"projectIndex" : 0
+				},
+				{
+					"directoryIndex" : 0,
+					"id" : "GIUGAME_autogen::@6890427a1f51a3e7e1df",
+					"jsonFile" : "target-GIUGAME_autogen-Debug-9733c3b980ad5ab98bfb.json",
+					"name" : "GIUGAME_autogen",
+					"projectIndex" : 0
+				},
+				{
+					"directoryIndex" : 0,
+					"id" : "GIUGAME_autogen_timestamp_deps::@6890427a1f51a3e7e1df",
+					"jsonFile" : "target-GIUGAME_autogen_timestamp_deps-Debug-6d7d2e3fc0f24740f04a.json",
+					"name" : "GIUGAME_autogen_timestamp_deps",
+					"projectIndex" : 0
+				}
+			]
+		}
+	],
+	"kind" : "codemodel",
+	"paths" : 
+	{
+		"build" : "C:/Users/Yusuf/Desktop/Stuff/Uni/Masters/APT/Labs/projectRepo/project/build/Desktop_Qt_6_8_0_MinGW_64_bit-Debug",
+		"source" : "C:/Users/Yusuf/Desktop/Stuff/Uni/Masters/APT/Labs/projectRepo/project"
+	},
+	"version" : 
+	{
+		"major" : 2,
+		"minor" : 7
+	}
+}
