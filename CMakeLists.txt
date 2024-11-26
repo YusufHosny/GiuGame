@@ -25,6 +25,7 @@ add_executable(GIUGAME
                 InputManagers/GameInput.h
                 InputManagers/inputmanager.h    InputManagers/inputmanager.cpp
                 Views/gameview.h                Views/gameview.cpp
+                .gitignore
 
 
     )
