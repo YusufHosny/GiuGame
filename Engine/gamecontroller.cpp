@@ -11,7 +11,7 @@ void GameController::start()
     qint64 tprev = QDateTime::currentMSecsSinceEpoch();
 
     // initialize the game state
-    this->gameState->init();
+    this->gameState->init_impl();
 
     // infinite loop
     while(true) {
@@ -24,7 +24,7 @@ void GameController::start()
         tprev = tcur;
 
         // step the game state
-        this->gameState->step(deltaTime, inputs);
+        this->gameState->step_impl(deltaTime, inputs);
 
         // draw next frame
         this->view->draw(this->gameState);

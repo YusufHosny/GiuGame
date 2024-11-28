@@ -24,18 +24,18 @@ std::ostream& operator<<(std::ostream& os, GameObject& s) {
 }
 
 
-void GameObject::init() {
+void GameObject::init_impl() {
     // TODO any default gameobject initializatons
-
+    this->init();
     for(auto &child: this->children) {
-        child->init();
+        child->init_impl();
     }
 }
-void GameObject::step(qint64 deltaT, std::set<GameInput> inputs) {
+void GameObject::step_impl(qint64 deltaT, std::set<GameInput> inputs) {
     // TODO any default gameobject updates
-
+    this->step(deltaT, inputs);
     for(auto &child: this->children) {
-        child->step(deltaT, inputs);
+        child->step_impl(deltaT, inputs);
     }
 
     for(auto &component: this->components) {

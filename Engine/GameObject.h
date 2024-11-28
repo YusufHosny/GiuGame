@@ -26,8 +26,8 @@ class GameObject {
 
         std::vector<std::unique_ptr<GameObjectComponent>> components;
 
-        virtual void init_impl() = 0;
-        virtual void step_impl(qint64 deltaT, std::set<GameInput> inputs) = 0;
+        virtual void init() = 0;
+        virtual void step(qint64 deltaT, std::set<GameInput> inputs) = 0;
 
         GameObject(const std::string label);
         GameObject();
@@ -38,8 +38,8 @@ class GameObject {
         virtual ~GameObject() {};
 
         // gameobject functionality
-        void init();
-        void step(qint64 deltaT, std::set<GameInput> inputs);
+        void init_impl();
+        void step_impl(qint64 deltaT, std::set<GameInput> inputs);
 
         // hierarchy functionality
         void addChild(std::shared_ptr<GameObject> child);

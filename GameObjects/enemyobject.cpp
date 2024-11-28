@@ -2,12 +2,12 @@
 
 EnemyObject::EnemyObject(std::unique_ptr<Enemy> enemyModel): enemyModel(std::move(enemyModel)) {}
 
-void EnemyObject::init_impl()
+void EnemyObject::init()
 {
 
 }
 
-void EnemyObject::step_impl(qint64 deltaT, std::set<GameInput> inputs)
+void EnemyObject::step(qint64 deltaT, std::set<GameInput> inputs)
 {
 
 }
