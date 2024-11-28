@@ -3,12 +3,12 @@
 LevelObject::LevelObject(std::vector<std::unique_ptr<Tile>> tiles, std::vector<std::unique_ptr<Tile>> healthPacks, int rows, int cols):
     tiles(std::move(tiles)), healthPacks(std::move(healthPacks)), rows(rows), cols(cols) {}
 
-void LevelObject::init()
+void LevelObject::init_impl()
 {
 
 }
 
-void LevelObject::step(qint64 deltaT, std::set<GameInput> inputs)
+void LevelObject::step_impl(qint64 deltaT, std::set<GameInput> inputs)
 {
 
 }

@@ -12,12 +12,16 @@ qt_standard_project_setup()
 
 add_library(GIUENGINE
     Engine/GameObject.h             Engine/GameObject.cpp
-    Engine/gameview.h               Engine/gameview.cpp
-    Engine/Components/GameObjectComponent.h
+    Engine/gameview.h
     Engine/gamecontroller.h         Engine/gamecontroller.cpp
     Engine/IdGenerator.h            Engine/IdGenerator.cpp
     Engine/GameInput.h
     Engine/inputmanager.h           Engine/inputmanager.cpp
+    Engine/gameloader.h
+
+    Engine/Components/collisionmanagercomponent.h    Engine/Components/collisionmanagercomponent.cpp
+    Engine/Components/collidercomponent.h            Engine/Components/collidercomponent.cpp
+    Engine/Components/gameobjectcomponent.h
 )
 
 target_include_directories(GIUENGINE PRIVATE ${CMAKE_SOURCE_DIR}/Engine)

@@ -4,30 +4,29 @@
 #include <QObject>
 #include <memory>
 #include "inputmanager.h"
-#include "levelobject.h"
-#include "worldloader.h"
+#include "gameloader.h"
 #include "gameview.h"
 
 class GameController: public QObject
 {
     Q_OBJECT
 
-private:
+protected:
     std::unique_ptr<InputManager> inputManager;
 
-    std::shared_ptr<LevelObject> gameState;
+    std::shared_ptr<GameObject> gameState;
 
-    WorldLoader worldLoader;
+    std::unique_ptr<GameLoader> gameLoader;
 
     std::shared_ptr<GameView> view;
-
-
-
-    // TODO View Object attribute
 
 public:
     GameController();
 
+    // initialize loader and load initial state
+    virtual void init() = 0;
+
+    // start game loop
     void start();
 
 };

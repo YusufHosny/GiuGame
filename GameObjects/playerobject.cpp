@@ -2,12 +2,12 @@
 
 PlayerObject::PlayerObject(std::unique_ptr<Protagonist> playerModel): playerModel(std::move(playerModel)) {}
 
-void PlayerObject::init()
+void PlayerObject::init_impl()
 {
 
 }
 
-void PlayerObject::step(qint64 deltaT, std::set<GameInput> inputs)
+void PlayerObject::step_impl(qint64 deltaT, std::set<GameInput> inputs)
 {
 
 }

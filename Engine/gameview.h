@@ -3,7 +3,7 @@
 
 #include <QObject>
 #include <QWidget>
-#include "levelobject.h"
+#include "GameObject.h"
 
 
 class GameView: public QWidget
@@ -12,7 +12,7 @@ class GameView: public QWidget
 public:
     GameView();
 
-    virtual void draw(std::shared_ptr<const LevelObject> state);
+    virtual void draw(std::shared_ptr<const GameObject> state);
 };
 
 #endif // GAMEVIEW_H

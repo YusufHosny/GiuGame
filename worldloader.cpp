@@ -7,7 +7,7 @@
 
 WorldLoader::WorldLoader() {}
 
-std::shared_ptr<LevelObject> WorldLoader::load(QString filepath)
+std::shared_ptr<GameObject> WorldLoader::load(QString filepath)
 {
     World wrld;
     wrld.createWorld(filepath,1, 1);
@@ -36,7 +36,6 @@ std::shared_ptr<LevelObject> WorldLoader::load(QString filepath)
             levelObject->addChild(enemyObject);
         }
     }
-
 
     return levelObject;
 }

@@ -8,7 +8,8 @@
 #include <iostream>
 #include <QIntegerForSize>
 #include "GameInput.h"
-#include "gameobjectcomponent.h"
+
+class GameObjectComponent;
 
 class GameObject {
 
@@ -23,10 +24,10 @@ class GameObject {
         std::shared_ptr<GameObject> parent;
         std::vector<std::shared_ptr<GameObject>> children;
 
+        std::vector<std::unique_ptr<GameObjectComponent>> components;
+
         virtual void init_impl() = 0;
         virtual void step_impl(qint64 deltaT, std::set<GameInput> inputs) = 0;
-
-        std::set<GameObjectComponent> components;
 
         GameObject(const std::string label);
         GameObject();
@@ -37,8 +38,6 @@ class GameObject {
         virtual ~GameObject() {};
 
         // gameobject functionality
-        // for these functions, basic implemetation for all GOs
-        // called in inherited classes as GameObject::init() etc
         void init();
         void step(qint64 deltaT, std::set<GameInput> inputs);
 

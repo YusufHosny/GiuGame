@@ -1,5 +1,6 @@
 #include "GameObject.h"
 #include "IdGenerator.h"
+#include "gameobjectcomponent.h"
 
 GameObject::GameObject(const std::string label): id(IdGenerator::generateId()) {}
 
@@ -25,9 +26,21 @@ std::ostream& operator<<(std::ostream& os, GameObject& s) {
 
 void GameObject::init() {
     // TODO any default gameobject initializatons
+
+    for(auto &child: this->children) {
+        child->init();
+    }
 }
 void GameObject::step(qint64 deltaT, std::set<GameInput> inputs) {
     // TODO any default gameobject updates
+
+    for(auto &child: this->children) {
+        child->step(deltaT, inputs);
+    }
+
+    for(auto &component: this->components) {
+        component->step_component(*this);
+    }
 }
 
 // hierarchy functionality
