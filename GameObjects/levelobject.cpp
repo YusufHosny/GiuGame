@@ -1,6 +1,7 @@
 #include "levelobject.h"
 
-LevelObject::LevelObject(std::vector<std::unique_ptr<Tile>> tiles): tiles(std::move(tiles)) {}
+LevelObject::LevelObject(std::vector<std::unique_ptr<Tile>> tiles, std::vector<std::unique_ptr<Tile>> healthPacks, int rows, int cols):
+    tiles(std::move(tiles)), healthPacks(std::move(healthPacks)), rows(rows), cols(cols) {}
 
 void LevelObject::init()
 {
