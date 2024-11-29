@@ -14,7 +14,7 @@ void PlayerObject::init()
             std::array<int, 2> out {this->playerModel->getXPos(), this->playerModel->getYPos()};
             return out;
         }
-        ));
+    ));
 
 }
 

@@ -3,7 +3,8 @@
 #include <QGraphicsScene>
 #include <QGraphicsRectItem>
 #include <QTimer>
-#include <iostream>
+#include "worldloader.h"
+#include "levelobject.h"
 
 MainWindow::MainWindow(QWidget *parent) :
   QMainWindow(parent),
@@ -11,6 +12,10 @@ MainWindow::MainWindow(QWidget *parent) :
   {
   ui->setupUi(this);
   QGraphicsScene * scene = new QGraphicsScene(this);
+
+  WorldLoader wl;
+  std::shared_ptr<LevelObject> lo = std::dynamic_pointer_cast<LevelObject>(wl.load(":img/test.png"));
+
   ui->graphicsView->setScene(scene);
   auto rect = scene->addRect(10, 50, 50, 120);
   rect->setZValue(1.1);

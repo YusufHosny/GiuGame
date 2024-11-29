@@ -14,9 +14,8 @@ private:
     LevelObject &operator=(const LevelObject &) = delete;
 
     std::vector<std::unique_ptr<Tile>> tiles;
-    std::vector<std::unique_ptr<Tile>> healthPacks;
 
-    LevelObject(std::vector<std::unique_ptr<Tile>> tiles, std::vector<std::unique_ptr<Tile>> healthPacks, int rows, int cols);
+    LevelObject(std::vector<std::unique_ptr<Tile>> tiles, int rows, int cols);
     int cols, rows;
 
 public:

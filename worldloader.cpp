@@ -4,6 +4,7 @@
 #include "playerobject.h"
 #include "enemyobject.h"
 #include "penemyobject.h"
+#include "healthpackobject.h"
 #include <memory>
 
 WorldLoader::WorldLoader() {}
@@ -11,13 +12,21 @@ WorldLoader::WorldLoader() {}
 std::shared_ptr<GameObject> WorldLoader::load(QString filepath)
 {
     World wrld;
-    wrld.createWorld(filepath,1, 1);
+    wrld.createWorld(filepath, 4, 2);
 
     // create level object
     int c = wrld.getCols();
     int r = wrld.getRows();
     std::shared_ptr<LevelObject> levelObject =
-        std::shared_ptr<LevelObject>( new LevelObject(wrld.getTiles(), wrld.getHealthPacks(), r, c) );
+        std::shared_ptr<LevelObject>( new LevelObject(wrld.getTiles(), r, c) );
+
+    // create health packs
+    std::vector<std::unique_ptr<Tile>> healthPacks = wrld.getHealthPacks();
+    for(auto &hp: healthPacks) {
+        std::shared_ptr<HealthPackObject> healthPackObject =
+            std::shared_ptr<HealthPackObject>( new HealthPackObject(std::move(hp)) );
+        levelObject->addChild(healthPackObject);
+    }
 
     // create player object
     std::shared_ptr<PlayerObject> playerObject =

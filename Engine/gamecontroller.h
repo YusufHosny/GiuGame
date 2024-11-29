@@ -13,11 +13,8 @@ class GameController: public QObject
 
 protected:
     std::unique_ptr<InputManager> inputManager;
-
     std::shared_ptr<GameObject> gameState;
-
     std::unique_ptr<GameLoader> gameLoader;
-
     std::shared_ptr<GameView> view;
 
 public:

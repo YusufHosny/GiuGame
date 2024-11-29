@@ -39,7 +39,7 @@ add_executable(GIUGAME
                 GameObjects/enemyobject.h       GameObjects/enemyobject.cpp
                 GameObjects/penemyobject.h      GameObjects/penemyobject.cpp
                 GameObjects/levelobject.h       GameObjects/levelobject.cpp
-
+                GameObjects/healthpackobject.h  GameObjects/healthpackobject.cpp
     )
 
 
