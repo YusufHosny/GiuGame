@@ -1,6 +1,6 @@
 #include "enemyobject.h"
 
-EnemyObject::EnemyObject(std::unique_ptr<Enemy> enemyModel): enemyModel(std::move(enemyModel)) {}
+EnemyObject::EnemyObject(std::unique_ptr<Enemy> enemyModel): enemyModel(std::move(enemyModel)), GameObject("Enemy") {}
 
 void EnemyObject::init()
 {

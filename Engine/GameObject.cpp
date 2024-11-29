@@ -2,8 +2,9 @@
 #include "IdGenerator.h"
 #include "gameobjectcomponent.h"
 
-GameObject::GameObject(const std::string label): id(IdGenerator::generateId()) {}
+GameObject::GameObject(): id(IdGenerator::generateId()) {}
 
+GameObject::GameObject(const std::string label): id(IdGenerator::generateId()), label(label) {}
 
 void GameObject::setParent(std::shared_ptr<GameObject> parent) {
     this->parent = parent;
@@ -66,11 +67,11 @@ std::shared_ptr<GameObject> GameObject::operator[](int index) const {
     return this->children[index];
 }
 
-std::vector<std::shared_ptr<GameObject>> GameObject::childrenWhere(std::predicate<GameObject> auto pred) const {
+std::vector<std::shared_ptr<GameObject>> GameObject::childrenWhere(std::predicate<std::shared_ptr<GameObject>> auto pred) const {
     std::vector<std::shared_ptr<GameObject>> out = std::vector<std::shared_ptr<GameObject>>();
 
-    for(auto &gameObject: this->children) {
-        if(pred(gameObject)) out.push_back(gameObject);
+    for(auto &child: this->children) {
+        if(pred(child)) out.push_back(child);
     }
 
     return out;

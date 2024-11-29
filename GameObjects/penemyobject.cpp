@@ -1,6 +1,6 @@
 #include "penemyobject.h"
 
-PEnemyObject::PEnemyObject(std::unique_ptr<PEnemy> pEnemyModel): pEnemyModel(std::move(pEnemyModel)) {}
+PEnemyObject::PEnemyObject(std::unique_ptr<PEnemy> pEnemyModel): pEnemyModel(std::move(pEnemyModel)), GameObject("PEnemy") {}
 
 void PEnemyObject::init()
 {

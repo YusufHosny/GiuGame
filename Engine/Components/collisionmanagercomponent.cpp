@@ -1,3 +1,27 @@
 #include "collisionmanagercomponent.h"
+#include "collidercomponent.h"
 
-CollisionManager::CollisionManager() {}
+CollisionManagerComponent::CollisionManagerComponent() {}
+
+void CollisionManagerComponent::step_component(GameObject &owner)
+{
+    for(auto &child: owner.childrenWithComponent<ColliderComponent>()) {
+        for(auto &otherchild: owner.childrenWithComponent<ColliderComponent>()) {
+
+            if(child != otherchild) {
+                std::shared_ptr<ColliderComponent> col1, col2;
+                col1 = child->getComponent<ColliderComponent>();
+                col2 = otherchild->getComponent<ColliderComponent>();
+
+                std::array<int, 2> pos1, pos2;
+                pos1 = col1->getPosition();
+                pos2 = col2->getPosition();
+
+                if(pos1[0] == pos2[0] && pos1[1] == pos2[1]) {
+                    col1->notifyCollision(otherchild);
+                    col2->notifyCollision(child);
+                }
+            }
+        }
+    }
+}

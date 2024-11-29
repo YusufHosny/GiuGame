@@ -7,16 +7,19 @@
 class ColliderComponent: public GameObjectComponent
 {
 private:
+    ColliderComponent() = delete;
+
     std::function<void(std::shared_ptr<GameObject>)> onCollision;
-    std::function<void(std::shared_ptr<const GameObject>)> getPosition;
-    bool hasCollided;
+    std::function<std::array<int, 2>()> getPositionImpl;
 
 public:
-    ColliderComponent(std::function<void(std::shared_ptr<GameObject>)> onCollision, std::function<void(std::shared_ptr<const GameObject>)> getPosition):
-        onCollision(onCollision), getPosition(getPosition) {};
-    void notifyCollision();
+    ColliderComponent(std::function<void(std::shared_ptr<GameObject>)> onCollision, std::function<std::array<int, 2>()> getPosition):
+        onCollision(onCollision), getPositionImpl(getPosition) {};
+    void notifyCollision(std::shared_ptr<GameObject> other);
 
-    void step_component(const GameObject& owner) override;
+    std::array<int, 2> getPosition();
+
+    void step_component(GameObject& owner) override;
 };
 
 #endif // COLLIDERCOMPONENT_H

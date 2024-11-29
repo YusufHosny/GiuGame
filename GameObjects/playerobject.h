@@ -12,6 +12,8 @@ private:
     PlayerObject(const PlayerObject &) = delete;
     PlayerObject &operator=(const PlayerObject &) = delete;
 
+    void onCollision(std::shared_ptr<GameObject> other);
+
     std::unique_ptr<Protagonist> playerModel;
     PlayerObject(std::unique_ptr<Protagonist> playerModel);
 

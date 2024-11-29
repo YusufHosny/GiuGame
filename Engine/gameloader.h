@@ -7,7 +7,7 @@
 class GameLoader
 {
 public:
-    GameLoader();
+    GameLoader() {};
 
     virtual std::shared_ptr<GameObject> load(QString filepath) = 0;
 };

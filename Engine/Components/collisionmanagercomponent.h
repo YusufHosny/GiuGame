@@ -6,9 +6,9 @@
 class CollisionManagerComponent: public GameObjectComponent
 {
 public:
-    void checkCollisions();
+    CollisionManagerComponent();
 
-    void step_component(const GameObject& owner) override;
+    void step_component(GameObject& owner) override;
 };
 
 #endif // COLLISIONMANAGERCOMPONENT_H

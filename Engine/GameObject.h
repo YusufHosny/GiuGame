@@ -24,7 +24,7 @@ class GameObject {
         std::shared_ptr<GameObject> parent;
         std::vector<std::shared_ptr<GameObject>> children;
 
-        std::vector<std::unique_ptr<GameObjectComponent>> components;
+        std::vector<std::shared_ptr<GameObjectComponent>> components;
 
         virtual void init() = 0;
         virtual void step(qint64 deltaT, std::set<GameInput> inputs) = 0;
@@ -52,7 +52,7 @@ class GameObject {
         std::shared_ptr<T> findChildById(const unsigned int targetId) const {
             for(auto &child : this->children) {
                 if(child->id == targetId) {
-                    return dynamic_cast<T>(child);
+                    return std::dynamic_pointer_cast<T>(child);
                 }
             }
             return nullptr;
@@ -63,7 +63,7 @@ class GameObject {
             std::vector<std::shared_ptr<T>> out;
 
             for(auto &child : this->children) {
-                if(auto c = dynamic_cast<T>(child)) {
+                if(auto c = std::dynamic_pointer_cast<T>(child)) {
                     out.push_back(c);
                 }
             }
@@ -74,10 +74,10 @@ class GameObject {
         template <class T>
         std::vector<std::shared_ptr<T>> findChildrenByLabel(const std::string targetLabel) const {
             std::vector<std::shared_ptr<T>> out;
-            \
+
             for(auto &child : this->children) {
                 if(child->label == targetLabel) {
-                    if(auto c = dynamic_cast<T>(child)) {
+                    if(auto c = std::dynamic_pointer_cast<T>(child)) {
                         out.push_back(c);
                     }
                 }
@@ -86,10 +86,37 @@ class GameObject {
             return out;
         }
 
+        template <class T>
+        std::vector<std::shared_ptr<GameObject>> childrenWithComponent() {
+            std::vector<std::shared_ptr<GameObject>> out;
+
+                for(auto &child : this->children) {
+                    for(auto &component: child->components) {
+                        if( dynamic_cast<T*>(component.get()) ) {
+                            out.push_back(child);
+                        }
+                    }
+            }
+
+            return out;
+
+        }
+
+        template <class T>
+        std::shared_ptr<T> getComponent() {
+
+            for(auto &component: this->components) {
+                if( auto c = std::dynamic_pointer_cast<T>(component) ) {
+                    return c;
+                }
+            }
+            return nullptr;
+        }
+
         std::shared_ptr<GameObject> get(const unsigned int index) const;
         std::shared_ptr<GameObject> operator[](int index) const;
 
-        std::vector<std::shared_ptr<GameObject>> childrenWhere(std::predicate<GameObject> auto pred) const;
+        std::vector<std::shared_ptr<GameObject>> childrenWhere(std::predicate<std::shared_ptr<GameObject>> auto pred) const;
 
         void setParent(std::shared_ptr<GameObject> parent);
         std::shared_ptr<GameObject> getParent() const;

@@ -12,9 +12,11 @@ class GameObjectComponent
 {
 
 public:
-    GameObjectComponent();
+    GameObjectComponent() {};
 
-    virtual void step_component(const GameObject& owner) = 0;
+    virtual ~GameObjectComponent() {};
+
+    virtual void step_component(GameObject& owner) = 0;
 };
 
 #endif // GAMEOBJECTCOMPONENT_H
