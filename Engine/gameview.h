@@ -9,10 +9,10 @@
 class GameView: public QWidget
 {
     Q_OBJECT
-public:
-    GameView();
 
-    virtual void draw(std::shared_ptr<const GameObject> state);
+public:
+
+    virtual void draw(std::shared_ptr<const GameObject> state) = 0;
 };
 
 #endif // GAMEVIEW_H

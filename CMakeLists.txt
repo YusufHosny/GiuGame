@@ -40,6 +40,8 @@ add_executable(GIUGAME
                 GameObjects/penemyobject.h      GameObjects/penemyobject.cpp
                 GameObjects/levelobject.h       GameObjects/levelobject.cpp
                 GameObjects/healthpackobject.h  GameObjects/healthpackobject.cpp
+
+                Views/2d/GameView2d.h Views/2d/GameView2d.cpp
     )
 
 
