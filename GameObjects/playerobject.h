@@ -23,7 +23,11 @@ public:
 
     std::string dumpData() const override;
 
+    const Protagonist &getProtagonist() const {return *playerModel;}
+
     friend class WorldLoader;
+
+
 };
 
 #endif // PLAYEROBJECT_H

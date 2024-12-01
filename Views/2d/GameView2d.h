@@ -4,10 +4,10 @@
 #include "gameview.h"
 #include <QGraphicsScene>
 #include <QGraphicsView>
+#include "playerview2d.h"
 
 class GameView2d: public GameView, public QGraphicsScene
 {
-
 
 public:
 
@@ -17,7 +17,8 @@ public:
 
 private:
 
-    QGraphicsView *view2D;
+    PlayerView2D *PlayerView;
+
 };
 
 

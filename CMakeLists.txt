@@ -42,6 +42,7 @@ add_executable(GIUGAME
                 GameObjects/healthpackobject.h  GameObjects/healthpackobject.cpp
 
                 Views/2d/GameView2d.h Views/2d/GameView2d.cpp
+                Views/2d/playerview2d.h Views/2d/playerview2d.cpp
     )
 
 

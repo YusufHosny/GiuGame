@@ -25,6 +25,8 @@ public:
     std::string dumpData() const override;
 
     friend class WorldLoader;
+
+    const std::vector<std::unique_ptr<Tile>> &getTiles() const { return tiles;}
 };
 
 #endif // LEVELOBJECT_H
