@@ -14,7 +14,7 @@ void GameView2d::draw(std::shared_ptr<const GameObject> state) {
 
     this->clear();
 
-    std::shared_ptr<LevelObject> lo = std::dynamic_pointer_cast<LevelObject>(state);
+    std::shared_ptr<const LevelObject> lo = std::dynamic_pointer_cast<const LevelObject>(state);
     if (!lo) return;
 
     for (const auto &tile : lo->getTiles()) {
