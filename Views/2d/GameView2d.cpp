@@ -3,7 +3,9 @@
 #include "playerview2d.h"
 #include "playerobject.h"
 
-GameView2d::GameView2d(QWidget *parent): QGraphicsScene(parent) {}
+GameView2d::GameView2d(QWidget *parent): QGraphicsScene(parent) {
+
+}
 
 void GameView2d::draw(std::shared_ptr<const GameObject> state) {
     this->clear();
@@ -24,7 +26,9 @@ void GameView2d::draw(std::shared_ptr<const GameObject> state) {
     }
 
     std::shared_ptr<PlayerObject> po = lo->findChildrenByLabel<PlayerObject>("Player").at(0);
-    //this->PlayerView->draw(po);
+    PlayerView2D *pv = new PlayerView2D();
+    this->addItem(pv);
+    pv->draw(po);
 
 }
 
