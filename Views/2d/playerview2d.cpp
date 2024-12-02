@@ -11,18 +11,19 @@ void PlayerView2D::draw(std::shared_ptr<const GameObject> go) {
 
     float x = playerObject->getProtagonist().getXPos();
     float y = playerObject->getProtagonist().getYPos();
+    qDebug() << "Updating PlayerView2D to X:" << x << ", Y:" << y;
 
     // Trigger a repaint
     QGraphicsItem::update();
 }
 
 QRectF PlayerView2D::boundingRect() const {
-    // Define a bounding rectangle that encapsulates the player's shape
+    qDebug() << "BoundingRect called. playerX:" << playerX << ", playerY:" << playerY;
     return QRectF(playerX - 20, playerY - 20, 40, 40); // Adjust based on shape size
 }
 
 void PlayerView2D::paint(QPainter *painter, const QStyleOptionGraphicsItem * /*option*/, QWidget * /*widget*/) {
-    // Set painter properties
+    qDebug() << "Paint called. playerX:" << playerX << ", playerY:" << playerY;
     painter->setBrush(Qt::blue); // Set arbitrary shape color
     painter->setPen(Qt::NoPen);  // No border
 

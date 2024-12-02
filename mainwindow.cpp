@@ -5,27 +5,39 @@
 #include <QTimer>
 #include "worldloader.h"
 #include "levelobject.h"
+#include "Views/2d/GameView2d.h"
 
 MainWindow::MainWindow(QWidget *parent) :
-  QMainWindow(parent),
-  ui(new Ui::MainWindow)
-  {
-  ui->setupUi(this);
-  QGraphicsScene * scene = new QGraphicsScene(this);
+    QMainWindow(parent)
+{
+    int tileWidth = 50;  // Width of each tile
+    int tileHeight = 50; // Height of each tile
+    int numTilesX = 10;  // Number of tiles horizontally
+    int numTilesY = 9;  // Number of tiles vertically
 
-  WorldLoader wl;
-  std::shared_ptr<LevelObject> lo = std::dynamic_pointer_cast<LevelObject>(wl.load(":img/test.png"));
+    int gridWidth = numTilesX * tileWidth;
+    int gridHeight = numTilesY * tileHeight;
 
-  ui->graphicsView->setScene(scene);
-  auto rect = scene->addRect(10, 50, 50, 120);
-  rect->setZValue(1.1);
-  rect->setFlag(QGraphicsItem::ItemIsMovable, true);
-  }
+    GameView2d *gameView = new GameView2d(this);
+
+    WorldLoader wl;
+    std::shared_ptr<LevelObject> lo = std::dynamic_pointer_cast<LevelObject>(wl.load(":img/test.png"));
+
+    std::cout << lo->getTiles().max_size() << std::endl;
+
+    gameView->draw(lo);
+
+    QGraphicsView *view = new QGraphicsView(gameView, this);
+
+    // Set view properties
+    view->setHorizontalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
+    view->setVerticalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
+    view->setFixedSize(gridWidth+1, gridHeight+1); // Set your desired view size
+
+    setCentralWidget(view);
+}
 
 MainWindow::~MainWindow()
-  {
-  delete ui;
-  //I don't need to delete scene or rect since everything what derives from QObject has also a parent
-  //when the toplevel QObject (ui in this case) is deleted, all its children will also be deleted
-  //So there is no urgent need to work with smart pointers for all QObject derived stuff you use
-  }
+{
+    // Nothing to manually delete since parent-child takes care of it
+}
