@@ -1,10 +1,17 @@
 #ifndef PENEMYVIEW2D_H
 #define PENEMYVIEW2D_H
 
-class PenemyView2D
+#include "characterview2d.h"
+
+class PEnemyView2D: public CharacterView2D
 {
 public:
-    PenemyView2D();
+    PEnemyView2D(QGraphicsItem *parent = nullptr);
+
+    void draw(std::shared_ptr<const GameObject> go) override;
+
+    QRectF boundingRect() const override;
+    void paint(QPainter *painter, const QStyleOptionGraphicsItem *option, QWidget *widget) override;
 };
 
 #endif // PENEMYVIEW2D_H

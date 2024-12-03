@@ -21,6 +21,9 @@ public:
 
     std::string dumpData() const override;
 
+    const PEnemy &getPEnemy() const {return *pEnemyModel;}
+
+
     friend class WorldLoader;
 };
 

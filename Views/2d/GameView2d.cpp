@@ -4,6 +4,8 @@
 #include "playerobject.h"
 #include "enemyview2d.h"
 #include "enemyobject.h"
+#include "penemyobject.h"
+#include "penemyview2d.h"
 
 GameView2d::GameView2d(QWidget *parent): QGraphicsScene(parent) {
 
@@ -14,6 +16,7 @@ void GameView2d::draw(std::shared_ptr<const GameObject> state) {
 
     std::shared_ptr<const LevelObject> lo = std::dynamic_pointer_cast<const LevelObject>(state);
 
+    // DRAWING TILES
     for (const auto &tile : lo->getTiles()) {
         float value = tile->getValue();
 
@@ -27,11 +30,15 @@ void GameView2d::draw(std::shared_ptr<const GameObject> state) {
         this->addRect(tile->getXPos()*50, tile->getYPos()*50, 50, 50, QPen(Qt::NoPen), brush);
     }
 
+
+    // DRAWING PLAYER
     std::shared_ptr<PlayerObject> po = lo->findChildrenByLabel<PlayerObject>("Player").at(0);
     PlayerView2D *pv = new PlayerView2D();
     this->addItem(pv);
     pv->draw(po);
 
+
+    // DRAWING ENEMIES
     std::vector<std::shared_ptr<EnemyObject>> enemies = lo->findChildrenByLabel<EnemyObject>("Enemy");
 
     for (const auto& enemy : enemies) {
@@ -41,5 +48,18 @@ void GameView2d::draw(std::shared_ptr<const GameObject> state) {
             ev->draw(enemy);
         }
     }
+
+
+    // DRAWING PENEMIES
+     std::vector<std::shared_ptr<PEnemyObject>> penemies = lo->findChildrenByLabel<PEnemyObject>("PEnemy");
+
+    for (const auto& penemy : penemies) {
+        if (penemy) {
+            PEnemyView2D *pev = new PEnemyView2D();
+            this->addItem(pev);
+            pev->draw(penemy);
+        }
+    }
+
 }
 

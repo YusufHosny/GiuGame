@@ -22,7 +22,7 @@ QRectF EnemyView2D::boundingRect() const {
 }
 
 void EnemyView2D::paint(QPainter *painter, const QStyleOptionGraphicsItem * /*option*/, QWidget * /*widget*/) {
-    painter->setBrush(Qt::green); // Set arbitrary shape color
+    painter->setBrush(Qt::red); // Set arbitrary shape color
     painter->setPen(Qt::NoPen);  // No border
     painter->drawEllipse(-10,-10, 20, 20); // Circle with radius 10
 }
