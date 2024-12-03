@@ -22,6 +22,8 @@ public:
 
     std::string dumpData() const override;
 
+    const Tile &getHP() const {return *tile;};
+
     friend class WorldLoader;
 };
 

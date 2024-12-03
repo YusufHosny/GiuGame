@@ -6,6 +6,8 @@
 #include "enemyobject.h"
 #include "penemyobject.h"
 #include "penemyview2d.h"
+#include "healthpackobject.h"
+#include "healthpackview2d.h"
 
 GameView2d::GameView2d(QWidget *parent, std::shared_ptr<const GameObject> state): QGraphicsScene(parent) {
 
@@ -79,6 +81,17 @@ GameView2d::GameView2d(QWidget *parent, std::shared_ptr<const GameObject> state)
         }
     }
 
+
+    // ADDING HEALTH PACKS
+    std::vector<std::shared_ptr<HealthPackObject>> healthPacks = levelObject->findChildrenByLabel<HealthPackObject>("Health Pack");
+    for (const auto &hp : healthPacks) {
+        if (hp) {
+            HealthPackView2D *hpv = new HealthPackView2D();
+            this->addItem(hpv);
+            hpv->draw(hp);
+            healthPackViews.push_back(hpv);
+        }
+    }
 }
 
 

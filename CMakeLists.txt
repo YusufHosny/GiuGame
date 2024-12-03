@@ -47,6 +47,7 @@ add_executable(GIUGAME
                 Views/2d/playerview2d.h
                 Views/2d/enemyview2d.h Views/2d/enemyview2d.cpp
                 Views/2d/penemyview2d.h Views/2d/penemyview2d.cpp
+                Views/2d/healthpackview2d.h Views/2d/healthpackview2d.cpp
     )
 
 
