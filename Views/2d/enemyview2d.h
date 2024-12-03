@@ -1,16 +1,14 @@
-#ifndef PLAYERVIEW2D_H
-#define PLAYERVIEW2D_H
+#ifndef ENEMYVIEW2D_H
+#define ENEMYVIEW2D_H
 
-#include <QGraphicsItem>
 #include "characterview2d.h"
 
-
-
-class PlayerView2D : public CharacterView2D {
+class EnemyView2D: public CharacterView2D
+{
 
 public:
 
-    PlayerView2D(QGraphicsItem *parent = nullptr);
+    EnemyView2D(QGraphicsItem *parent = nullptr);
 
     void draw(std::shared_ptr<const GameObject> go) override;
 
@@ -19,4 +17,4 @@ public:
 
 };
 
-#endif // PLAYERVIEW2D_H
+#endif // ENEMYVIEW2D_H

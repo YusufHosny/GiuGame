@@ -21,6 +21,8 @@ public:
 
     std::string dumpData() const override;
 
+    const Enemy &getEnemy() const {return *enemyModel;}
+
     friend class WorldLoader;
 };
 

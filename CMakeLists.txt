@@ -42,7 +42,11 @@ add_executable(GIUGAME
                 GameObjects/healthpackobject.h  GameObjects/healthpackobject.cpp
 
                 Views/2d/GameView2d.h Views/2d/GameView2d.cpp
-                Views/2d/playerview2d.h Views/2d/playerview2d.cpp
+                Views/2d/characterview2d.h Views/2d/playerview2d.cpp
+                Views/2d/enemyview2d.cpp
+                Views/2d/playerview2d.h
+                Views/2d/enemyview2d.h Views/2d/enemyview2d.cpp
+                Views/2d/penemyview2d.h Views/2d/penemyview2d.cpp
     )
 
 

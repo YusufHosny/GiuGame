@@ -2,6 +2,8 @@
 #include "levelobject.h"
 #include "playerview2d.h"
 #include "playerobject.h"
+#include "enemyview2d.h"
+#include "enemyobject.h"
 
 GameView2d::GameView2d(QWidget *parent): QGraphicsScene(parent) {
 
@@ -30,5 +32,14 @@ void GameView2d::draw(std::shared_ptr<const GameObject> state) {
     this->addItem(pv);
     pv->draw(po);
 
+    std::vector<std::shared_ptr<EnemyObject>> enemies = lo->findChildrenByLabel<EnemyObject>("Enemy");
+
+    for (const auto& enemy : enemies) {
+        if (enemy) {
+            EnemyView2D *ev = new EnemyView2D();
+            this->addItem(ev);
+            ev->draw(enemy);
+        }
+    }
 }
 

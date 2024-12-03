@@ -2,7 +2,7 @@
 #include <QPainter>
 #include "playerobject.h"
 
-PlayerView2D::PlayerView2D(QGraphicsItem *parent) : QGraphicsItem(parent)  {}
+PlayerView2D::PlayerView2D(QGraphicsItem *parent) : CharacterView2D(parent)  {}
 
 void PlayerView2D::draw(std::shared_ptr<const GameObject> go) {
 
@@ -11,7 +11,6 @@ void PlayerView2D::draw(std::shared_ptr<const GameObject> go) {
 
     float x = playerObject->getProtagonist().getXPos()*50;
     float y = playerObject->getProtagonist().getYPos()*50;
-    qDebug() << "Updating PlayerView2D to X:" << x << ", Y:" << y;
     setPos(x+25,y+25);
 
     // Trigger a repaint
@@ -19,12 +18,10 @@ void PlayerView2D::draw(std::shared_ptr<const GameObject> go) {
 }
 
 QRectF PlayerView2D::boundingRect() const {
-    qDebug() << "BoundingRect called. playerX:" << playerX << ", playerY:" << playerY;
     return QRectF(-10, -10, 20, 20); // Adjust based on shape size
 }
 
 void PlayerView2D::paint(QPainter *painter, const QStyleOptionGraphicsItem * /*option*/, QWidget * /*widget*/) {
-    qDebug() << "Paint called. playerX:" << playerX << ", playerY:" << playerY;
     painter->setBrush(Qt::blue); // Set arbitrary shape color
     painter->setPen(Qt::NoPen);  // No border
     painter->drawEllipse(-10,-10, 20, 20); // Circle with radius 10
