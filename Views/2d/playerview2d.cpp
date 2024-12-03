@@ -13,16 +13,15 @@ void PlayerView2D::draw(std::shared_ptr<const GameObject> go) {
     float y = playerObject->getProtagonist().getYPos()*50;
     setPos(x+25,y+25);
 
-    // Trigger a repaint
     QGraphicsItem::update();
 }
 
 QRectF PlayerView2D::boundingRect() const {
-    return QRectF(-10, -10, 20, 20); // Adjust based on shape size
+    return QRectF(-10, -10, 20, 20);
 }
 
-void PlayerView2D::paint(QPainter *painter, const QStyleOptionGraphicsItem * /*option*/, QWidget * /*widget*/) {
-    painter->setBrush(Qt::blue); // Set arbitrary shape color
-    painter->setPen(Qt::NoPen);  // No border
-    painter->drawEllipse(-10,-10, 20, 20); // Circle with radius 10
+void PlayerView2D::paint(QPainter *painter, const QStyleOptionGraphicsItem *, QWidget *) {
+    painter->setBrush(Qt::blue);
+    painter->setPen(Qt::NoPen);
+    painter->drawEllipse(-10,-10, 20, 20);
 }

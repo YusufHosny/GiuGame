@@ -18,14 +18,13 @@ MainWindow::MainWindow(QWidget *parent) :
     int gridWidth = numTilesX * tileWidth;
     int gridHeight = numTilesY * tileHeight;
 
-    GameView2d *gameView = new GameView2d(this);
+
 
     WorldLoader wl;
     std::shared_ptr<LevelObject> lo = std::dynamic_pointer_cast<LevelObject>(wl.load(":img/test.png"));
 
-    std::cout << lo->getTiles().max_size() << std::endl;
+    GameView2d *gameView = new GameView2d(this,lo);
 
-    gameView->draw(lo);
 
     QGraphicsView *view = new QGraphicsView(gameView, this);
 
