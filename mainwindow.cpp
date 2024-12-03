@@ -31,7 +31,7 @@ MainWindow::MainWindow(QWidget *parent) :
     // Set view properties
     view->setHorizontalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
     view->setVerticalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
-    view->setFixedSize(gridWidth+1, gridHeight+1); // Set your desired view size
+    view->setFixedSize(gridWidth+200, gridHeight); // Set your desired view size
 
     setCentralWidget(view);
 }

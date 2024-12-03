@@ -24,6 +24,11 @@ private:
     std::vector<PEnemyView2D *> penemyViews;
     std::vector<QGraphicsRectItem *> tileViews;
 
+    int rows, cols;
+
+    QGraphicsRectItem *healthBar;
+    QGraphicsRectItem *energyBar;
+
 };
 
 

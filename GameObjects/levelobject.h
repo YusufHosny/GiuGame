@@ -27,6 +27,9 @@ public:
     friend class WorldLoader;
 
     const std::vector<std::unique_ptr<Tile>> &getTiles() const { return tiles;}
+
+    const int getRows() const {return rows;}
+    const int getCols() const {return cols;}
 };
 
 #endif // LEVELOBJECT_H

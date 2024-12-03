@@ -15,7 +15,6 @@ public:
     virtual QRectF boundingRect() const override = 0;
     virtual void paint(QPainter *painter, const QStyleOptionGraphicsItem *option, QWidget *widget) override = 0;
 
-
 protected:
     float X = 0.0f;
     float Y = 0.0f;

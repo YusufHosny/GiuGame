@@ -13,6 +13,12 @@ GameView2d::GameView2d(QWidget *parent, std::shared_ptr<const GameObject> state)
 
     std::shared_ptr<const LevelObject> levelObject = std::dynamic_pointer_cast<const LevelObject>(state);
 
+    rows = levelObject->getRows();
+    cols = levelObject->getCols();
+
+    std::cout << rows << std::endl;
+    int tileWidth = 50;
+
     // ADDING TILES
     for (const auto &tile : levelObject->getTiles()) {
         float value = tile->getValue();
@@ -21,7 +27,7 @@ GameView2d::GameView2d(QWidget *parent, std::shared_ptr<const GameObject> state)
         int grayScale = static_cast<int>(value * 255);
         QBrush brush(QColor(grayScale, grayScale, grayScale));
 
-        auto rectItem = this->addRect(tile->getXPos() * 50, tile->getYPos() * 50, 50, 50, QPen(Qt::NoPen), brush);
+        auto rectItem = this->addRect(tile->getXPos() * tileWidth, tile->getYPos() * tileWidth, tileWidth, tileWidth, QPen(Qt::NoPen), brush);
         tileViews.push_back(rectItem);
     }
 
@@ -30,6 +36,26 @@ GameView2d::GameView2d(QWidget *parent, std::shared_ptr<const GameObject> state)
     playerView = new PlayerView2D();
     this->addItem(playerView);
     playerView->draw(po);
+
+    // ADDING INDICATOR BARS
+    int barWidth = tileWidth;
+    int maxBarHeight = 200;
+    int leftMargin = (rows + 2) * tileWidth;
+    int topOffset = 2 * tileWidth;
+
+    // ADDING GUI
+    healthBar = this->addRect(leftMargin, topOffset, barWidth, maxBarHeight, QPen(Qt::NoPen), QBrush(Qt::green));
+    energyBar = this->addRect(leftMargin + 2*tileWidth, topOffset, barWidth, maxBarHeight, QPen(Qt::NoPen), QBrush(Qt::green));
+
+    QGraphicsTextItem *hpLabel = this->addText("HP");
+    hpLabel->setDefaultTextColor(Qt::black);
+    hpLabel->setFont(QFont("Arial", 12));
+    hpLabel->setPos(leftMargin + (tileWidth/5), topOffset + maxBarHeight + (tileWidth/5));
+
+    QGraphicsTextItem *energyLabel = this->addText("ENERGY");
+    energyLabel->setDefaultTextColor(Qt::black);
+    energyLabel->setFont(QFont("Arial", 12));
+    energyLabel->setPos(leftMargin + 2*tileWidth - tileWidth/5, topOffset + maxBarHeight + (tileWidth/5));
 
     // ADDING ENEMIES
     std::vector<std::shared_ptr<EnemyObject>> enemies = levelObject->findChildrenByLabel<EnemyObject>("Enemy");
@@ -52,6 +78,7 @@ GameView2d::GameView2d(QWidget *parent, std::shared_ptr<const GameObject> state)
             penemyViews.push_back(pev);
         }
     }
+
 }
 
 
@@ -60,10 +87,12 @@ void GameView2d::draw(std::shared_ptr<const GameObject> state) {
 
     // REDRAW PLAYER
     std::shared_ptr<const LevelObject> lo = std::dynamic_pointer_cast<const LevelObject>(state);
-    if (playerView) {
-        std::shared_ptr<PlayerObject> po = lo->findChildrenByLabel<PlayerObject>("Player").at(0);
-        playerView->draw(po);
-    }
+
+
+
+    std::shared_ptr<PlayerObject> po = lo->findChildrenByLabel<PlayerObject>("Player").at(0);
+    playerView->draw(po);
+
 
     // REDRAW ENEMIES
     std::vector<std::shared_ptr<EnemyObject>> enemies = lo->findChildrenByLabel<EnemyObject>("Enemy");
@@ -80,6 +109,19 @@ void GameView2d::draw(std::shared_ptr<const GameObject> state) {
             penemyViews[i]->draw(penemies[i]);
         }
     }
+
+    // UPDATE HEALTH AND ENERGY BARS
+    int maxBarHeight = 200;
+    int health = po->getProtagonist().getHealth();
+    int energy = po->getProtagonist().getEnergy();
+
+    // HP
+    int healthHeight = static_cast<int>((health / 100.0) * maxBarHeight);
+    healthBar->setRect(10, 10 + (maxBarHeight - healthHeight), 20, healthHeight);
+
+    // ENERGY
+    int energyHeight = static_cast<int>((energy / 100.0) * maxBarHeight);
+    energyBar->setRect(40, 10 + (maxBarHeight - energyHeight), 20, energyHeight);
 
 }
 
