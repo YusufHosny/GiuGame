@@ -6,7 +6,7 @@
 #include "inputmanager.h"
 #include "gameloader.h"
 #include "gameview.h"
-#include "QGraphicsScene"
+#include "QGraphicsView"
 
 class GameController: public QObject
 {
@@ -28,7 +28,7 @@ public:
     GameController& setGameView(GameView* v);
 
     // scene getter, for visualization
-    virtual QGraphicsScene* getScene() = 0;
+    QGraphicsView* getView();
 
     // start game loop
     void start();

@@ -50,6 +50,7 @@ add_executable(GIUGAME
                 Views/2d/enemyview2d.h Views/2d/enemyview2d.cpp
                 Views/2d/penemyview2d.h Views/2d/penemyview2d.cpp
                 Views/2d/healthpackview2d.h Views/2d/healthpackview2d.cpp
+                Views/giugameconfig.h
     )
 
 
@@ -60,6 +61,8 @@ target_include_directories(GIUGAME PRIVATE ${CMAKE_SOURCE_DIR}/Engine/Components
 
 target_include_directories(GIUGAME PRIVATE ${CMAKE_SOURCE_DIR}/GameObjects)
 target_include_directories(GIUGAME PRIVATE ${CMAKE_SOURCE_DIR}/InputManagers)
+
+target_include_directories(GIUGAME PRIVATE ${CMAKE_SOURCE_DIR}/Views)
 target_include_directories(GIUGAME PRIVATE ${CMAKE_SOURCE_DIR}/Views/2d)
 
 target_link_libraries(GIUGAME PRIVATE Qt6::Widgets)

@@ -16,8 +16,6 @@ public:
 
     void init(MainWindow* parent);
 
-    QGraphicsScene* getScene() override;
-
 };
 
 

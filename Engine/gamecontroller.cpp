@@ -26,6 +26,9 @@ GameController& GameController::setGameView(GameView* v) {
     return *this;
 }
 
+QGraphicsView* GameController::getView() {
+    return dynamic_cast<QGraphicsView*>(this->view);
+}
 
 void GameController::start()
 {

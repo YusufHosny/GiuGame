@@ -8,8 +8,9 @@
 #include "penemyview2d.h"
 #include "enemyview2d.h"
 #include "healthpackview2d.h"
+#include "levelobject.h"
 
-class GameView2d: public GameView, public QGraphicsScene
+class GameView2d: public GameView, public QGraphicsView
 {
 
 public:
@@ -19,6 +20,7 @@ public:
     void draw(std::shared_ptr<const GameObject> state) override;
 
 private:
+    int rows, cols;
 
     PlayerView2D *playerView;
     std::vector<EnemyView2D*> enemyViews;
@@ -26,10 +28,14 @@ private:
     std::vector<QGraphicsRectItem*> tileViews;
     std::vector<HealthPackView2D*> healthPackViews;
 
-    int rows, cols;
-
     QGraphicsRectItem *healthBar;
     QGraphicsRectItem *energyBar;
+
+    void drawPlayer(std::shared_ptr<const LevelObject> levelObject);
+    void drawEnemies(std::shared_ptr<const LevelObject> levelObject);
+    void drawTiles(std::shared_ptr<const LevelObject> levelObject);
+    void drawHealthPacks(std::shared_ptr<const LevelObject> levelObject);
+    void drawGui(std::shared_ptr<const LevelObject> levelObject);
 
 };
 
