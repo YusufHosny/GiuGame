@@ -1,9 +1,9 @@
 #ifndef PENEMYVIEW2D_H
 #define PENEMYVIEW2D_H
 
-#include "characterview2d.h"
+#include "itemview2d.h"
 
-class PEnemyView2D: public CharacterView2D
+class PEnemyView2D: public ItemView2d
 {
 public:
     PEnemyView2D(QGraphicsItem *parent = nullptr);

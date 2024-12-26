@@ -22,6 +22,7 @@ add_library(GIUENGINE
     Engine/Components/collisionmanagercomponent.h    Engine/Components/collisionmanagercomponent.cpp
     Engine/Components/collidercomponent.h            Engine/Components/collidercomponent.cpp
     Engine/Components/gameobjectcomponent.h
+
 )
 
 target_include_directories(GIUENGINE PRIVATE ${CMAKE_SOURCE_DIR}/Engine)
@@ -31,6 +32,7 @@ target_link_libraries(GIUENGINE PRIVATE Qt6::Widgets)
 
 add_executable(GIUGAME
                 main.cpp
+                GiuGameController.h GiuGameController.cpp
                 mainwindow.cpp  mainwindow.h    mainwindow.ui
                 Images.qrc
                 worldloader.h                   worldloader.cpp
@@ -42,7 +44,7 @@ add_executable(GIUGAME
                 GameObjects/healthpackobject.h  GameObjects/healthpackobject.cpp
 
                 Views/2d/GameView2d.h Views/2d/GameView2d.cpp
-                Views/2d/characterview2d.h Views/2d/playerview2d.cpp
+                Views/2d/itemview2d.h Views/2d/playerview2d.cpp
                 Views/2d/enemyview2d.cpp
                 Views/2d/playerview2d.h
                 Views/2d/enemyview2d.h Views/2d/enemyview2d.cpp
@@ -58,7 +60,7 @@ target_include_directories(GIUGAME PRIVATE ${CMAKE_SOURCE_DIR}/Engine/Components
 
 target_include_directories(GIUGAME PRIVATE ${CMAKE_SOURCE_DIR}/GameObjects)
 target_include_directories(GIUGAME PRIVATE ${CMAKE_SOURCE_DIR}/InputManagers)
-target_include_directories(GIUGAME PRIVATE ${CMAKE_SOURCE_DIR}/Views)
+target_include_directories(GIUGAME PRIVATE ${CMAKE_SOURCE_DIR}/Views/2d)
 
 target_link_libraries(GIUGAME PRIVATE Qt6::Widgets)
 

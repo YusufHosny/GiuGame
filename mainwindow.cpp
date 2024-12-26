@@ -1,11 +1,10 @@
 ﻿#include "mainwindow.h"
-#include "ui_mainwindow.h"
 #include <QGraphicsScene>
 #include <QGraphicsRectItem>
+#include <QGraphicsView>
 #include <QTimer>
 #include "worldloader.h"
-#include "levelobject.h"
-#include "Views/2d/GameView2d.h"
+#include "GiuGameController.h"
 
 MainWindow::MainWindow(QWidget *parent) :
     QMainWindow(parent)
@@ -18,25 +17,19 @@ MainWindow::MainWindow(QWidget *parent) :
     int gridWidth = numTilesX * tileWidth;
     int gridHeight = numTilesY * tileHeight;
 
+    GiuGameController controller;
+    controller.setGameLoader(std::make_unique<WorldLoader>());
+    controller.setInputManager(nullptr); // TODO
+    controller.init(this);
 
-
-    WorldLoader wl;
-    std::shared_ptr<LevelObject> lo = std::dynamic_pointer_cast<LevelObject>(wl.load(":img/test.png"));
-
-    GameView2d *gameView = new GameView2d(this,lo);
-
-
-    QGraphicsView *view = new QGraphicsView(gameView, this);
+    // create main view and bind to controller
+    QGraphicsView *view = new QGraphicsView(controller.getScene(), this);
 
     // Set view properties
     view->setHorizontalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
     view->setVerticalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
-    view->setFixedSize(gridWidth+200, gridHeight); // Set your desired view size
-
-    setCentralWidget(view);
+    view->setFixedSize(gridWidth+200, gridHeight);
+    this->setCentralWidget(view);
 }
 
-MainWindow::~MainWindow()
-{
-    // Nothing to manually delete since parent-child takes care of it
-}
+MainWindow::~MainWindow() {}

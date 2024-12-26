@@ -3,9 +3,9 @@
 
 
 #include <QGraphicsItem>
-#include "characterview2d.h"
+#include "itemview2d.h"
 
-class HealthPackView2D : public CharacterView2D {
+class HealthPackView2D : public ItemView2d {
 public:
 
     HealthPackView2D(QGraphicsItem *parent = nullptr);

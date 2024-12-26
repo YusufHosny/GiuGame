@@ -2,11 +2,11 @@
 #define PLAYERVIEW2D_H
 
 #include <QGraphicsItem>
-#include "characterview2d.h"
+#include "itemview2d.h"
 
 
 
-class PlayerView2D : public CharacterView2D {
+class PlayerView2D : public ItemView2d {
 
 public:
 

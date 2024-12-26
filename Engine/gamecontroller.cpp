@@ -6,6 +6,26 @@
 
 GameController::GameController() {}
 
+GameController& GameController::setInputManager(std::unique_ptr<InputManager> im) {
+    this->inputManager = std::move(im);
+    return *this;
+}
+
+GameController& GameController::setGameState(std::shared_ptr<GameObject> gs) {
+    this->gameState = gs;
+    return *this;
+}
+
+GameController& GameController::setGameLoader(std::unique_ptr<GameLoader> gl) {
+    this->gameLoader = std::move(gl);
+    return *this;
+}
+
+GameController& GameController::setGameView(GameView* v) {
+    this->view = v;
+    return *this;
+}
+
 
 void GameController::start()
 {

@@ -2,12 +2,12 @@
 #include <QPainter>
 #include "enemyobject.h"
 
-EnemyView2D::EnemyView2D(QGraphicsItem *parent) : CharacterView2D(parent)  {}
+EnemyView2D::EnemyView2D(QGraphicsItem *parent) : ItemView2d(parent)  {}
 
 void EnemyView2D::draw(std::shared_ptr<const GameObject> go) {
 
     auto enemyObject = std::dynamic_pointer_cast<const EnemyObject>(go);
-    if (!enemyObject) return;
+    assert(enemyObject);
 
     float x = enemyObject->getEnemy().getXPos()*50;
     float y = enemyObject->getEnemy().getYPos()*50;

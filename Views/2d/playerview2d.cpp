@@ -2,16 +2,16 @@
 #include <QPainter>
 #include "playerobject.h"
 
-PlayerView2D::PlayerView2D(QGraphicsItem *parent) : CharacterView2D(parent)  {}
+PlayerView2D::PlayerView2D(QGraphicsItem *parent) : ItemView2d(parent)  {}
 
 void PlayerView2D::draw(std::shared_ptr<const GameObject> go) {
 
     auto playerObject = std::dynamic_pointer_cast<const PlayerObject>(go);
-    if (!playerObject) return;
+    assert(playerObject);
 
     float x = playerObject->getProtagonist().getXPos()*50;
     float y = playerObject->getProtagonist().getYPos()*50;
-    setPos(x+25,y+25);
+    this->setPos(x+25,y+25);
 
     QGraphicsItem::update();
 }

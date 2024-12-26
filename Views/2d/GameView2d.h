@@ -21,10 +21,10 @@ public:
 private:
 
     PlayerView2D *playerView;
-    std::vector<EnemyView2D *> enemyViews;
-    std::vector<PEnemyView2D *> penemyViews;
-    std::vector<QGraphicsRectItem *> tileViews;
-    std::vector<HealthPackView2D *> healthPackViews;
+    std::vector<EnemyView2D*> enemyViews;
+    std::vector<PEnemyView2D*> penemyViews;
+    std::vector<QGraphicsRectItem*> tileViews;
+    std::vector<HealthPackView2D*> healthPackViews;
 
     int rows, cols;
 

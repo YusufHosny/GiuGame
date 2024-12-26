@@ -3,16 +3,16 @@
 #include <QPainter>
 #include "healthpackobject.h"
 
-HealthPackView2D::HealthPackView2D(QGraphicsItem *parent) : CharacterView2D(parent)  {}
+HealthPackView2D::HealthPackView2D(QGraphicsItem *parent) : ItemView2d(parent)  {}
 
 void HealthPackView2D::draw(std::shared_ptr<const GameObject> go) {
 
     auto HPObject = std::dynamic_pointer_cast<const HealthPackObject>(go);
-    if (!HPObject) return;
+    assert(HPObject);
 
     float x = HPObject->getHP().getXPos()*50;
     float y = HPObject->getHP().getYPos()*50;
-    setPos(x+25,y+25);
+    this->setPos(x+25,y+25);
 
     QGraphicsItem::update();
 }

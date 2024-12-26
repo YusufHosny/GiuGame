@@ -1,14 +1,14 @@
-#ifndef CHARACTERVIEW2D_H
-#define CHARACTERVIEW2D_H
+#ifndef ITEMVIEW2D_H
+#define ITEMVIEW2D_H
 
 #include "gameview.h"
 #include <QGraphicsItem>
 
 
-class CharacterView2D : public QGraphicsItem, public GameView {
+class ItemView2d : public QGraphicsItem, public GameView {
 public:
 
-    CharacterView2D(QGraphicsItem *parent = nullptr): QGraphicsItem(parent){};
+    ItemView2d(QGraphicsItem *parent = nullptr): QGraphicsItem(parent){};
 
     virtual void draw(std::shared_ptr<const GameObject> go) override = 0;
 
@@ -21,4 +21,4 @@ protected:
 
 };
 
-#endif // CHARACTERVIEW2D_H
+#endif // ITEMVIEW2D_H

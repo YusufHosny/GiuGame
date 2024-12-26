@@ -6,22 +6,29 @@
 #include "inputmanager.h"
 #include "gameloader.h"
 #include "gameview.h"
+#include "QGraphicsScene"
 
 class GameController: public QObject
 {
     Q_OBJECT
 
 protected:
+    GameController();
+
     std::unique_ptr<InputManager> inputManager;
     std::shared_ptr<GameObject> gameState;
     std::unique_ptr<GameLoader> gameLoader;
-    std::shared_ptr<GameView> view;
+    GameView* view; // raw pointer, GameView lifetime managed by Qt
 
 public:
-    GameController();
+    // setters, returning reference for chaining for convenience
+    GameController& setInputManager(std::unique_ptr<InputManager> im);
+    GameController& setGameState(std::shared_ptr<GameObject> gs);
+    GameController& setGameLoader(std::unique_ptr<GameLoader> gl);
+    GameController& setGameView(GameView* v);
 
-    // initialize loader and load initial state
-    virtual void init() = 0;
+    // scene getter, for visualization
+    virtual QGraphicsScene* getScene() = 0;
 
     // start game loop
     void start();

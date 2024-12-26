@@ -6,10 +6,8 @@
 #include "GameObject.h"
 
 
-class GameView: public QWidget
+class GameView
 {
-    Q_OBJECT
-
 public:
 
     virtual void draw(std::shared_ptr<const GameObject> state) = 0;

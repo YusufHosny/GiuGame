@@ -2,16 +2,16 @@
 #include <QPainter>
 #include "penemyobject.h"
 
-PEnemyView2D::PEnemyView2D(QGraphicsItem *parent) : CharacterView2D(parent)  {}
+PEnemyView2D::PEnemyView2D(QGraphicsItem *parent) : ItemView2d(parent)  {}
 
 void PEnemyView2D::draw(std::shared_ptr<const GameObject> go) {
 
     auto penemyObject = std::dynamic_pointer_cast<const PEnemyObject>(go);
-    if (!penemyObject) return;
+    assert(penemyObject);
 
     float x = penemyObject->getPEnemy().getXPos()*50;
     float y = penemyObject->getPEnemy().getYPos()*50;
-    setPos(x+25,y+25);
+    this->setPos(x+25,y+25);
 
     QGraphicsItem::update();
 }

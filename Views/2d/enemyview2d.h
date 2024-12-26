@@ -1,9 +1,9 @@
 #ifndef ENEMYVIEW2D_H
 #define ENEMYVIEW2D_H
 
-#include "characterview2d.h"
+#include "itemview2d.h"
 
-class EnemyView2D: public CharacterView2D
+class EnemyView2D: public ItemView2d
 {
 
 public:
