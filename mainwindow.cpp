@@ -10,13 +10,15 @@
 MainWindow::MainWindow(QWidget *parent) :
     QMainWindow(parent)
 {
+    // create input manager
+    this->input = new InputManager2d(this);
 
-    this->controller = new GiuGameController;
-    this->controller->setParent(this);
+    // create main controller and bind to input manager
+    this->controller = new GiuGameController(this->input);
     this->controller
         ->setGameLoader(std::make_unique<WorldLoader>())
-        .setInputManager(nullptr); // TODO
-    this->controller->init(this);
+        .setInputManager(this->input);
+    this->controller->init(this->input);
 
     this->controller->start();
 

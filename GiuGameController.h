@@ -2,16 +2,16 @@
 #define GIUGAMECONTROLLER_H
 
 #include "gamecontroller.h"
-#include "mainwindow.h"
 
 class GiuGameController : public GameController
 {
     Q_OBJECT
 
 public:
-    GiuGameController();
+    GiuGameController() = delete;
+    GiuGameController(QObject* parent);
 
-    void init(MainWindow* parent);
+    void init(QWidget* parent);
 
 };
 

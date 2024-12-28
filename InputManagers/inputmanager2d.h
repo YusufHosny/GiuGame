@@ -8,13 +8,11 @@ class InputManager2d : public InputManager
 {
     Q_OBJECT
 public:
-    InputManager2d();
+    InputManager2d(QWidget *parent);
 
 private:
     // event handlers
-    void mousePressEvent(QMouseEvent *e) override;
-    void keyPressEvent(QKeyEvent *e) override;
-    void wheelEvent(QWheelEvent *e) override;
+    bool eventFilter(QObject *o, QEvent *e) override;
 };
 
 #endif // INPUTMANAGER2D_H

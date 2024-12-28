@@ -20,19 +20,20 @@ private:
     int maxFrameRate = 200;
 
 protected:
-    GameController();
+    GameController() = delete;
+    GameController(QObject *parent);
 
-    std::unique_ptr<InputManager> inputManager;
+    InputManager* inputManager; // raw pointer, managed by Qt
+    GameView* view; // raw pointer, managed by Qt
     std::shared_ptr<GameObject> gameState;
     std::unique_ptr<GameLoader> gameLoader;
-    GameView* view; // raw pointer, GameView lifetime managed by Qt
 
 public:
     // setters, returning reference for chaining for convenience
-    GameController& setInputManager(std::unique_ptr<InputManager> im);
+    GameController& setInputManager(InputManager* im);
+    GameController& setGameView(GameView* v);
     GameController& setGameState(std::shared_ptr<GameObject> gs);
     GameController& setGameLoader(std::unique_ptr<GameLoader> gl);
-    GameController& setGameView(GameView* v);
 
     // scene getter, for visualization
     QGraphicsView* getView();

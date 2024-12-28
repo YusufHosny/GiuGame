@@ -20,7 +20,40 @@ void PlayerObject::init()
 
 void PlayerObject::step(qint64 deltaT, std::set<GameInput> inputs)
 {
-    // TODO
+    std::cout << "stepped player" << std::endl;
+    for(auto &input: inputs) {
+        if(input.type == GameInputType::PLAYERMOVE) { // TODO CHECK MOVE VALID
+            switch(input.parameter) {
+            case(0): { // up
+                int x = this->playerModel->getYPos();
+                int y = this->playerModel->getXPos();
+                this->playerModel->setPos(x, y-1);
+                break;
+            }
+            case(1): { // down
+                int x = this->playerModel->getYPos();
+                int y = this->playerModel->getXPos();
+                this->playerModel->setPos(x, y+1);
+                break;
+            }
+            case(2): { // left
+                int x = this->playerModel->getYPos();
+                int y = this->playerModel->getXPos();
+                this->playerModel->setPos(x-1, y);
+                break;
+            }
+            case(3): { // right
+                int x = this->playerModel->getYPos();
+                int y = this->playerModel->getXPos();
+                this->playerModel->setPos(x+1, y);
+                std::cout << "moved model right" << std::endl;
+                break;
+            }
+
+
+            }
+        }
+    }
 }
 
 

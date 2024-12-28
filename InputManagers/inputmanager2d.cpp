@@ -3,50 +3,57 @@
 #include <QKeyEvent>
 #include <QWheelEvent>
 #include "GameInput.h"
+#include <iostream>
 
+InputManager2d::InputManager2d(QWidget *parent) : InputManager(parent) {}
 
-InputManager2d::InputManager2d() {}
+bool InputManager2d::eventFilter(QObject *o, QEvent *e) {
+    if(e->type() == QEvent::MouseButtonPress) {
+        auto me = dynamic_cast<QMouseEvent*>(e);
+        if(me->button() == Qt::MouseButton::LeftButton) {
+            inputs.insert(GameInput(GameInputType::GOTO));
+        }
+        else if(me->button() == Qt::MouseButton::RightButton) {
+            inputs.insert(GameInput(GameInputType::SWITCHVIEW, 1));
+        }
+        else if(me->button() == Qt::MouseButton::MiddleButton) {
+            inputs.insert(GameInput(GameInputType::SWITCHVIEW, 2));
+        }
+    }
+    else if(e->type() == QEvent::KeyPress) {
+        auto ke = dynamic_cast<QKeyEvent*>(e);
+        switch(ke->key()) {
+            case Qt::Key_W:
+                inputs.insert(GameInput(GameInputType::PLAYERMOVE, 0));
+                break;
 
+            case Qt::Key_A:
+                inputs.insert(GameInput(GameInputType::PLAYERMOVE, 2));
+                break;
 
-void InputManager2d::mousePressEvent(QMouseEvent *e) {
-    if(e->button() == Qt::MouseButton::LeftButton) {
-        inputs.insert(GameInput(GameInputType::GOTO));
+            case Qt::Key_S:
+                inputs.insert(GameInput(GameInputType::PLAYERMOVE, 1));
+                break;
+
+            case Qt::Key_D:
+                inputs.insert(GameInput(GameInputType::PLAYERMOVE, 3));
+                break;
+        }
+    }
+    else if(e->type() == QEvent::Wheel) {
+        auto we = dynamic_cast<QWheelEvent*>(e);
+
+        if(we->angleDelta().y() > 0) {
+            inputs.insert(GameInput(GameInputType::ZOOM, 0));
+        }
+        else {
+            inputs.insert(GameInput(GameInputType::ZOOM, 1));
+        }
     }
     else {
-        inputs.insert(GameInput(GameInputType::SWITCHVIEW3D));
+        return false;
     }
 
-}
+    return true;
+};
 
-void InputManager2d::wheelEvent(QWheelEvent *e) {
-    if(e->angleDelta().y() > 0) {
-        inputs.insert(GameInput(GameInputType::ZOOMIN));
-    }
-    else {
-        inputs.insert(GameInput(GameInputType::ZOOMOUT));
-    }
-
-}
-
-
-void InputManager2d::keyPressEvent(QKeyEvent *e) {
-    switch(e->key()) {
-
-    case Qt::Key_W:
-        inputs.insert(GameInput(GameInputType::PLAYERUP));
-        break;
-
-    case Qt::Key_A:
-        inputs.insert(GameInput(GameInputType::PLAYERLEFT));
-        break;
-
-    case Qt::Key_S:
-        inputs.insert(GameInput(GameInputType::PLAYERDOWN));
-        break;
-
-    case Qt::Key_D:
-        inputs.insert(GameInput(GameInputType::PLAYERRIGHT));
-        break;
-
-    }
-}

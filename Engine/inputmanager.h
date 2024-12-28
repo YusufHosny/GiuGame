@@ -10,7 +10,7 @@ class InputManager: public QWidget
     Q_OBJECT
 
 protected:
-    InputManager();
+    InputManager(QWidget *parent);
 
     std::set<GameInput> inputs;
 

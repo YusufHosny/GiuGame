@@ -3,10 +3,10 @@
 #include <qdatetime.h>
 #include <qthread.h>
 
-GameController::GameController() {}
+GameController::GameController(QObject *parent) : QObject(parent) {}
 
-GameController& GameController::setInputManager(std::unique_ptr<InputManager> im) {
-    this->inputManager = std::move(im);
+GameController& GameController::setInputManager(InputManager* im) {
+    this->inputManager = im;
     return *this;
 }
 
@@ -38,7 +38,7 @@ void GameController::start()
         qint64 tprev = QDateTime::currentMSecsSinceEpoch();
 
         // initialize the game state
-        // this->gameState->init_impl();
+        this->gameState->init_impl();
 
         // inf loop
         while(true) {
@@ -48,11 +48,6 @@ void GameController::start()
 
             // retrieve inputs
             std::set<GameInput> inputs = this->inputManager->popInputs();
-            for(auto &input : inputs) {
-                if(input.type == GameInputType::GOTO) {
-                    std::cout << inputs.size();
-                }
-            }
 
             // get deltatime
             qint64 tcur = QDateTime::currentMSecsSinceEpoch();
@@ -60,7 +55,7 @@ void GameController::start()
             tprev = tcur;
 
             // step the game state
-            // this->gameState->step_impl(deltaTime, inputs);
+            this->gameState->step_impl(deltaTime, inputs);
 
             // draw next frame
             emit sendFrame();

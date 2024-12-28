@@ -37,6 +37,8 @@ private:
     void drawHealthPacks(std::shared_ptr<const LevelObject> levelObject);
     void drawGui(std::shared_ptr<const LevelObject> levelObject);
 
+    void wheelEvent(QWheelEvent *e) override;
+
 };
 
 

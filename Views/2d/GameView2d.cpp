@@ -9,6 +9,7 @@
 #include "healthpackobject.h"
 #include "healthpackview2d.h"
 #include "giugameconfig.h"
+#include <QWheelEvent>
 
 GameView2d::GameView2d(QWidget *parent, std::shared_ptr<const GameObject> state): QGraphicsView(parent) {
 
@@ -113,7 +114,7 @@ void GameView2d::drawGui(std::shared_ptr<const LevelObject> levelObject ) {
     energyLabel->setPos(leftMargin + 2*GiuGameConfig2d::tileSideLen - GiuGameConfig2d::tileSideLen/5, topOffset + maxBarHeight + (GiuGameConfig2d::tileSideLen/5));
 }
 
-
+void GameView2d::wheelEvent(QWheelEvent *e) { e->ignore(); }; // ignore wheel event, just to be safe
 
 void GameView2d::draw(std::shared_ptr<const GameObject> state) {
 
