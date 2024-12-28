@@ -10,7 +10,7 @@
 #include "healthpackview2d.h"
 #include "levelobject.h"
 
-class GameView2d: public GameView, public QGraphicsView
+class GameView2d:  public GameView, public QGraphicsView
 {
 
 public:

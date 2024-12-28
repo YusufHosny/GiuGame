@@ -2,15 +2,22 @@
 #define GAMECONTROLLER_H
 
 #include <QObject>
+#include <QMutex>
+#include <QWaitCondition>
+#include <QGraphicsView>
 #include <memory>
 #include "inputmanager.h"
 #include "gameloader.h"
 #include "gameview.h"
-#include "QGraphicsView"
 
 class GameController: public QObject
 {
     Q_OBJECT
+
+private:
+    QWaitCondition frameReady;
+    QMutex frameLock;
+    int maxFrameRate = 200;
 
 protected:
     GameController();
@@ -33,6 +40,11 @@ public:
     // start game loop
     void start();
 
+public slots:
+    void drawFrame();
+
+signals:
+    void sendFrame();
 };
 
 #endif // GAMECONTROLLER_H

@@ -1,10 +1,7 @@
 #ifndef GAMEVIEW_H
 #define GAMEVIEW_H
 
-#include <QObject>
-#include <QWidget>
 #include "GameObject.h"
-
 
 class GameView
 {

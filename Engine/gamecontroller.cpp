@@ -1,5 +1,4 @@
 #include "gamecontroller.h"
-#include <set>
 #include <QIntegerForSize>
 #include <qdatetime.h>
 #include <qthread.h>
@@ -32,17 +31,28 @@ QGraphicsView* GameController::getView() {
 
 void GameController::start()
 {
+    this->connect(this, &GameController::sendFrame,
+                  this, &GameController::drawFrame);
     // in separate thread
     QThread* loopThread = QThread::create([this]() {
         qint64 tprev = QDateTime::currentMSecsSinceEpoch();
 
         // initialize the game state
-        this->gameState->init_impl();
+        // this->gameState->init_impl();
 
         // inf loop
         while(true) {
+            frameLock.lock();
+            frameReady.wait(&frameLock);
+            QThread::sleep(1e9/this->maxFrameRate); // sleep to give main thread time to update
+
             // retrieve inputs
             std::set<GameInput> inputs = this->inputManager->popInputs();
+            for(auto &input : inputs) {
+                if(input.type == GameInputType::GOTO) {
+                    std::cout << inputs.size();
+                }
+            }
 
             // get deltatime
             qint64 tcur = QDateTime::currentMSecsSinceEpoch();
@@ -50,12 +60,20 @@ void GameController::start()
             tprev = tcur;
 
             // step the game state
-            this->gameState->step_impl(deltaTime, inputs);
+            // this->gameState->step_impl(deltaTime, inputs);
 
             // draw next frame
-            this->view->draw(this->gameState);
+            emit sendFrame();
+            frameLock.unlock();
         }
     });
 
     loopThread->start();
+}
+
+void GameController::drawFrame() {
+    frameLock.lock();
+    this->view->draw(this->gameState);
+    frameReady.wakeAll();
+    frameLock.unlock();
 }

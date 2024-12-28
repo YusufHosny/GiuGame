@@ -32,16 +32,21 @@ target_link_libraries(GIUENGINE PRIVATE Qt6::Widgets)
 
 add_executable(GIUGAME
                 main.cpp
-                GiuGameController.h GiuGameController.cpp
                 mainwindow.cpp  mainwindow.h    mainwindow.ui
                 Images.qrc
                 worldloader.h                   worldloader.cpp
+
+                GiuGameController.h GiuGameController.cpp
+
+                InputManagers/inputmanager2d.h InputManagers/inputmanager2d.cpp
 
                 GameObjects/playerobject.h      GameObjects/playerobject.cpp
                 GameObjects/enemyobject.h       GameObjects/enemyobject.cpp
                 GameObjects/penemyobject.h      GameObjects/penemyobject.cpp
                 GameObjects/levelobject.h       GameObjects/levelobject.cpp
                 GameObjects/healthpackobject.h  GameObjects/healthpackobject.cpp
+
+                Views/giugameconfig.h
 
                 Views/2d/GameView2d.h Views/2d/GameView2d.cpp
                 Views/2d/itemview2d.h Views/2d/playerview2d.cpp
@@ -50,7 +55,7 @@ add_executable(GIUGAME
                 Views/2d/enemyview2d.h Views/2d/enemyview2d.cpp
                 Views/2d/penemyview2d.h Views/2d/penemyview2d.cpp
                 Views/2d/healthpackview2d.h Views/2d/healthpackview2d.cpp
-                Views/giugameconfig.h
+
     )
 
 

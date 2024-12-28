@@ -8,9 +8,6 @@ class GiuGameController : public GameController
 {
     Q_OBJECT
 
-private:
-    GameView* view;
-
 public:
     GiuGameController();
 
