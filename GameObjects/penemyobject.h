@@ -12,6 +12,8 @@ private:
     PEnemyObject(const PEnemyObject &) = delete;
     PEnemyObject &operator=(const PEnemyObject &) = delete;
 
+    void onCollision(std::shared_ptr<GameObject> other);
+
     std::unique_ptr<PEnemy> pEnemyModel;
     PEnemyObject(std::unique_ptr<PEnemy> pEnemyModel);
 

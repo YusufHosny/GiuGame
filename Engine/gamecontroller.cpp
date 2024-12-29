@@ -3,7 +3,7 @@
 #include <qdatetime.h>
 #include <qthread.h>
 
-GameController::GameController(QObject *parent) : QObject(parent) {}
+GameController::GameController(QObject *parent) : QObject(parent), isFrameReady(true) {}
 
 GameController& GameController::setInputManager(InputManager* im) {
     this->inputManager = im;
@@ -43,8 +43,9 @@ void GameController::start()
         // inf loop
         while(true) {
             frameLock.lock();
-            frameReady.wait(&frameLock);
-            QThread::sleep(1e9/this->maxFrameRate); // sleep to give main thread time to update
+            while(!isFrameReady)
+                frameReady.wait(&frameLock);
+            // QThread::usleep(1e6/this->maxFrameRate); // sleep to give main thread time to update
 
             // retrieve inputs
             std::set<GameInput> inputs = this->inputManager->popInputs();
@@ -58,6 +59,7 @@ void GameController::start()
             this->gameState->step_impl(deltaTime, inputs);
 
             // draw next frame
+            isFrameReady = false;
             emit sendFrame();
             frameLock.unlock();
         }
@@ -69,6 +71,7 @@ void GameController::start()
 void GameController::drawFrame() {
     frameLock.lock();
     this->view->draw(this->gameState);
+    isFrameReady = true;
     frameReady.wakeAll();
     frameLock.unlock();
 }

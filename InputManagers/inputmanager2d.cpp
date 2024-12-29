@@ -23,21 +23,25 @@ bool InputManager2d::eventFilter(QObject *o, QEvent *e) {
     else if(e->type() == QEvent::KeyPress) {
         auto ke = dynamic_cast<QKeyEvent*>(e);
         switch(ke->key()) {
-            case Qt::Key_W:
-                inputs.insert(GameInput(GameInputType::PLAYERMOVE, 0));
-                break;
+        case Qt::Key_W: {
+            inputs.insert(GameInput(GameInputType::PLAYERMOVE, 0));
+            break;
+        }
 
-            case Qt::Key_A:
-                inputs.insert(GameInput(GameInputType::PLAYERMOVE, 2));
-                break;
+        case Qt::Key_A: {
+            inputs.insert(GameInput(GameInputType::PLAYERMOVE, 2));
+            break;
+        }
 
-            case Qt::Key_S:
-                inputs.insert(GameInput(GameInputType::PLAYERMOVE, 1));
-                break;
+        case Qt::Key_S: {
+            inputs.insert(GameInput(GameInputType::PLAYERMOVE, 1));
+            break;
+        }
 
-            case Qt::Key_D:
-                inputs.insert(GameInput(GameInputType::PLAYERMOVE, 3));
-                break;
+        case Qt::Key_D: {
+            inputs.insert(GameInput(GameInputType::PLAYERMOVE, 3));
+            break;
+        }
         }
     }
     else if(e->type() == QEvent::Wheel) {

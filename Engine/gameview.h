@@ -5,7 +5,11 @@
 
 class GameView
 {
+protected:
+    GameView() {};
+
 public:
+    virtual ~GameView() {};
 
     virtual void draw(std::shared_ptr<const GameObject> state) = 0;
 };

@@ -6,8 +6,11 @@
 
 class GameLoader
 {
-public:
+protected:
     GameLoader() {};
+
+public:
+    virtual ~GameLoader() {};
 
     virtual std::shared_ptr<GameObject> load(QString filepath) = 0;
 };

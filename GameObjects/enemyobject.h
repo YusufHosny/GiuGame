@@ -12,6 +12,8 @@ private:
     EnemyObject(const EnemyObject &) = delete;
     EnemyObject &operator=(const EnemyObject &) = delete;
 
+    void onCollision(std::shared_ptr<GameObject> other);
+
     std::unique_ptr<Enemy> enemyModel;
     EnemyObject(std::unique_ptr<Enemy> enemyModel);
 

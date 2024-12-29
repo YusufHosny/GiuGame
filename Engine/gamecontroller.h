@@ -15,6 +15,7 @@ class GameController: public QObject
     Q_OBJECT
 
 private:
+    bool isFrameReady;
     QWaitCondition frameReady;
     QMutex frameLock;
     int maxFrameRate = 200;
@@ -29,6 +30,8 @@ protected:
     std::unique_ptr<GameLoader> gameLoader;
 
 public:
+    virtual ~GameController() {};
+
     // setters, returning reference for chaining for convenience
     GameController& setInputManager(InputManager* im);
     GameController& setGameView(GameView* v);

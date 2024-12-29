@@ -14,7 +14,7 @@ private:
     void onCollision(std::shared_ptr<GameObject> other);
 
     std::unique_ptr<Tile> tile;
-    HealthPackObject(std::unique_ptr<Tile> tiles);
+    HealthPackObject(std::unique_ptr<Tile> tile);
 
 public:
     void init() override;
