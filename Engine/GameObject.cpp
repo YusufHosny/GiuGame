@@ -47,9 +47,11 @@ void GameObject::step_impl(qint64 deltaT, std::set<GameInput> inputs) {
 // hierarchy functionality
 void GameObject::addChild(std::shared_ptr<GameObject> child) {
     this->children.push_back(child);
+    child->setParent(shared_from_this());
 }
 void GameObject::removeChild(std::shared_ptr<GameObject> child) {
     std::erase(this->children, child);
+    child->parent = nullptr;
 }
 
 unsigned int GameObject::getId() const {

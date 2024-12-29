@@ -11,7 +11,21 @@ void LevelObject::init()
 
 void LevelObject::step(qint64 deltaT, std::set<GameInput> inputs)
 {
-
+    this->zoomStatus = 0;
+    this->cameraReset = false;
+    for(auto &input: inputs) {
+        if(input.type == GameInputType::ZOOM) {
+            if(input.parameter == 0) {
+                this->zoomStatus = -1;
+            }
+            else {
+                this->zoomStatus = 1;
+            }
+        }
+        else if(input.type == GameInputType::RESETCAMERA) {
+            this->cameraReset = true;
+        }
+    }
 }
 
 std::string LevelObject::dumpData() const

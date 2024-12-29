@@ -11,7 +11,7 @@
 
 class GameObjectComponent;
 
-class GameObject {
+class GameObject : public std::enable_shared_from_this<GameObject> {
 
     private:
         GameObject(const GameObject &) = delete;

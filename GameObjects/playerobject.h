@@ -14,6 +14,8 @@ private:
 
     void onCollision(std::shared_ptr<GameObject> other);
 
+    void move(int dir);
+
     std::unique_ptr<Protagonist> playerModel;
     PlayerObject(std::unique_ptr<Protagonist> playerModel);
 

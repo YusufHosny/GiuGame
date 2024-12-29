@@ -96,12 +96,15 @@ void GameView2d::drawHealthPacks(std::shared_ptr<const LevelObject> levelObject 
 
 void GameView2d::drawGui(std::shared_ptr<const LevelObject> levelObject ) {
     int barWidth = GiuGameConfig::config2d::tileSideLen;
-    int maxBarHeight = 200;
     int leftMargin = (this->rows + 2) * GiuGameConfig::config2d::tileSideLen;
     int topOffset = 2 * GiuGameConfig::config2d::tileSideLen;
 
-    healthBar = this->scene()->addRect(leftMargin, topOffset, barWidth, maxBarHeight, QPen(Qt::NoPen), QBrush(Qt::green));
-    energyBar = this->scene()->addRect(leftMargin + 2*GiuGameConfig::config2d::tileSideLen, topOffset, barWidth, maxBarHeight, QPen(Qt::NoPen), QBrush(Qt::green));
+    int maxBarHeight = 200;
+    float playerEnergy = levelObject->findChildren<PlayerObject>().at(0)->getProtagonist().getEnergy() / 100;
+    float playerHealth = levelObject->findChildren<PlayerObject>().at(0)->getProtagonist().getHealth() / 100;
+
+    healthBar = this->scene()->addRect(leftMargin, topOffset, barWidth, maxBarHeight * playerHealth, QPen(Qt::NoPen), QBrush(Qt::green));
+    energyBar = this->scene()->addRect(leftMargin + 2*GiuGameConfig::config2d::tileSideLen, topOffset, barWidth, maxBarHeight * playerEnergy, QPen(Qt::NoPen), QBrush(Qt::green));
 
     QGraphicsTextItem *hpLabel = this->scene()->addText("Health");
     hpLabel->setDefaultTextColor(Qt::white);
@@ -116,6 +119,22 @@ void GameView2d::drawGui(std::shared_ptr<const LevelObject> levelObject ) {
 
 void GameView2d::wheelEvent(QWheelEvent *e) { e->ignore(); }; // ignore wheel event, just to be safe
 
+void GameView2d::updateCamera(int zoomStatus, bool reset) {
+    // zoom in out
+    this->setResizeAnchor(AnchorUnderMouse);
+    this->setTransformationAnchor(AnchorUnderMouse);
+    if(zoomStatus == 1) {
+        this->scale(0.9 * GiuGameConfig::config2d::zoomSpeed, 0.9 * GiuGameConfig::config2d::zoomSpeed);
+    }
+    else if(zoomStatus == -1) {
+        this->scale(1.1 * GiuGameConfig::config2d::zoomSpeed, 1.1 * GiuGameConfig::config2d::zoomSpeed);
+    }
+
+    if(reset) {
+        this->centerOn(playerView);
+    }
+}
+
 void GameView2d::draw(std::shared_ptr<const GameObject> state) {
 
     std::shared_ptr<const LevelObject> levelObject = std::dynamic_pointer_cast<const LevelObject>(state);
@@ -128,6 +147,9 @@ void GameView2d::draw(std::shared_ptr<const GameObject> state) {
     this->drawEnemies(levelObject);
     this->drawHealthPacks(levelObject);
     this->drawGui(levelObject);
+
+    this->updateCamera(levelObject->getZoomStatus(), levelObject->getCameraReset());
+
 
 }
 

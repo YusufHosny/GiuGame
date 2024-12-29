@@ -25,7 +25,6 @@ public:
 
     const PEnemy &getPEnemy() const {return *pEnemyModel;}
 
-
     friend class WorldLoader;
 };
 

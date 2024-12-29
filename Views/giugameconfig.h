@@ -9,8 +9,8 @@ namespace GiuGameConfig {
 
     namespace config2d
     {
-        const int tileSideLen = 50;  // base tile side length
-
+        static const int tileSideLen = 50;  // base tile side length
+        static int zoomSpeed = 1; // zoom in/out speed
     };
 
 }

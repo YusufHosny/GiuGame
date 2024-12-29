@@ -3,7 +3,6 @@
 #include <QKeyEvent>
 #include <QWheelEvent>
 #include "GameInput.h"
-#include <iostream>
 
 InputManager2d::InputManager2d(QWidget *parent) : InputManager(parent) {}
 
@@ -24,22 +23,27 @@ bool InputManager2d::eventFilter(QObject *o, QEvent *e) {
         auto ke = dynamic_cast<QKeyEvent*>(e);
         switch(ke->key()) {
         case Qt::Key_W: {
-            inputs.insert(GameInput(GameInputType::PLAYERMOVE, 0));
+            inputs.insert(GameInput(GameInputType::PLAYERMOVE, Direction::UP));
             break;
         }
 
         case Qt::Key_A: {
-            inputs.insert(GameInput(GameInputType::PLAYERMOVE, 2));
+            inputs.insert(GameInput(GameInputType::PLAYERMOVE, Direction::LEFT));
             break;
         }
 
         case Qt::Key_S: {
-            inputs.insert(GameInput(GameInputType::PLAYERMOVE, 1));
+            inputs.insert(GameInput(GameInputType::PLAYERMOVE, Direction::DOWN));
             break;
         }
 
         case Qt::Key_D: {
-            inputs.insert(GameInput(GameInputType::PLAYERMOVE, 3));
+            inputs.insert(GameInput(GameInputType::PLAYERMOVE, Direction::RIGHT));
+            break;
+        }
+
+        case Qt::Key_R: {
+            inputs.insert(GameInput(GameInputType::RESETCAMERA));
             break;
         }
         }
