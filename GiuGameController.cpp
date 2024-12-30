@@ -8,7 +8,7 @@ GiuGameController::GiuGameController(QObject *parent) : GameController(parent) {
 void GiuGameController::init(QWidget* viewparent)  {
 
     // load first level
-    std::shared_ptr<LevelObject> lo = std::dynamic_pointer_cast<LevelObject>(gameLoader->load(GiuGameConfig::startLevelPath));
+    std::shared_ptr<LevelObject> lo = std::dynamic_pointer_cast<LevelObject>(gameLoader->load(GiuGameConfig::getInstance().startLevelPath));
     assert(lo);
 
     this->gameState = lo;

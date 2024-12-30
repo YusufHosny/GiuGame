@@ -21,12 +21,15 @@ void PlayerObject::init()
         }
     ));
 
+    this->moveCooldownLeft = 0;
+    this->poisonCooldownLeft = 0;
 }
 
 void PlayerObject::step(qint64 deltaT, std::set<GameInput> inputs)
 {
     if(this->moveCooldownLeft > 0) {
         this->moveCooldownLeft -= deltaT;
+        std::cout << this->moveCooldownLeft << "ms left, " << deltaT << "ms delta" << std::endl;
     }
     this->stepPoison(deltaT);
 
@@ -45,7 +48,7 @@ void PlayerObject::stepPoison(qint64 deltaT) {
     } else if(this->poisonAmount > 0) {
         this->playerModel->setHealth(this->playerModel->getHealth() - 10);
         this->poisonAmount -= 10;
-        this->poisonCooldownLeft = GiuGameConfig::poisonCooldown;
+        this->poisonCooldownLeft = GiuGameConfig::getInstance().poisonCooldown;
     }
 }
 
@@ -81,7 +84,7 @@ void PlayerObject::move(qint64 deltaT, int dir) { // TODO CHECK MOVE VALID
     if(!std::isinf(targetValue)) {
         this->playerModel->setPos(x, y);
         this->playerModel->setEnergy(energy - targetValue);
-        this->moveCooldownLeft = GiuGameConfig::movementCooldown;
+        this->moveCooldownLeft = GiuGameConfig::getInstance().movementCooldown;
     }
 
 }
@@ -115,7 +118,7 @@ void PlayerObject::onCollision(std::shared_ptr<PEnemyObject> pe) {
     float eHealth = pe->getPEnemy().getValue();
 
     this->poisonAmount = pe->getPEnemy().getPoisonLevel();
-    this->poisonCooldownLeft = GiuGameConfig::poisonCooldown;
+    this->poisonCooldownLeft = GiuGameConfig::getInstance().poisonCooldown;
 
     this->playerModel->setHealth(health - eHealth);
 

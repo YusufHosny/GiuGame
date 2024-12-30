@@ -36,6 +36,8 @@ add_executable(GIUGAME
                 Images.qrc
                 worldloader.h                   worldloader.cpp
 
+                giugameconfig.h giugameconfig.cpp
+
                 GiuGameController.h GiuGameController.cpp
 
                 InputManagers/inputmanager2d.h InputManagers/inputmanager2d.cpp
@@ -46,8 +48,6 @@ add_executable(GIUGAME
                 GameObjects/levelobject.h       GameObjects/levelobject.cpp
                 GameObjects/healthpackobject.h  GameObjects/healthpackobject.cpp
 
-                Views/giugameconfig.h
-
                 Views/2d/GameView2d.h Views/2d/GameView2d.cpp
                 Views/2d/itemview2d.h Views/2d/playerview2d.cpp
                 Views/2d/enemyview2d.cpp
@@ -56,10 +56,13 @@ add_executable(GIUGAME
                 Views/2d/penemyview2d.h Views/2d/penemyview2d.cpp
                 Views/2d/healthpackview2d.h Views/2d/healthpackview2d.cpp
 
+
     )
 
 
 target_link_libraries(GIUGAME PUBLIC GIUENGINE)
+
+target_include_directories(GIUGAME PRIVATE ${CMAKE_SOURCE_DIR}/)
 
 target_include_directories(GIUGAME PRIVATE ${CMAKE_SOURCE_DIR}/Engine)
 target_include_directories(GIUGAME PRIVATE ${CMAKE_SOURCE_DIR}/Engine/Components)

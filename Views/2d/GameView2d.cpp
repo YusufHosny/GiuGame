@@ -26,7 +26,7 @@ GameView2d::GameView2d(QWidget *parent, std::shared_ptr<const GameObject> state)
     // initialize properties
     this->setHorizontalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
     this->setVerticalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
-    this->setFixedSize(GiuGameConfig::gameWidth, GiuGameConfig::gameHeight);
+    this->setFixedSize(GiuGameConfig::getInstance().gameWidth, GiuGameConfig::getInstance().gameHeight);
 
     // draw all items
     this->drawTiles(levelObject);
@@ -41,11 +41,13 @@ GameView2d::GameView2d(QWidget *parent, std::shared_ptr<const GameObject> state)
 }
 
 void GameView2d::drawTiles(std::shared_ptr<const LevelObject> levelObject ) {
+    int tileSideLen = GiuGameConfig::getInstance().config2d.tileSideLen;
+
     // get viewport bounds to cull tiles outside of viewport for optimization
     QRectF viewportBounds = this->mapToScene(this->viewport()->geometry()).boundingRect();
     QPointF NW = viewportBounds.topLeft(), SE = viewportBounds.bottomRight();
-    NW /= GiuGameConfig::config2d::tileSideLen;
-    SE /= GiuGameConfig::config2d::tileSideLen;
+    NW /= tileSideLen;
+    SE /= tileSideLen;
     viewportBounds = QRectF(NW, SE);
 
     for (const auto &tile : levelObject->getTiles()) {
@@ -56,7 +58,7 @@ void GameView2d::drawTiles(std::shared_ptr<const LevelObject> levelObject ) {
         float value = tile->getValue();
         int grayScale = static_cast<int>( (std::isinf(value) ? 0 : value) * 255);
         QBrush brush(QColor(grayScale, grayScale, grayScale));
-        auto rectItem = this->scene()->addRect(tile->getXPos() * GiuGameConfig::config2d::tileSideLen, tile->getYPos() * GiuGameConfig::config2d::tileSideLen, GiuGameConfig::config2d::tileSideLen, GiuGameConfig::config2d::tileSideLen, QPen(Qt::NoPen), brush);
+        auto rectItem = this->scene()->addRect(tile->getXPos() * tileSideLen, tile->getYPos() * tileSideLen, tileSideLen, tileSideLen, QPen(Qt::NoPen), brush);
         tileViews.push_back(rectItem);
     }
 }
@@ -101,39 +103,43 @@ void GameView2d::drawHealthPacks(std::shared_ptr<const LevelObject> levelObject 
 }
 
 void GameView2d::drawGui(std::shared_ptr<const LevelObject> levelObject ) {
-    int barWidth = GiuGameConfig::config2d::tileSideLen;
-    int leftMargin = (this->rows + 2) * GiuGameConfig::config2d::tileSideLen;
-    int topOffset = 2 * GiuGameConfig::config2d::tileSideLen;
+    int tileSideLen = GiuGameConfig::getInstance().config2d.tileSideLen;
+
+    int barWidth = tileSideLen;
+    int leftMargin = (this->rows + 2) * tileSideLen;
+    int topOffset = 2 * tileSideLen;
 
     int maxBarHeight = 200;
     float playerEnergy = levelObject->findChildren<PlayerObject>().at(0)->getProtagonist().getEnergy() / 100;
     float playerHealth = levelObject->findChildren<PlayerObject>().at(0)->getProtagonist().getHealth() / 100;
 
     healthBar = this->scene()->addRect(leftMargin, topOffset, barWidth, maxBarHeight * playerHealth, QPen(Qt::NoPen), QBrush(Qt::green));
-    energyBar = this->scene()->addRect(leftMargin + 2*GiuGameConfig::config2d::tileSideLen, topOffset, barWidth, maxBarHeight * playerEnergy, QPen(Qt::NoPen), QBrush(Qt::green));
+    energyBar = this->scene()->addRect(leftMargin + 2*tileSideLen, topOffset, barWidth, maxBarHeight * playerEnergy, QPen(Qt::NoPen), QBrush(Qt::green));
 
     QGraphicsTextItem *hpLabel = this->scene()->addText("Health");
     hpLabel->setDefaultTextColor(Qt::white);
     hpLabel->setFont(QFont("Arial", 12));
-    hpLabel->setPos(leftMargin + (GiuGameConfig::config2d::tileSideLen/5), topOffset + maxBarHeight + (GiuGameConfig::config2d::tileSideLen/5));
+    hpLabel->setPos(leftMargin + (tileSideLen/5), topOffset + maxBarHeight + (tileSideLen/5));
 
     QGraphicsTextItem *energyLabel = this->scene()->addText("Energy");
     energyLabel->setDefaultTextColor(Qt::white);
     energyLabel->setFont(QFont("Arial", 12));
-    energyLabel->setPos(leftMargin + 2*GiuGameConfig::config2d::tileSideLen - GiuGameConfig::config2d::tileSideLen/5, topOffset + maxBarHeight + (GiuGameConfig::config2d::tileSideLen/5));
+    energyLabel->setPos(leftMargin + 2*tileSideLen - tileSideLen/5, topOffset + maxBarHeight + (tileSideLen/5));
 }
 
 void GameView2d::wheelEvent(QWheelEvent *e) { e->ignore(); }; // ignore wheel event, just to be safe
 
 void GameView2d::updateCamera(int zoomStatus, bool reset) {
     // zoom in out
+    float zoomSpeed = GiuGameConfig::getInstance().config2d.zoomSpeed;
+
     this->setResizeAnchor(AnchorUnderMouse);
     this->setTransformationAnchor(AnchorUnderMouse);
     if(zoomStatus == 1 && this->transform().m11() > 0.3) {
-        this->scale(0.9 * GiuGameConfig::config2d::zoomSpeed, 0.9 * GiuGameConfig::config2d::zoomSpeed);
+        this->scale(0.9 * zoomSpeed, 0.9 * zoomSpeed);
     }
     else if(zoomStatus == -1 && this->transform().m11() < 3) {
-        this->scale(1.1 * GiuGameConfig::config2d::zoomSpeed, 1.1 * GiuGameConfig::config2d::zoomSpeed);
+        this->scale(1.1 * zoomSpeed, 1.1 * zoomSpeed);
     }
 
     if(reset) {
