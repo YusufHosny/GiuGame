@@ -22,9 +22,12 @@ private:
     void onCollision(std::shared_ptr<PEnemyObject> other);
     void onCollision(std::shared_ptr<HealthPackObject> other);
 
+    float poisonAmount;
 
+    qint64 poisonCooldownLeft; // usecs delay
+    qint64 moveCooldownLeft; // usecs delay
 
-    void move(int dir);
+    void move(qint64 deltaT, int dir);
 
     std::unique_ptr<Protagonist> playerModel;
     PlayerObject(std::unique_ptr<Protagonist> playerModel);
@@ -35,9 +38,10 @@ public:
 
     std::string dumpData() const override;
 
-    const Protagonist &getProtagonist() const {return *playerModel;}
+    const Protagonist &getProtagonist() const { return *playerModel; }
 
     float getPoisonAmount() const { return poisonAmount; };
+    void stepPoison(qint64 deltaT);
 
     friend class WorldLoader;
 

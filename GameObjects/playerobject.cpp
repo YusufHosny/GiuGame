@@ -4,6 +4,7 @@
 #include "penemyobject.h"
 #include "healthpackobject.h"
 #include "levelobject.h"
+#include "giugameconfig.h"
 
 PlayerObject::PlayerObject(std::unique_ptr<Protagonist> playerModel): playerModel(std::move(playerModel)), GameObject("Player") {}
 
@@ -24,14 +25,33 @@ void PlayerObject::init()
 
 void PlayerObject::step(qint64 deltaT, std::set<GameInput> inputs)
 {
+    if(this->moveCooldownLeft > 0) {
+        this->moveCooldownLeft -= deltaT;
+    }
+    this->stepPoison(deltaT);
+
     for(auto &input: inputs) {
         if(input.type == GameInputType::PLAYERMOVE) {
-            this->move(input.parameter);
+            this->move(deltaT, input.parameter);
         }
+    }
+
+
+}
+
+void PlayerObject::stepPoison(qint64 deltaT) {
+    if(this->poisonCooldownLeft > 0) {
+        this->poisonCooldownLeft -= deltaT;
+    } else if(this->poisonAmount > 0) {
+        this->playerModel->setHealth(this->playerModel->getHealth() - 10);
+        this->poisonAmount -= 10;
+        this->poisonCooldownLeft = GiuGameConfig::poisonCooldown;
     }
 }
 
-void PlayerObject::move(int dir) { // TODO CHECK MOVE VALID
+void PlayerObject::move(qint64 deltaT, int dir) { // TODO CHECK MOVE VALID
+    if(this->moveCooldownLeft > 0) return;
+
     int x = this->playerModel->getXPos(), y = this->playerModel->getYPos();
 
     switch(dir) {
@@ -61,6 +81,7 @@ void PlayerObject::move(int dir) { // TODO CHECK MOVE VALID
     if(!std::isinf(targetValue)) {
         this->playerModel->setPos(x, y);
         this->playerModel->setEnergy(energy - targetValue);
+        this->moveCooldownLeft = GiuGameConfig::movementCooldown;
     }
 
 }
@@ -85,8 +106,6 @@ void PlayerObject::onCollision(std::shared_ptr<EnemyObject> e) {
 
     this->playerModel->setHealth(health - eHealth);
 
-    std::cout << "final: " << this->playerModel->getHealth() << std::endl;
-
     std::shared_ptr<LevelObject> lo = std::dynamic_pointer_cast<LevelObject>(this->parent);
     lo->removeChild(e);
 }
@@ -95,9 +114,10 @@ void PlayerObject::onCollision(std::shared_ptr<PEnemyObject> pe) {
     float health = this->playerModel->getHealth();
     float eHealth = pe->getPEnemy().getValue();
 
-    this->playerModel->setHealth(health - eHealth);
+    this->poisonAmount = pe->getPEnemy().getPoisonLevel();
+    this->poisonCooldownLeft = GiuGameConfig::poisonCooldown;
 
-    std::cout << "final: " << this->playerModel->getHealth() << std::endl;
+    this->playerModel->setHealth(health - eHealth);
 
     std::shared_ptr<LevelObject> lo = std::dynamic_pointer_cast<LevelObject>(this->parent);
     lo->removeChild(pe);

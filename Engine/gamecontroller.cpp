@@ -35,7 +35,8 @@ void GameController::start()
                   this, &GameController::drawFrame);
     // in separate thread
     QThread* loopThread = QThread::create([this]() {
-        qint64 tprev = QDateTime::currentMSecsSinceEpoch();
+        QElapsedTimer frameTimer;
+        frameTimer.start();
 
         // initialize the game state
         this->gameState->init_impl();
@@ -45,15 +46,13 @@ void GameController::start()
             frameLock.lock();
             while(!isFrameReady)
                 frameReady.wait(&frameLock);
-            //QThread::usleep(1e6); // 1 SECOND FOR DEBUG
 
             // retrieve inputs
             std::set<GameInput> inputs = this->inputManager->popInputs();
 
             // get deltatime
-            qint64 tcur = QDateTime::currentMSecsSinceEpoch();
-            qint64 deltaTime = tcur - tprev;
-            tprev = tcur;
+            qint64 deltaTime = frameTimer.elapsed();
+            frameTimer.restart();
 
             // step the game state
             this->gameState->step_impl(deltaTime, inputs);
