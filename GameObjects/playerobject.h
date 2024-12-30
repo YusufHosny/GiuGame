@@ -5,6 +5,10 @@
 #include "world.h"
 #include <memory>
 
+class EnemyObject;
+class PEnemyObject;
+class HealthPackObject;
+
 class PlayerObject : public GameObject
 {
 
@@ -13,6 +17,12 @@ private:
     PlayerObject &operator=(const PlayerObject &) = delete;
 
     void onCollision(std::shared_ptr<GameObject> other);
+
+    void onCollision(std::shared_ptr<EnemyObject> other);
+    void onCollision(std::shared_ptr<PEnemyObject> other);
+    void onCollision(std::shared_ptr<HealthPackObject> other);
+
+
 
     void move(int dir);
 
@@ -26,6 +36,8 @@ public:
     std::string dumpData() const override;
 
     const Protagonist &getProtagonist() const {return *playerModel;}
+
+    float getPoisonAmount() const { return poisonAmount; };
 
     friend class WorldLoader;
 

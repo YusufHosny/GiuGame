@@ -23,13 +23,10 @@ GameView2d::GameView2d(QWidget *parent, std::shared_ptr<const GameObject> state)
     this->rows = levelObject->getRows();
     this->cols = levelObject->getCols();
 
-    int gridWidth = this->cols * GiuGameConfig::config2d::tileSideLen;
-    int gridHeight = this->rows * GiuGameConfig::config2d::tileSideLen;
-
     // initialize properties
     this->setHorizontalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
     this->setVerticalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
-    this->setFixedSize(gridWidth+400, gridHeight);
+    this->setFixedSize(GiuGameConfig::gameWidth, GiuGameConfig::gameHeight);
 
     // draw all items
     this->drawTiles(levelObject);
@@ -44,12 +41,21 @@ GameView2d::GameView2d(QWidget *parent, std::shared_ptr<const GameObject> state)
 }
 
 void GameView2d::drawTiles(std::shared_ptr<const LevelObject> levelObject ) {
-    for (const auto &tile : levelObject->getTiles()) {
+    // get viewport bounds to cull tiles outside of viewport for optimization
+    QRectF viewportBounds = this->mapToScene(this->viewport()->geometry()).boundingRect();
+    QPointF NW = viewportBounds.topLeft(), SE = viewportBounds.bottomRight();
+    NW /= GiuGameConfig::config2d::tileSideLen;
+    SE /= GiuGameConfig::config2d::tileSideLen;
+    viewportBounds = QRectF(NW, SE);
 
+    for (const auto &tile : levelObject->getTiles()) {
+        // check if tile is in viewport bounds and should be drawn, if not skip
+        if(!viewportBounds.contains(tile->getXPos(), tile->getYPos())) continue;
+
+        // draw tile
         float value = tile->getValue();
         int grayScale = static_cast<int>( (std::isinf(value) ? 0 : value) * 255);
         QBrush brush(QColor(grayScale, grayScale, grayScale));
-
         auto rectItem = this->scene()->addRect(tile->getXPos() * GiuGameConfig::config2d::tileSideLen, tile->getYPos() * GiuGameConfig::config2d::tileSideLen, GiuGameConfig::config2d::tileSideLen, GiuGameConfig::config2d::tileSideLen, QPen(Qt::NoPen), brush);
         tileViews.push_back(rectItem);
     }
@@ -123,10 +129,10 @@ void GameView2d::updateCamera(int zoomStatus, bool reset) {
     // zoom in out
     this->setResizeAnchor(AnchorUnderMouse);
     this->setTransformationAnchor(AnchorUnderMouse);
-    if(zoomStatus == 1) {
+    if(zoomStatus == 1 && this->transform().m11() > 0.3) {
         this->scale(0.9 * GiuGameConfig::config2d::zoomSpeed, 0.9 * GiuGameConfig::config2d::zoomSpeed);
     }
-    else if(zoomStatus == -1) {
+    else if(zoomStatus == -1 && this->transform().m11() < 3) {
         this->scale(1.1 * GiuGameConfig::config2d::zoomSpeed, 1.1 * GiuGameConfig::config2d::zoomSpeed);
     }
 
@@ -149,7 +155,6 @@ void GameView2d::draw(std::shared_ptr<const GameObject> state) {
     this->drawGui(levelObject);
 
     this->updateCamera(levelObject->getZoomStatus(), levelObject->getCameraReset());
-
 
 }
 

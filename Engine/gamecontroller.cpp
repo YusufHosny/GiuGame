@@ -45,7 +45,7 @@ void GameController::start()
             frameLock.lock();
             while(!isFrameReady)
                 frameReady.wait(&frameLock);
-            // QThread::usleep(1e6/this->maxFrameRate); // sleep to give main thread time to update
+            //QThread::usleep(1e6); // 1 SECOND FOR DEBUG
 
             // retrieve inputs
             std::set<GameInput> inputs = this->inputManager->popInputs();

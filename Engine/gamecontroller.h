@@ -18,7 +18,6 @@ private:
     bool isFrameReady;
     QWaitCondition frameReady;
     QMutex frameLock;
-    int maxFrameRate = 200;
 
 protected:
     GameController() = delete;

@@ -5,8 +5,11 @@ CollisionManagerComponent::CollisionManagerComponent() {}
 
 void CollisionManagerComponent::step_component(GameObject &owner)
 {
-    for(auto &child: owner.childrenWithComponent<ColliderComponent>()) {
-        for(auto &otherchild: owner.childrenWithComponent<ColliderComponent>()) {
+    auto collisionObjects = owner.childrenWithComponent<ColliderComponent>();
+    for(auto first = collisionObjects.begin(); first != collisionObjects.end(); first++) {
+        for(auto second = first + 1; second != collisionObjects.end(); second++) {
+            std::shared_ptr<GameObject> child = *first;
+            std::shared_ptr<GameObject> otherchild = *second;
 
             if(child != otherchild) {
                 std::shared_ptr<ColliderComponent> col1, col2;

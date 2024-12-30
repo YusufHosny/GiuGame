@@ -25,13 +25,13 @@ void PlayerObject::init()
 void PlayerObject::step(qint64 deltaT, std::set<GameInput> inputs)
 {
     for(auto &input: inputs) {
-        if(input.type == GameInputType::PLAYERMOVE) { // TODO CHECK MOVE VALID
+        if(input.type == GameInputType::PLAYERMOVE) {
             this->move(input.parameter);
         }
     }
 }
 
-void PlayerObject::move(int dir) {
+void PlayerObject::move(int dir) { // TODO CHECK MOVE VALID
     int x = this->playerModel->getXPos(), y = this->playerModel->getYPos();
 
     switch(dir) {
@@ -52,26 +52,63 @@ void PlayerObject::move(int dir) {
             break;
     }
 
-    this->playerModel->setPos(x, y);
-
+    // get energy needed for target tile
     float energy = this->playerModel->getEnergy();
     std::shared_ptr<LevelObject> lo = std::dynamic_pointer_cast<LevelObject>(this->parent);
     float targetValue = lo->getTile(x, y)->getValue();
-    this->playerModel->setEnergy(energy - targetValue);
+
+    // block movement for inf tiles
+    if(!std::isinf(targetValue)) {
+        this->playerModel->setPos(x, y);
+        this->playerModel->setEnergy(energy - targetValue);
+    }
+
 }
 
 
 void PlayerObject::onCollision(std::shared_ptr<GameObject> other)
 {
     if(auto e = std::dynamic_pointer_cast<EnemyObject>(other)) {
-        std::cout << "collided with enemy" << std::endl;
+        this->onCollision(e);
     }
     else if(auto pe = std::dynamic_pointer_cast<PEnemyObject>(other)) {
-        std::cout << "collided with penemy" << std::endl;
+        this->onCollision(pe);
     }
     else if(auto hp = std::dynamic_pointer_cast<HealthPackObject>(other)) {
-        std::cout << "collided with healthpack" << std::endl;
+        this->onCollision(hp);
     }
+}
+
+void PlayerObject::onCollision(std::shared_ptr<EnemyObject> e) {
+    float health = this->playerModel->getHealth();
+    float eHealth = e->getEnemy().getValue();
+
+    this->playerModel->setHealth(health - eHealth);
+
+    std::cout << "final: " << this->playerModel->getHealth() << std::endl;
+
+    std::shared_ptr<LevelObject> lo = std::dynamic_pointer_cast<LevelObject>(this->parent);
+    lo->removeChild(e);
+}
+
+void PlayerObject::onCollision(std::shared_ptr<PEnemyObject> pe) {
+    float health = this->playerModel->getHealth();
+    float eHealth = pe->getPEnemy().getValue();
+
+    this->playerModel->setHealth(health - eHealth);
+
+    std::cout << "final: " << this->playerModel->getHealth() << std::endl;
+
+    std::shared_ptr<LevelObject> lo = std::dynamic_pointer_cast<LevelObject>(this->parent);
+    lo->removeChild(pe);
+}
+
+void PlayerObject::onCollision(std::shared_ptr<HealthPackObject> hp) {
+    float health = this->playerModel->getHealth();
+    this->playerModel->setHealth(health + hp->getHP().getValue());
+
+    std::shared_ptr<LevelObject> lo = std::dynamic_pointer_cast<LevelObject>(this->parent);
+    lo->removeChild(hp);
 }
 
 
