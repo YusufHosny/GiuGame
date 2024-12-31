@@ -19,10 +19,9 @@ add_library(GIUENGINE
     Engine/inputmanager.h           Engine/inputmanager.cpp
     Engine/gameloader.h
 
-    Engine/Components/collisionmanagercomponent.h    Engine/Components/collisionmanagercomponent.cpp
-    Engine/Components/collidercomponent.h            Engine/Components/collidercomponent.cpp
     Engine/Components/gameobjectcomponent.h
-
+    Engine/Components/collisionmanagercomponent.h   Engine/Components/collisionmanagercomponent.cpp
+    Engine/Components/collidercomponent.h           Engine/Components/collidercomponent.cpp
 )
 
 target_include_directories(GIUENGINE PRIVATE ${CMAKE_SOURCE_DIR}/Engine)
@@ -39,6 +38,8 @@ add_executable(GIUGAME
                 giugameconfig.h giugameconfig.cpp
 
                 GiuGameController.h GiuGameController.cpp
+
+                Components/autoplaycomponent.h    Components/autoplaycomponent.cpp
 
                 InputManagers/inputmanager2d.h InputManagers/inputmanager2d.cpp
 
@@ -66,6 +67,8 @@ target_include_directories(GIUGAME PRIVATE ${CMAKE_SOURCE_DIR}/)
 
 target_include_directories(GIUGAME PRIVATE ${CMAKE_SOURCE_DIR}/Engine)
 target_include_directories(GIUGAME PRIVATE ${CMAKE_SOURCE_DIR}/Engine/Components)
+
+target_include_directories(GIUGAME PRIVATE ${CMAKE_SOURCE_DIR}/Components)
 
 target_include_directories(GIUGAME PRIVATE ${CMAKE_SOURCE_DIR}/GameObjects)
 target_include_directories(GIUGAME PRIVATE ${CMAKE_SOURCE_DIR}/InputManagers)

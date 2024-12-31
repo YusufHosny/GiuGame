@@ -27,7 +27,7 @@ private:
     qint64 poisonCooldownLeft; // usecs delay
     qint64 moveCooldownLeft; // usecs delay
 
-    void move(qint64 deltaT, int dir);
+
 
     std::unique_ptr<Protagonist> playerModel;
     PlayerObject(std::unique_ptr<Protagonist> playerModel);
@@ -39,6 +39,8 @@ public:
     std::string dumpData() const override;
 
     const Protagonist &getProtagonist() const { return *playerModel; }
+
+    void move(int dir);
 
     float getPoisonAmount() const { return poisonAmount; };
     void stepPoison(qint64 deltaT);

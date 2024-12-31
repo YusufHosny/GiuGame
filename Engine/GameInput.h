@@ -19,6 +19,7 @@ enum class GameInputType {
     ZOOM, // param: {0: in, 1: out}
     GOTO, // param: id of target
     RESETCAMERA, // no param
+    AUTOPLAY, // no param, toggles
 };
 
 

@@ -5,6 +5,7 @@
 #include "healthpackobject.h"
 #include "levelobject.h"
 #include "giugameconfig.h"
+#include "autoplaycomponent.h"
 
 PlayerObject::PlayerObject(std::unique_ptr<Protagonist> playerModel): playerModel(std::move(playerModel)), GameObject("Player") {}
 
@@ -21,6 +22,8 @@ void PlayerObject::init()
         }
     ));
 
+    this->components.emplace_back(new AutoPlayComponent());
+
     this->moveCooldownLeft = 0;
     this->poisonCooldownLeft = 0;
 }
@@ -29,16 +32,17 @@ void PlayerObject::step(qint64 deltaT, std::set<GameInput> inputs)
 {
     if(this->moveCooldownLeft > 0) {
         this->moveCooldownLeft -= deltaT;
-        std::cout << this->moveCooldownLeft << "ms left, " << deltaT << "ms delta" << std::endl;
     }
     this->stepPoison(deltaT);
 
     for(auto &input: inputs) {
         if(input.type == GameInputType::PLAYERMOVE) {
-            this->move(deltaT, input.parameter);
+            this->move(input.parameter);
+        }
+        else if(input.type == GameInputType::AUTOPLAY) {
+            this->getComponent<AutoPlayComponent>()->toggleAutoplay();
         }
     }
-
 
 }
 
@@ -52,7 +56,7 @@ void PlayerObject::stepPoison(qint64 deltaT) {
     }
 }
 
-void PlayerObject::move(qint64 deltaT, int dir) { // TODO CHECK MOVE VALID
+void PlayerObject::move(int dir) { // TODO CHECK MOVE VALID
     if(this->moveCooldownLeft > 0) return;
 
     int x = this->playerModel->getXPos(), y = this->playerModel->getYPos();
