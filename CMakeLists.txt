@@ -57,6 +57,14 @@ add_executable(GIUGAME
                 Views/2d/penemyview2d.h Views/2d/penemyview2d.cpp
                 Views/2d/healthpackview2d.h Views/2d/healthpackview2d.cpp
 
+                Views/text/GameViewText.h Views/text/GameViewText.cpp
+                Views/text/itemviewtext.h Views/text/playerviewtext.cpp
+                Views/text/enemyviewtext.cpp
+                Views/text/playerviewtext.h
+                Views/text/enemyviewtext.h Views/text/enemyviewtext.cpp
+                Views/text/penemyviewtext.h Views/text/penemyviewtext.cpp
+                Views/text/healthpackviewtext.h Views/text/healthpackviewtext.cpp
+
 
     )
 
@@ -75,6 +83,7 @@ target_include_directories(GIUGAME PRIVATE ${CMAKE_SOURCE_DIR}/InputManagers)
 
 target_include_directories(GIUGAME PRIVATE ${CMAKE_SOURCE_DIR}/Views)
 target_include_directories(GIUGAME PRIVATE ${CMAKE_SOURCE_DIR}/Views/2d)
+target_include_directories(GIUGAME PRIVATE ${CMAKE_SOURCE_DIR}/Views/text)
 
 target_link_libraries(GIUGAME PRIVATE Qt6::Widgets)
 

@@ -10,7 +10,7 @@ GiuGameConfig::GiuGameConfig() {
     config2d.tileSideLen = 50;  // base tile side length
     config2d.zoomSpeed = 1; // zoom in/out speed
 
-    startLevelPath = ":img/test.png";
+    startLevelPath = ":img/maze1.png";
 
     gameWidth = 1200;
     gameHeight = 800;

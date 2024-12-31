@@ -1,17 +1,17 @@
-#include "GameView2d.h"
+#include "GameViewText.h"
 #include "levelobject.h"
-#include "playerview2d.h"
+#include "playerviewtext.h"
 #include "playerobject.h"
-#include "enemyview2d.h"
+#include "enemyviewtext.h"
 #include "enemyobject.h"
 #include "penemyobject.h"
-#include "penemyview2d.h"
+#include "penemyviewtext.h"
 #include "healthpackobject.h"
-#include "healthpackview2d.h"
+#include "healthpackviewtext.h"
 #include "giugameconfig.h"
 #include <QWheelEvent>
 
-GameView2d::GameView2d(QWidget *parent, std::shared_ptr<const GameObject> state): QGraphicsView(parent) {
+GameViewText::GameViewText(QWidget *parent, std::shared_ptr<const GameObject> state): QGraphicsView(parent) {
 
     // cast input to a level object
     std::shared_ptr<const LevelObject> levelObject = std::dynamic_pointer_cast<const LevelObject>(state);
@@ -40,7 +40,7 @@ GameView2d::GameView2d(QWidget *parent, std::shared_ptr<const GameObject> state)
 
 }
 
-void GameView2d::drawTiles(std::shared_ptr<const LevelObject> levelObject ) {
+void GameViewText::drawTiles(std::shared_ptr<const LevelObject> levelObject ) {
     int tileSideLen = GiuGameConfig::getInstance().config2d.tileSideLen;
 
     // get viewport bounds to cull tiles outside of viewport for optimization
@@ -50,11 +50,11 @@ void GameView2d::drawTiles(std::shared_ptr<const LevelObject> levelObject ) {
     NW = QPointF(
         NW.x()/tileSideLen - 1,
         NW.y()/tileSideLen - 1
-    );
+        );
     SE = QPointF(
         SE.x()/tileSideLen + 1,
         SE.y()/tileSideLen + 1
-    );
+        );
 
     viewportBounds = QRectF(NW, SE);
 
@@ -71,18 +71,18 @@ void GameView2d::drawTiles(std::shared_ptr<const LevelObject> levelObject ) {
     }
 }
 
-void GameView2d::drawPlayer(std::shared_ptr<const LevelObject> levelObject ) {
+void GameViewText::drawPlayer(std::shared_ptr<const LevelObject> levelObject ) {
     std::shared_ptr<PlayerObject> po = levelObject->findChildren<PlayerObject>().at(0);
-    playerView = new PlayerView2D();
+    playerView = new PlayerViewText();
     this->scene()->addItem(playerView);
     playerView->draw(po);
 }
 
-void GameView2d::drawEnemies(std::shared_ptr<const LevelObject> levelObject ) {
+void GameViewText::drawEnemies(std::shared_ptr<const LevelObject> levelObject ) {
     // draw enemies
     std::vector<std::shared_ptr<EnemyObject>> enemies = levelObject->findChildren<EnemyObject>();
     for (const auto &enemy : enemies) {
-        EnemyView2D *ev = new EnemyView2D();
+        EnemyViewText *ev = new EnemyViewText();
         this->scene()->addItem(ev);
         enemyViews.push_back(ev);
         ev->draw(enemy);
@@ -91,7 +91,7 @@ void GameView2d::drawEnemies(std::shared_ptr<const LevelObject> levelObject ) {
     // draw penemies
     std::vector<std::shared_ptr<PEnemyObject>> penemies = levelObject->findChildren<PEnemyObject>();
     for (const auto &penemy : penemies) {
-        PEnemyView2D *pev = new PEnemyView2D();
+        PEnemyViewText *pev = new PEnemyViewText();
         this->scene()->addItem(pev);
         penemyViews.push_back(pev);
         pev->draw(penemy);
@@ -100,17 +100,17 @@ void GameView2d::drawEnemies(std::shared_ptr<const LevelObject> levelObject ) {
     // TODO draw xenemies
 }
 
-void GameView2d::drawHealthPacks(std::shared_ptr<const LevelObject> levelObject ) {
+void GameViewText::drawHealthPacks(std::shared_ptr<const LevelObject> levelObject ) {
     std::vector<std::shared_ptr<HealthPackObject>> healthPacks = levelObject->findChildren<HealthPackObject>();
     for (const auto &hp : healthPacks) {
-        HealthPackView2D *hpv = new HealthPackView2D();
+        HealthPackViewText *hpv = new HealthPackViewText();
         this->scene()->addItem(hpv);
         healthPackViews.push_back(hpv);
         hpv->draw(hp);
     }
 }
 
-void GameView2d::drawGui(std::shared_ptr<const LevelObject> levelObject ) {
+void GameViewText::drawGui(std::shared_ptr<const LevelObject> levelObject ) {
     int tileSideLen = GiuGameConfig::getInstance().config2d.tileSideLen;
 
     int barWidth = tileSideLen;
@@ -135,9 +135,9 @@ void GameView2d::drawGui(std::shared_ptr<const LevelObject> levelObject ) {
     energyLabel->setPos(leftMargin + 2*tileSideLen - tileSideLen/5, topOffset + maxBarHeight + (tileSideLen/5));
 }
 
-void GameView2d::wheelEvent(QWheelEvent *e) { e->ignore(); }; // ignore wheel event, just to be safe
+void GameViewText::wheelEvent(QWheelEvent *e) { e->ignore(); }; // ignore wheel event, just to be safe
 
-void GameView2d::updateCamera(int zoomStatus, bool reset) {
+void GameViewText::updateCamera(int zoomStatus, bool reset) {
     // zoom in out
     float zoomSpeed = GiuGameConfig::getInstance().config2d.zoomSpeed;
 
@@ -155,7 +155,7 @@ void GameView2d::updateCamera(int zoomStatus, bool reset) {
     }
 }
 
-void GameView2d::draw(std::shared_ptr<const GameObject> state) {
+void GameViewText::draw(std::shared_ptr<const GameObject> state) {
 
     std::shared_ptr<const LevelObject> levelObject = std::dynamic_pointer_cast<const LevelObject>(state);
     assert(levelObject); // assert correct type was passed in

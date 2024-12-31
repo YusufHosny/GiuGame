@@ -1,5 +1,6 @@
 #include "GiuGameController.h"
 #include "levelobject.h"
+#include "GameViewText.h"
 #include "GameView2d.h"
 #include "giugameconfig.h"
 

@@ -13,6 +13,8 @@ public:
 
     void init(QWidget* parent);
 
+    QGraphicsView changeView(ViewType vt);
+
 };
 
 
