@@ -116,14 +116,10 @@ public:
             qCDebug(pathfinderCategory) << "Node to continue... (" << currentX << "," << currentY << ")";
 
             //process neighbors
-            checkNeighbour(currentX-1, currentY-1, currentPathNode);
             checkNeighbour(currentX, currentY-1, currentPathNode);
-            checkNeighbour(currentX+1, currentY-1, currentPathNode);
             checkNeighbour(currentX-1, currentY, currentPathNode);
             checkNeighbour(currentX+1, currentY, currentPathNode);
-            checkNeighbour(currentX-1, currentY+1, currentPathNode);
             checkNeighbour(currentX, currentY+1, currentPathNode);
-            checkNeighbour(currentX+1, currentY+1, currentPathNode);
 
             //this means no path is possible, so we return an empty vector
             if (openList.empty())
