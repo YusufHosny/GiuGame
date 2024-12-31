@@ -44,7 +44,12 @@ void AutoPlayComponent::step_component(GameObject& owner) {
         std::sort(healthpacks.begin(), healthpacks.end(), [this, &player](const std::shared_ptr<HealthPackObject>& a, const std::shared_ptr<HealthPackObject>& b) {
             return this->heurdist(player.getProtagonist(), a->getHP()) < this->heurdist(player.getProtagonist(), b->getHP());
         });
-        target = &healthpacks.at(0)->getHP();
+        if(!healthpacks.empty())
+            target = &healthpacks.at(0)->getHP();
+        else {
+            std::cout << "no health packs for autoplay" << std::endl;
+            return;
+        }
     }
     else {
         // check for enemies
@@ -67,6 +72,7 @@ void AutoPlayComponent::step_component(GameObject& owner) {
             else {
                 // go to exit
                 std::cout << "no exit yet" << std::endl;
+                return;
             }
         }
     }
@@ -82,8 +88,6 @@ void AutoPlayComponent::step_component(GameObject& owner) {
 
     std::vector<int> path = pf.A_star();
     assert(!path.empty()); // path should never be empty
-
-    std::cout << "GOING TO: " << path.at(0) << std::endl;
 
     switch(path.at(0)) {
     case(0):
