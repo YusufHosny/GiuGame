@@ -67,6 +67,10 @@ add_executable(GIUGAME
                 Views/text/tileviewtext.h           Views/text/tileviewtext.cpp
                 GameObjects/benemyobject.h
                 GameObjects/benemyobject.cpp
+                Views/2d/benemyview2d.cpp
+                Views/text/benemyviewtext.h
+                Views/text/benemyviewtext.cpp
+                Views/2d/benemyview2d.h
 
 
     )

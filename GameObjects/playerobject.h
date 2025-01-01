@@ -6,6 +6,7 @@
 #include <memory>
 
 class EnemyObject;
+class BEnemyObject;
 class PEnemyObject;
 class HealthPackObject;
 
@@ -19,6 +20,7 @@ private:
     void onCollision(std::shared_ptr<GameObject> other);
 
     void onCollision(std::shared_ptr<EnemyObject> other);
+    void onCollision(std::shared_ptr<BEnemyObject> other);
     void onCollision(std::shared_ptr<PEnemyObject> other);
     void onCollision(std::shared_ptr<HealthPackObject> other);
 

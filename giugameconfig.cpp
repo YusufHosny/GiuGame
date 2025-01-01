@@ -20,7 +20,7 @@ GiuGameConfig::GiuGameConfig() {
 
     poisonCooldown = 1000; // in msec
     movementCooldown = 200; // in msec
-    blinkCooldown = 400; // in msec
+    blinkCooldown = 1000; // in msec
 
 }
 

@@ -3,6 +3,7 @@
 #include "levelobject.h"
 #include "playerobject.h"
 #include "enemyobject.h"
+#include "benemyobject.h"
 #include "penemyobject.h"
 #include "healthpackobject.h"
 #include <memory>
@@ -42,7 +43,7 @@ std::shared_ptr<GameObject> WorldLoader::load(QString filepath)
             levelObject->addChild(pEnemyObject);
         }
         else {
-            std::shared_ptr<EnemyObject> enemyObject = std::shared_ptr<EnemyObject>( new EnemyObject(std::move(enemy)) );
+            std::shared_ptr<BEnemyObject> enemyObject = std::shared_ptr<BEnemyObject>( new BEnemyObject(std::move(enemy)) );
             levelObject->addChild(enemyObject);
         }
     }

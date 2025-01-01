@@ -10,6 +10,8 @@
 #include "healthpackviewtext.h"
 #include "tileviewtext.h"
 #include "giugameconfig.h"
+#include "benemyviewtext.h"
+#include "benemyobject.h"
 #include <QWheelEvent>
 
 GameViewText::GameViewText(QWidget *parent, std::shared_ptr<const GameObject> state): QGraphicsView(parent) {
@@ -70,8 +72,6 @@ void GameViewText::drawTiles(std::shared_ptr<const LevelObject> levelObject ) {
         TileViewText *t = new TileViewText(tile->getXPos(), tile->getYPos(), luminance);
         this->scene()->addItem(t);
         t->draw(levelObject);
-
-        tileViews.push_back(t);
     }
 }
 
@@ -88,7 +88,6 @@ void GameViewText::drawEnemies(std::shared_ptr<const LevelObject> levelObject ) 
     for (const auto &enemy : enemies) {
         EnemyViewText *ev = new EnemyViewText();
         this->scene()->addItem(ev);
-        enemyViews.push_back(ev);
         ev->draw(enemy);
     }
 
@@ -97,11 +96,17 @@ void GameViewText::drawEnemies(std::shared_ptr<const LevelObject> levelObject ) 
     for (const auto &penemy : penemies) {
         PEnemyViewText *pev = new PEnemyViewText();
         this->scene()->addItem(pev);
-        penemyViews.push_back(pev);
         pev->draw(penemy);
     }
 
-    // TODO draw xenemies
+    // draw benemies
+    std::vector<std::shared_ptr<BEnemyObject>> benemies = levelObject->findChildren<BEnemyObject>();
+    for (const auto &benemy : benemies) {
+        if (!benemy->isBlinkVisible()) continue;
+        BEnemyViewText *bev = new BEnemyViewText();
+        this->scene()->addItem(bev);
+        bev->draw(benemy);
+    }
 }
 
 void GameViewText::drawHealthPacks(std::shared_ptr<const LevelObject> levelObject ) {
@@ -109,7 +114,6 @@ void GameViewText::drawHealthPacks(std::shared_ptr<const LevelObject> levelObjec
     for (const auto &hp : healthPacks) {
         HealthPackViewText *hpv = new HealthPackViewText();
         this->scene()->addItem(hpv);
-        healthPackViews.push_back(hpv);
         hpv->draw(hp);
     }
 }
@@ -125,8 +129,8 @@ void GameViewText::drawGui(std::shared_ptr<const LevelObject> levelObject ) {
     float playerEnergy = levelObject->findChildren<PlayerObject>().at(0)->getProtagonist().getEnergy() / 100;
     float playerHealth = levelObject->findChildren<PlayerObject>().at(0)->getProtagonist().getHealth() / 100;
 
-    healthBar = this->scene()->addRect(leftMargin, topOffset, barWidth, maxBarHeight * playerHealth, QPen(Qt::NoPen), QBrush(Qt::green));
-    energyBar = this->scene()->addRect(leftMargin + 2*tileSideLen, topOffset, barWidth, maxBarHeight * playerEnergy, QPen(Qt::NoPen), QBrush(Qt::green));
+    this->scene()->addRect(leftMargin, topOffset, barWidth, maxBarHeight * playerHealth, QPen(Qt::NoPen), QBrush(Qt::green));
+    this->scene()->addRect(leftMargin + 2*tileSideLen, topOffset, barWidth, maxBarHeight * playerEnergy, QPen(Qt::NoPen), QBrush(Qt::green));
 
     QGraphicsTextItem *hpLabel = this->scene()->addText("Health");
     hpLabel->setDefaultTextColor(Qt::white);

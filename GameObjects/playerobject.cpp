@@ -6,6 +6,7 @@
 #include "levelobject.h"
 #include "giugameconfig.h"
 #include "autoplaycomponent.h"
+#include "benemyobject.h"
 
 PlayerObject::PlayerObject(std::unique_ptr<Protagonist> playerModel): playerModel(std::move(playerModel)), GameObject("Player") {}
 
@@ -99,6 +100,9 @@ void PlayerObject::onCollision(std::shared_ptr<GameObject> other)
     if(auto e = std::dynamic_pointer_cast<EnemyObject>(other)) {
         this->onCollision(e);
     }
+    else if(auto be = std::dynamic_pointer_cast<BEnemyObject>(other)) {
+        this->onCollision(be);
+    }
     else if(auto pe = std::dynamic_pointer_cast<PEnemyObject>(other)) {
         this->onCollision(pe);
     }
@@ -116,6 +120,17 @@ void PlayerObject::onCollision(std::shared_ptr<EnemyObject> e) {
     std::shared_ptr<LevelObject> lo = std::dynamic_pointer_cast<LevelObject>(this->parent);
     lo->removeChild(e);
 }
+
+void PlayerObject::onCollision(std::shared_ptr<BEnemyObject> be) {
+    float health = this->playerModel->getHealth();
+    float eHealth = be->getEnemy().getValue();
+
+    this->playerModel->setHealth(health - eHealth);
+
+    std::shared_ptr<LevelObject> lo = std::dynamic_pointer_cast<LevelObject>(this->parent);
+    lo->removeChild(be);
+}
+
 
 void PlayerObject::onCollision(std::shared_ptr<PEnemyObject> pe) {
     float health = this->playerModel->getHealth();

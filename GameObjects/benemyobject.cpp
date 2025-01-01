@@ -18,15 +18,29 @@ void BEnemyObject::init()
         ));
 
     this->blinkTime = GiuGameConfig::getInstance().blinkCooldown; // can be adjusted or random
+    this->blinkTimeLeft = this->blinkTime;
+    this->blinkVisible = true;
 }
 
 void BEnemyObject::step(qint64 deltaT, std::set<GameInput> inputs)
 {
-
+    if(this->blinkTimeLeft > 0) {
+        this->blinkTimeLeft -= deltaT;
+    }
+    else {
+        this->blinkVisible = !this->blinkVisible;
+        std::shared_ptr<ColliderComponent> collider = this->getComponent<ColliderComponent>();
+        collider->setActive(this->blinkVisible);
+        this->blinkTimeLeft = this->blinkTime;
+    }
 }
 
 void BEnemyObject::onCollision(std::shared_ptr<GameObject> other) {
 
+}
+
+bool BEnemyObject::isBlinkVisible() const {
+    return this->blinkVisible;
 }
 
 

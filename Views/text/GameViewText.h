@@ -24,13 +24,6 @@ private:
     int rows, cols;
 
     PlayerViewText *playerView;
-    std::vector<EnemyViewText*> enemyViews;
-    std::vector<PEnemyViewText*> penemyViews;
-    std::vector<TileViewText*> tileViews;
-    std::vector<HealthPackViewText*> healthPackViews;
-
-    QGraphicsRectItem *healthBar;
-    QGraphicsRectItem *energyBar;
 
     void drawPlayer(std::shared_ptr<const LevelObject> levelObject);
     void drawEnemies(std::shared_ptr<const LevelObject> levelObject);

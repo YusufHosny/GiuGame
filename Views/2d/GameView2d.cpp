@@ -9,6 +9,8 @@
 #include "healthpackobject.h"
 #include "healthpackview2d.h"
 #include "giugameconfig.h"
+#include "benemyview2d.h"
+#include "benemyobject.h"
 #include <QWheelEvent>
 
 GameView2d::GameView2d(QWidget *parent, std::shared_ptr<const GameObject> state): QGraphicsView(parent) {
@@ -40,7 +42,7 @@ GameView2d::GameView2d(QWidget *parent, std::shared_ptr<const GameObject> state)
 
 }
 
-void GameView2d::drawTiles(std::shared_ptr<const LevelObject> levelObject ) {
+void GameView2d::drawTiles(std::shared_ptr<const LevelObject> levelObject) {
     int tileSideLen = GiuGameConfig::getInstance().config2d.tileSideLen;
 
     // get viewport bounds to cull tiles outside of viewport for optimization
@@ -67,7 +69,6 @@ void GameView2d::drawTiles(std::shared_ptr<const LevelObject> levelObject ) {
         int grayScale = static_cast<int>( (std::isinf(value) ? 0 : value) * 255);
         QBrush brush(QColor(grayScale, grayScale, grayScale));
         auto rectItem = this->scene()->addRect(tile->getXPos() * tileSideLen, tile->getYPos() * tileSideLen, tileSideLen, tileSideLen, QPen(Qt::NoPen), brush);
-        tileViews.push_back(rectItem);
     }
 }
 
@@ -84,7 +85,6 @@ void GameView2d::drawEnemies(std::shared_ptr<const LevelObject> levelObject ) {
     for (const auto &enemy : enemies) {
         EnemyView2D *ev = new EnemyView2D();
         this->scene()->addItem(ev);
-        enemyViews.push_back(ev);
         ev->draw(enemy);
     }
 
@@ -93,11 +93,17 @@ void GameView2d::drawEnemies(std::shared_ptr<const LevelObject> levelObject ) {
     for (const auto &penemy : penemies) {
         PEnemyView2D *pev = new PEnemyView2D();
         this->scene()->addItem(pev);
-        penemyViews.push_back(pev);
         pev->draw(penemy);
     }
 
-    // TODO draw xenemies
+    // draw benemies
+    std::vector<std::shared_ptr<BEnemyObject>> benemies = levelObject->findChildren<BEnemyObject>();
+    for (const auto &benemy : benemies) {
+        if (!benemy->isBlinkVisible()) continue;
+        BEnemyView2D *bev = new BEnemyView2D();
+        this->scene()->addItem(bev);
+        bev->draw(benemy);
+    }
 }
 
 void GameView2d::drawHealthPacks(std::shared_ptr<const LevelObject> levelObject ) {
@@ -105,7 +111,6 @@ void GameView2d::drawHealthPacks(std::shared_ptr<const LevelObject> levelObject 
     for (const auto &hp : healthPacks) {
         HealthPackView2D *hpv = new HealthPackView2D();
         this->scene()->addItem(hpv);
-        healthPackViews.push_back(hpv);
         hpv->draw(hp);
     }
 }
@@ -121,8 +126,8 @@ void GameView2d::drawGui(std::shared_ptr<const LevelObject> levelObject ) {
     float playerEnergy = levelObject->findChildren<PlayerObject>().at(0)->getProtagonist().getEnergy() / 100;
     float playerHealth = levelObject->findChildren<PlayerObject>().at(0)->getProtagonist().getHealth() / 100;
 
-    healthBar = this->scene()->addRect(leftMargin, topOffset, barWidth, maxBarHeight * playerHealth, QPen(Qt::NoPen), QBrush(Qt::green));
-    energyBar = this->scene()->addRect(leftMargin + 2*tileSideLen, topOffset, barWidth, maxBarHeight * playerEnergy, QPen(Qt::NoPen), QBrush(Qt::green));
+    this->scene()->addRect(leftMargin, topOffset, barWidth, maxBarHeight * playerHealth, QPen(Qt::NoPen), QBrush(Qt::green));
+    this->scene()->addRect(leftMargin + 2*tileSideLen, topOffset, barWidth, maxBarHeight * playerEnergy, QPen(Qt::NoPen), QBrush(Qt::green));
 
     QGraphicsTextItem *hpLabel = this->scene()->addText("Health");
     hpLabel->setDefaultTextColor(Qt::white);

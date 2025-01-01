@@ -16,7 +16,7 @@ private:
 
     qint64 blinkTime;
     qint64 blinkTimeLeft;
-    bool visible;
+    bool blinkVisible;
 
     std::unique_ptr<Enemy> enemyModel;
     BEnemyObject(std::unique_ptr<Enemy> enemyModel);
@@ -28,6 +28,8 @@ public:
     std::string dumpData() const override;
 
     const Enemy &getEnemy() const {return *enemyModel;}
+
+    bool isBlinkVisible() const;
 
     friend class WorldLoader;
 };
