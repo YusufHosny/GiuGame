@@ -1,23 +1,22 @@
 #include "PEnemyView2D.h"
-#include <QPainter>
+#include "giugameconfig.h"
 #include "penemyobject.h"
+#include <QPainter>
 
-PEnemyView2D::PEnemyView2D(QGraphicsItem *parent) : ItemView2d(parent)  {}
+PEnemyView2D::PEnemyView2D(QGraphicsItem *parent) : ItemView(parent)  {}
 
 void PEnemyView2D::draw(std::shared_ptr<const GameObject> go) {
 
     auto penemyObject = std::dynamic_pointer_cast<const PEnemyObject>(go);
     assert(penemyObject);
 
-    float x = penemyObject->getPEnemy().getXPos()*50;
-    float y = penemyObject->getPEnemy().getYPos()*50;
-    this->setPos(x+25,y+25);
+    int tileSideLen = GiuGameConfig::getInstance().config2d.tileSideLen;
+
+    float x = penemyObject->getPEnemy().getXPos()*tileSideLen;
+    float y = penemyObject->getPEnemy().getYPos()*tileSideLen;
+    this->setPos(x+tileSideLen/2,y+tileSideLen/2);
 
     QGraphicsItem::update();
-}
-
-QRectF PEnemyView2D::boundingRect() const {
-    return QRectF(-10, -10, 20, 20);
 }
 
 void PEnemyView2D::paint(QPainter *painter, const QStyleOptionGraphicsItem *, QWidget *) {

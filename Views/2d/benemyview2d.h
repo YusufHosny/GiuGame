@@ -1,9 +1,9 @@
 #ifndef BENEMYVIEW2D_H
 #define BENEMYVIEW2D_H
 
-#include "itemview2d.h"
+#include "itemview.h"
 
-class BEnemyView2D: public ItemView2d
+class BEnemyView2D: public ItemView
 {
 
 public:
@@ -12,7 +12,6 @@ public:
 
     void draw(std::shared_ptr<const GameObject> go) override;
 
-    QRectF boundingRect() const override;
     void paint(QPainter *painter, const QStyleOptionGraphicsItem *option, QWidget *widget) override;
 
 };

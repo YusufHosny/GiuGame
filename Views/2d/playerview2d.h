@@ -1,12 +1,9 @@
 #ifndef PLAYERVIEW2D_H
 #define PLAYERVIEW2D_H
 
-#include <QGraphicsItem>
-#include "itemview2d.h"
+#include "itemview.h"
 
-
-
-class PlayerView2D : public ItemView2d {
+class PlayerView2D : public ItemView {
 
 public:
 
@@ -14,7 +11,6 @@ public:
 
     void draw(std::shared_ptr<const GameObject> go) override;
 
-    QRectF boundingRect() const override;
     void paint(QPainter *painter, const QStyleOptionGraphicsItem *option, QWidget *widget) override;
 
 };

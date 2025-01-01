@@ -1,23 +1,22 @@
 #include "EnemyView2D.h"
-#include <QPainter>
 #include "enemyobject.h"
+#include "giugameconfig.h"
+#include <QPainter>
 
-EnemyView2D::EnemyView2D(QGraphicsItem *parent) : ItemView2d(parent)  {}
+EnemyView2D::EnemyView2D(QGraphicsItem *parent) : ItemView(parent)  {}
 
 void EnemyView2D::draw(std::shared_ptr<const GameObject> go) {
 
     auto enemyObject = std::dynamic_pointer_cast<const EnemyObject>(go);
     assert(enemyObject);
 
-    float x = enemyObject->getEnemy().getXPos()*50;
-    float y = enemyObject->getEnemy().getYPos()*50;
-    setPos(x+25,y+25);
+    int tileSideLen = GiuGameConfig::getInstance().config2d.tileSideLen;
+
+    float x = enemyObject->getEnemy().getXPos()*tileSideLen;
+    float y = enemyObject->getEnemy().getYPos()*tileSideLen;
+    setPos(x+tileSideLen/2,y+tileSideLen/2);
 
     QGraphicsItem::update();
-}
-
-QRectF EnemyView2D::boundingRect() const {
-    return QRectF(-10, -10, 20, 20);
 }
 
 void EnemyView2D::paint(QPainter *painter, const QStyleOptionGraphicsItem *, QWidget *) {

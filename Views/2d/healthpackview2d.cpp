@@ -1,24 +1,22 @@
 #include "healthpackview2d.h"
-
-#include <QPainter>
 #include "healthpackobject.h"
+#include "giugameconfig.h"
+#include <QPainter>
 
-HealthPackView2D::HealthPackView2D(QGraphicsItem *parent) : ItemView2d(parent)  {}
+HealthPackView2D::HealthPackView2D(QGraphicsItem *parent) : ItemView(parent)  {}
 
 void HealthPackView2D::draw(std::shared_ptr<const GameObject> go) {
 
     auto HPObject = std::dynamic_pointer_cast<const HealthPackObject>(go);
     assert(HPObject);
 
-    float x = HPObject->getHP().getXPos()*50;
-    float y = HPObject->getHP().getYPos()*50;
-    this->setPos(x+25,y+25);
+    int tileSideLen = GiuGameConfig::getInstance().config2d.tileSideLen;
+
+    float x = HPObject->getHP().getXPos()*tileSideLen;
+    float y = HPObject->getHP().getYPos()*tileSideLen;
+    this->setPos(x+tileSideLen/2,y+tileSideLen/2);
 
     QGraphicsItem::update();
-}
-
-QRectF HealthPackView2D::boundingRect() const {
-    return QRectF(-10, -10, 20, 20);
 }
 
 void HealthPackView2D::paint(QPainter *painter, const QStyleOptionGraphicsItem *, QWidget *) {

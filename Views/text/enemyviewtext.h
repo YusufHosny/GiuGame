@@ -1,18 +1,13 @@
 #ifndef ENEMYVIEWTEXT_H
 #define ENEMYVIEWTEXT_H
 
-#include "itemviewtext.h"
+#include "enemyview2d.h"
 
-class EnemyViewText: public ItemViewText
+class EnemyViewText: public EnemyView2D
 {
-
 public:
-
     EnemyViewText(QGraphicsItem *parent = nullptr);
 
-    void draw(std::shared_ptr<const GameObject> go) override;
-
-    QRectF boundingRect() const override;
     void paint(QPainter *painter, const QStyleOptionGraphicsItem *option, QWidget *widget) override;
 
 };

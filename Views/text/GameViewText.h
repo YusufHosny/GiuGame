@@ -1,40 +1,13 @@
 #ifndef GAMEVIEWTEXT_H
 #define GAMEVIEWTEXT_H
 
-#include "gameview.h"
-#include <QGraphicsScene>
-#include <QGraphicsView>
-#include "playerviewtext.h"
-#include "penemyviewtext.h"
-#include "enemyviewtext.h"
-#include "healthpackviewtext.h"
-#include "tileviewtext.h"
-#include "levelobject.h"
+#include "GameView2d.h"
 
-class GameViewText:  public GameView, public QGraphicsView
+class GameViewText:  public GameView2d
 {
 
 public:
-
     GameViewText(QWidget *parent, std::shared_ptr<const GameObject> state);
-
-    void draw(std::shared_ptr<const GameObject> state) override;
-
-private:
-    int rows, cols;
-
-    PlayerViewText *playerView;
-
-    void drawPlayer(std::shared_ptr<const LevelObject> levelObject);
-    void drawEnemies(std::shared_ptr<const LevelObject> levelObject);
-    void drawTiles(std::shared_ptr<const LevelObject> levelObject);
-    void drawHealthPacks(std::shared_ptr<const LevelObject> levelObject);
-    void drawGui(std::shared_ptr<const LevelObject> levelObject);
-
-    void updateCamera(int zoomStatus, bool reset);
-
-    void wheelEvent(QWheelEvent *e) override;
-
 };
 
 

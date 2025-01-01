@@ -4,38 +4,38 @@
 #include "gameview.h"
 #include <QGraphicsScene>
 #include <QGraphicsView>
-#include "playerview2d.h"
-#include "penemyview2d.h"
-#include "enemyview2d.h"
-#include "healthpackview2d.h"
 #include "levelobject.h"
+#include "itemview.h"
+#include "itemviewfactory.h"
 
-class GameView2d:  public GameView, public QGraphicsView
+class GameView2d: public QGraphicsView, public GameView
 {
 
 public:
 
-    GameView2d(QWidget *parent, std::shared_ptr<const GameObject> state);
+    GameView2d(QWidget* parent, std::shared_ptr<const GameObject> state, ViewType t = ViewType::VIEW2D);
+
+    void init(std::shared_ptr<const LevelObject>);
 
     void draw(std::shared_ptr<const GameObject> state) override;
+
+protected:
+    ItemViewFactory factory;
 
 private:
     int rows, cols;
 
-    PlayerView2D *playerView;
+    ItemView* playerView;
 
-    QGraphicsRectItem *healthBar;
-    QGraphicsRectItem *energyBar;
+    virtual void drawPlayer(std::shared_ptr<const LevelObject> levelObject);
+    virtual void drawEnemies(std::shared_ptr<const LevelObject> levelObject);
+    virtual void drawTiles(std::shared_ptr<const LevelObject> levelObject);
+    virtual void drawHealthPacks(std::shared_ptr<const LevelObject> levelObject);
+    virtual void drawGui(std::shared_ptr<const LevelObject> levelObject);
 
-    void drawPlayer(std::shared_ptr<const LevelObject> levelObject);
-    void drawEnemies(std::shared_ptr<const LevelObject> levelObject);
-    void drawTiles(std::shared_ptr<const LevelObject> levelObject);
-    void drawHealthPacks(std::shared_ptr<const LevelObject> levelObject);
-    void drawGui(std::shared_ptr<const LevelObject> levelObject);
+    virtual void updateCamera(int zoomStatus, bool reset);
 
-    void updateCamera(int zoomStatus, bool reset);
-
-    void wheelEvent(QWheelEvent *e) override;
+    void wheelEvent(QWheelEvent* e) override;
 
 };
 

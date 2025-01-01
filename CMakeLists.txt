@@ -22,7 +22,6 @@ add_library(GIUENGINE
     Engine/Components/gameobjectcomponent.h         Engine/Components/gameobjectcomponent.cpp
     Engine/Components/collisionmanagercomponent.h   Engine/Components/collisionmanagercomponent.cpp
     Engine/Components/collidercomponent.h           Engine/Components/collidercomponent.cpp
-
 )
 
 target_include_directories(GIUENGINE PRIVATE ${CMAKE_SOURCE_DIR}/Engine)
@@ -33,8 +32,9 @@ target_link_libraries(GIUENGINE PRIVATE Qt6::Widgets)
 add_executable(GIUGAME
                 main.cpp
                 mainwindow.cpp  mainwindow.h
+                worldloader.h   worldloader.cpp
+
                 Images.qrc
-                worldloader.h                   worldloader.cpp
 
                 giugameconfig.h giugameconfig.cpp
 
@@ -49,30 +49,27 @@ add_executable(GIUGAME
                 GameObjects/penemyobject.h      GameObjects/penemyobject.cpp
                 GameObjects/levelobject.h       GameObjects/levelobject.cpp
                 GameObjects/healthpackobject.h  GameObjects/healthpackobject.cpp
+                GameObjects/benemyobject.h      GameObjects/benemyobject.cpp
 
-                Views/2d/GameView2d.h Views/2d/GameView2d.cpp
-                Views/2d/itemview2d.h Views/2d/playerview2d.cpp
-                Views/2d/enemyview2d.cpp
-                Views/2d/playerview2d.h
-                Views/2d/enemyview2d.h Views/2d/enemyview2d.cpp
-                Views/2d/penemyview2d.h Views/2d/penemyview2d.cpp
+                Views/itemview.h            Views/itemview.cpp
+                Views/itemviewfactory.h     Views/itemviewfactory.cpp
+
+                Views/2d/GameView2d.h       Views/2d/GameView2d.cpp
+                Views/2d/playerview2d.h     Views/2d/playerview2d.cpp
+                Views/2d/enemyview2d.h      Views/2d/enemyview2d.cpp
+                Views/2d/penemyview2d.h     Views/2d/penemyview2d.cpp
                 Views/2d/healthpackview2d.h Views/2d/healthpackview2d.cpp
+                Views/2d/benemyview2d.h     Views/2d/benemyview2d.cpp
+                Views/2d/tileview2d.h       Views/2d/tileview2d.cpp
+
 
                 Views/text/GameViewText.h           Views/text/GameViewText.cpp
-                Views/text/itemviewtext.h
                 Views/text/playerviewtext.h         Views/text/playerviewtext.cpp
                 Views/text/enemyviewtext.h          Views/text/enemyviewtext.cpp
                 Views/text/penemyviewtext.h         Views/text/penemyviewtext.cpp
                 Views/text/healthpackviewtext.h     Views/text/healthpackviewtext.cpp
                 Views/text/tileviewtext.h           Views/text/tileviewtext.cpp
-                GameObjects/benemyobject.h
-                GameObjects/benemyobject.cpp
-                Views/2d/benemyview2d.cpp
-                Views/text/benemyviewtext.h
-                Views/text/benemyviewtext.cpp
-                Views/2d/benemyview2d.h
-
-
+                Views/text/benemyviewtext.h         Views/text/benemyviewtext.cpp
     )
 
 

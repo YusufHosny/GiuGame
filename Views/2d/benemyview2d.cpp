@@ -1,24 +1,24 @@
 #include "benemyview2d.h"
-#include <QPainter>
 #include "benemyobject.h"
+#include "giugameconfig.h"
+#include <QPainter>
 
-BEnemyView2D::BEnemyView2D(QGraphicsItem *parent) : ItemView2d(parent)  {}
+BEnemyView2D::BEnemyView2D(QGraphicsItem *parent) : ItemView(parent)  {}
 
 void BEnemyView2D::draw(std::shared_ptr<const GameObject> go) {
 
-    auto enemyObject = std::dynamic_pointer_cast<const BEnemyObject>(go);
-    assert(enemyObject);
+    auto benemyObject = std::dynamic_pointer_cast<const BEnemyObject>(go);
+    assert(benemyObject);
 
-    float x = enemyObject->getEnemy().getXPos()*50;
-    float y = enemyObject->getEnemy().getYPos()*50;
-    setPos(x+25,y+25);
+    int tileSideLen = GiuGameConfig::getInstance().config2d.tileSideLen;
+
+    float x = benemyObject->getEnemy().getXPos()*tileSideLen;
+    float y = benemyObject->getEnemy().getYPos()*tileSideLen;
+    setPos(x+tileSideLen/2,y+tileSideLen/2);
 
     QGraphicsItem::update();
 }
 
-QRectF BEnemyView2D::boundingRect() const {
-    return QRectF(-10, -10, 20, 20);
-}
 
 void BEnemyView2D::paint(QPainter *painter, const QStyleOptionGraphicsItem *, QWidget *) {
     painter->setBrush(Qt::red);
