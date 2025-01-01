@@ -6,6 +6,7 @@ CollisionManagerComponent::CollisionManagerComponent() {}
 
 void CollisionManagerComponent::step_component(GameObject &owner)
 {
+    if(!this->active) return;
     auto collisionObjects = owner.childrenWithActiveComponent<ColliderComponent>();
     for(auto first = collisionObjects.begin(); first != collisionObjects.end(); first++) {
         for(auto second = first + 1; second != collisionObjects.end(); second++) {

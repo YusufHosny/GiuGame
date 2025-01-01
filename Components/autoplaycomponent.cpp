@@ -8,7 +8,7 @@
 
 
 
-AutoPlayComponent::AutoPlayComponent() : active(false) {
+AutoPlayComponent::AutoPlayComponent() {
 
     this->heurdist = [](const Tile& t1, const Tile& t2) {
         return std::abs(t1.getXPos()-t2.getXPos()) + std::abs(t1.getYPos()-t2.getYPos());

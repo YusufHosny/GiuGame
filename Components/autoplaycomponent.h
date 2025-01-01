@@ -16,8 +16,6 @@ public:
     void step_component(GameObject& owner) override;
 
 private:
-    bool active;
-
     class Node : public Tile{
     public:
         Node(Tile &t) : Tile(t), f(0), g(0), h(0), visited(false), closed(false), prev(nullptr) {};
