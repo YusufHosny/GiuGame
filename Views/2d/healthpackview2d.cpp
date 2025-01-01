@@ -22,6 +22,7 @@ void HealthPackView2D::draw(std::shared_ptr<const GameObject> go) {
 void HealthPackView2D::paint(QPainter *painter, const QStyleOptionGraphicsItem *, QWidget *) {
     painter->setBrush(Qt::NoBrush);
     painter->setPen(QPen(Qt::red, 2));
-    painter->drawLine(-10, 0, 10, 0);
-    painter->drawLine(0, -10, 0, 10);
+    int tileSideLen = GiuGameConfig::getInstance().config2d.tileSideLen;
+    painter->drawLine(-tileSideLen/5, 0, tileSideLen/5, 0);
+    painter->drawLine(0, -tileSideLen/5, 0, tileSideLen/5);
 }
