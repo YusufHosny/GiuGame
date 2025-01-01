@@ -1,11 +1,12 @@
 #include "collisionmanagercomponent.h"
 #include "collidercomponent.h"
+#include "GameObject.h"
 
 CollisionManagerComponent::CollisionManagerComponent() {}
 
 void CollisionManagerComponent::step_component(GameObject &owner)
 {
-    auto collisionObjects = owner.childrenWithComponent<ColliderComponent>();
+    auto collisionObjects = owner.childrenWithActiveComponent<ColliderComponent>();
     for(auto first = collisionObjects.begin(); first != collisionObjects.end(); first++) {
         for(auto second = first + 1; second != collisionObjects.end(); second++) {
             std::shared_ptr<GameObject> child = *first;

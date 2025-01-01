@@ -8,8 +8,7 @@
 #include <iostream>
 #include <QIntegerForSize>
 #include "GameInput.h"
-
-class GameObjectComponent;
+#include "gameobjectcomponent.h"
 
 class GameObject : public std::enable_shared_from_this<GameObject> {
 
@@ -96,6 +95,22 @@ class GameObject : public std::enable_shared_from_this<GameObject> {
                             out.push_back(child);
                         }
                     }
+            }
+
+            return out;
+
+        }
+
+        template <class T>
+        std::vector<std::shared_ptr<GameObject>> childrenWithActiveComponent() {
+            std::vector<std::shared_ptr<GameObject>> out;
+
+            for(auto &child : this->children) {
+                for(auto &component: child->components) {
+                    if( dynamic_cast<T*>(component.get()) && component->isActive() ) {
+                        out.push_back(child);
+                    }
+                }
             }
 
             return out;

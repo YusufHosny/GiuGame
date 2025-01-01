@@ -1,7 +1,8 @@
 #ifndef GAMEOBJECTCOMPONENT_H
 #define GAMEOBJECTCOMPONENT_H
 
-#include "GameObject.h"
+
+class GameObject;
 
 /*
  * A GameObjectComponent is a reusable component that can be
@@ -11,12 +12,18 @@
 class GameObjectComponent
 {
 
+protected:
+    bool active;
+
 public:
-    GameObjectComponent() {};
+    GameObjectComponent();
 
     virtual ~GameObjectComponent() {};
 
     virtual void step_component(GameObject& owner) = 0;
+
+    bool isActive();
+    void setActive(bool active);
 };
 
 #endif // GAMEOBJECTCOMPONENT_H

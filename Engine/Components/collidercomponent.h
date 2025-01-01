@@ -3,6 +3,7 @@
 
 #include <functional>
 #include "gameobjectcomponent.h"
+#include <memory>
 
 class ColliderComponent: public GameObjectComponent
 {
