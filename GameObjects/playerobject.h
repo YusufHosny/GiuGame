@@ -1,16 +1,14 @@
 #ifndef PLAYEROBJECT_H
 #define PLAYEROBJECT_H
 
-#include "GameObject.h"
-#include "world.h"
-#include <memory>
+#include "tileobject.h"
 
 class EnemyObject;
 class BEnemyObject;
 class PEnemyObject;
 class HealthPackObject;
 
-class PlayerObject : public GameObject
+class PlayerObject : public TileObject
 {
 
 private:
@@ -29,7 +27,7 @@ private:
     qint64 poisonCooldownLeft; // usecs delay
     qint64 moveCooldownLeft; // usecs delay
 
-
+    bool showPath;
 
     std::unique_ptr<Protagonist> playerModel;
     PlayerObject(std::unique_ptr<Protagonist> playerModel);
@@ -40,12 +38,17 @@ public:
 
     std::string dumpData() const override;
 
-    const Protagonist &getProtagonist() const { return *playerModel; }
+    const Protagonist& getProtagonist() const { return *playerModel; }
 
     void move(int dir);
 
+    void setShowPath(bool showPath);
+    bool isShowPath() const;
+
     float getPoisonAmount() const { return poisonAmount; };
     void stepPoison(qint64 deltaT);
+
+    const Tile& getTile() const override;
 
     friend class WorldLoader;
 

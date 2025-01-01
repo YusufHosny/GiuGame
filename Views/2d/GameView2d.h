@@ -28,6 +28,7 @@ private:
     ItemView* playerView;
 
     virtual void drawPlayer(std::shared_ptr<const LevelObject> levelObject);
+    virtual void drawPaths(std::shared_ptr<const LevelObject> levelObject);
     virtual void drawEnemies(std::shared_ptr<const LevelObject> levelObject);
     virtual void drawTiles(std::shared_ptr<const LevelObject> levelObject);
     virtual void drawHealthPacks(std::shared_ptr<const LevelObject> levelObject);

@@ -1,11 +1,9 @@
 #ifndef BENEMYOBJECT_H
 #define BENEMYOBJECT_H
 
-#include "GameObject.h"
-#include "world.h"
-#include <memory>
+#include "tileobject.h"
 
-class BEnemyObject : public GameObject
+class BEnemyObject : public TileObject
 {
 
 private:
@@ -28,6 +26,8 @@ public:
     std::string dumpData() const override;
 
     const Enemy &getEnemy() const {return *enemyModel;}
+
+    const Tile& getTile() const override;
 
     bool isBlinkVisible() const;
 

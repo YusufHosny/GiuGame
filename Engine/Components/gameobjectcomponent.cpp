@@ -11,3 +11,8 @@ void GameObjectComponent::setActive(bool active)
 {
     this->active = active;
 }
+
+void GameObjectComponent::toggle()
+{
+    this->active = !this->active;
+}

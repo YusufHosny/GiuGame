@@ -40,22 +40,26 @@ add_executable(GIUGAME
 
                 GiuGameController.h GiuGameController.cpp
 
-                Components/autoplaycomponent.h    Components/autoplaycomponent.cpp
+                Components/autoplaycomponent.h      Components/autoplaycomponent.cpp
+                Components/pathtracercomponent.h    Components/pathtracercomponent.cpp
 
                 InputManagers/inputmanager2d.h InputManagers/inputmanager2d.cpp
 
+                GameObjects/tileobject.h        GameObjects/tileobject.cpp
                 GameObjects/playerobject.h      GameObjects/playerobject.cpp
                 GameObjects/enemyobject.h       GameObjects/enemyobject.cpp
                 GameObjects/penemyobject.h      GameObjects/penemyobject.cpp
                 GameObjects/levelobject.h       GameObjects/levelobject.cpp
                 GameObjects/healthpackobject.h  GameObjects/healthpackobject.cpp
                 GameObjects/benemyobject.h      GameObjects/benemyobject.cpp
+                GameObjects/pathobject.h        GameObjects/pathobject.cpp
 
                 Views/itemview.h            Views/itemview.cpp
                 Views/itemviewfactory.h     Views/itemviewfactory.cpp
 
                 Views/2d/GameView2d.h       Views/2d/GameView2d.cpp
                 Views/2d/playerview2d.h     Views/2d/playerview2d.cpp
+                Views/2d/pathview2d.h       Views/2d/pathview2d.cpp
                 Views/2d/enemyview2d.h      Views/2d/enemyview2d.cpp
                 Views/2d/penemyview2d.h     Views/2d/penemyview2d.cpp
                 Views/2d/healthpackview2d.h Views/2d/healthpackview2d.cpp

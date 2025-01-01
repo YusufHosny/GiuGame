@@ -1,7 +1,7 @@
 #include "penemyobject.h"
 #include "collidercomponent.h"
 
-PEnemyObject::PEnemyObject(std::unique_ptr<PEnemy> pEnemyModel): pEnemyModel(std::move(pEnemyModel)), GameObject("PEnemy") {}
+PEnemyObject::PEnemyObject(std::unique_ptr<PEnemy> pEnemyModel): pEnemyModel(std::move(pEnemyModel)), TileObject("PEnemy") {}
 
 void PEnemyObject::init()
 {
@@ -15,6 +15,10 @@ void PEnemyObject::init()
             return out;
         }
         ));
+}
+
+const Tile& PEnemyObject::getTile() const {
+    return *this->pEnemyModel;
 }
 
 void PEnemyObject::step(qint64 deltaT, std::set<GameInput> inputs)

@@ -18,9 +18,13 @@ GiuGameConfig::GiuGameConfig() {
     gameWidth = 1200;
     gameHeight = 800;
 
-    poisonCooldown = 1000; // in msec
-    movementCooldown = 200; // in msec
-    blinkCooldown = 1000; // in msec
+    poisonCooldown = 1000;
+    movementCooldown = 200;
+    blinkCooldown = 1000;
+    pathOpacDecayCooldown = 100;
+
+    pathBaseOpacity = .9;
+    pathOpacityDecay = .01;
 
 }
 

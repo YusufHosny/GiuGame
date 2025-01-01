@@ -1,7 +1,7 @@
 #include "enemyobject.h"
 #include "collidercomponent.h"
 
-EnemyObject::EnemyObject(std::unique_ptr<Enemy> enemyModel): enemyModel(std::move(enemyModel)), GameObject("Enemy") {}
+EnemyObject::EnemyObject(std::unique_ptr<Enemy> enemyModel): enemyModel(std::move(enemyModel)), TileObject("Enemy") {}
 
 void EnemyObject::init()
 {
@@ -15,6 +15,10 @@ void EnemyObject::init()
             return out;
         }
         ));
+}
+
+const Tile& EnemyObject::getTile() const {
+    return *this->enemyModel;
 }
 
 void EnemyObject::step(qint64 deltaT, std::set<GameInput> inputs)

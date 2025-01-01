@@ -4,6 +4,7 @@
 
 #include "levelobject.h"
 #include "playerobject.h"
+#include "pathobject.h"
 #include "enemyobject.h"
 #include "penemyobject.h"
 #include "healthpackobject.h"
@@ -85,6 +86,17 @@ void GameView2d::drawPlayer(std::shared_ptr<const LevelObject> levelObject) {
     playerView = factory.makePlayer();
     this->scene()->addItem(playerView);
     playerView->draw(po);
+}
+
+void GameView2d::drawPaths(std::shared_ptr<const LevelObject> levelObject)
+{
+    std::shared_ptr<PlayerObject> po = levelObject->findChildren<PlayerObject>().at(0);
+    std::vector<std::shared_ptr<PathObject>> paths = po->findChildren<PathObject>();
+    for(const auto& path : paths) {
+        ItemView* pathView = factory.makePath();
+        this->scene()->addItem(pathView);
+        pathView->draw(path);
+    }
 }
 
 void GameView2d::drawEnemies(std::shared_ptr<const LevelObject> levelObject ) {
@@ -176,6 +188,7 @@ void GameView2d::draw(std::shared_ptr<const GameObject> state) {
     this->scene()->clear();
 
     this->drawTiles(levelObject);
+    this->drawPaths(levelObject);
     this->drawPlayer(levelObject);
     this->drawEnemies(levelObject);
     this->drawHealthPacks(levelObject);

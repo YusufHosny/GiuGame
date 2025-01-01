@@ -24,6 +24,7 @@ public:
 
     bool isActive();
     void setActive(bool active);
+    void toggle();
 };
 
 #endif // GAMEOBJECTCOMPONENT_H

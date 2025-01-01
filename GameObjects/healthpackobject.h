@@ -1,11 +1,9 @@
 #ifndef HEALTHPACKOBJECT_H
 #define HEALTHPACKOBJECT_H
 
-#include "GameObject.h"
-#include "world.h"
-#include <memory>
+#include "tileobject.h"
 
-class HealthPackObject: public GameObject
+class HealthPackObject: public TileObject
 {
 private:
     HealthPackObject(const HealthPackObject &) = delete;
@@ -22,7 +20,9 @@ public:
 
     std::string dumpData() const override;
 
-    const Tile &getHP() const {return *tile;};
+    const Tile& getHP() const {return *tile;};
+
+    const Tile& getTile() const override;
 
     friend class WorldLoader;
 };

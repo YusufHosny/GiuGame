@@ -1,12 +1,12 @@
 #include "autoplaycomponent.h"
-#include "playerobject.h"
+
 #include "pathfinder_class.h"
+
 #include "levelobject.h"
-#include "enemyobject.h"
+#include "playerobject.h"
 #include "healthpackobject.h"
+#include "enemyobject.h"
 #include "penemyobject.h"
-
-
 
 AutoPlayComponent::AutoPlayComponent() {
 
@@ -22,14 +22,8 @@ AutoPlayComponent::AutoPlayComponent() {
     };
 }
 
-void AutoPlayComponent::toggleAutoplay() {
-    this->active = !this->active;
-}
-
 
 void AutoPlayComponent::step_component(GameObject& owner) {
-    if(!this->active) return;
-
     PlayerObject& player = dynamic_cast<PlayerObject&>(owner); // throws if non-player owns this component
 
     std::shared_ptr<LevelObject> lo = std::dynamic_pointer_cast<LevelObject>(player.getParent());

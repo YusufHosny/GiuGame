@@ -38,9 +38,14 @@ public:
     int gameWidth;
     int gameHeight;
 
-    qint64 poisonCooldown; // in msec
-    qint64 movementCooldown; // in msec
-    qint64 blinkCooldown; // in msec
+    // in msec
+    qint64 poisonCooldown;
+    qint64 movementCooldown;
+    qint64 blinkCooldown;
+    qint64 pathOpacDecayCooldown;
+
+    float pathBaseOpacity;
+    float pathOpacityDecay;
 
     Config2d config2d;
     ConfigText configText;

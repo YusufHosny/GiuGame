@@ -14,6 +14,7 @@ public:
 
     ItemView* makeTile(int x, int y, float luminance);
     ItemView* makePlayer();
+    ItemView* makePath();
     ItemView* makeEnemy();
     ItemView* makePEnemy();
     ItemView* makeBEnemy();

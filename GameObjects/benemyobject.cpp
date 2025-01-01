@@ -2,7 +2,7 @@
 #include "collidercomponent.h"
 #include "giugameconfig.h"
 
-BEnemyObject::BEnemyObject(std::unique_ptr<Enemy> enemyModel): enemyModel(std::move(enemyModel)), GameObject("BEnemy") {}
+BEnemyObject::BEnemyObject(std::unique_ptr<Enemy> enemyModel): enemyModel(std::move(enemyModel)), TileObject("BEnemy") {}
 
 void BEnemyObject::init()
 {
@@ -20,6 +20,10 @@ void BEnemyObject::init()
     this->blinkTime = GiuGameConfig::getInstance().blinkCooldown; // can be adjusted or random
     this->blinkTimeLeft = this->blinkTime;
     this->blinkVisible = true;
+}
+
+const Tile& BEnemyObject::getTile() const {
+    return *this->enemyModel;
 }
 
 void BEnemyObject::step(qint64 deltaT, std::set<GameInput> inputs)

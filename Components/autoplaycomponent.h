@@ -11,8 +11,6 @@ class AutoPlayComponent : public GameObjectComponent
 public:
     AutoPlayComponent();
 
-    void toggleAutoplay();
-
     void step_component(GameObject& owner) override;
 
 private:

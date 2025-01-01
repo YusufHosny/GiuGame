@@ -1,11 +1,9 @@
 #ifndef PENEMYOBJECT_H
 #define PENEMYOBJECT_H
 
-#include "GameObject.h"
-#include "world.h"
-#include <memory>
+#include "tileobject.h"
 
-class PEnemyObject : public GameObject
+class PEnemyObject : public TileObject
 {
 
 private:
@@ -24,6 +22,8 @@ public:
     std::string dumpData() const override;
 
     const PEnemy &getPEnemy() const {return *pEnemyModel;}
+
+    const Tile& getTile() const override;
 
     friend class WorldLoader;
 };

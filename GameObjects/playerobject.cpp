@@ -1,14 +1,18 @@
 #include "playerobject.h"
-#include "collidercomponent.h"
+
 #include "enemyobject.h"
 #include "penemyobject.h"
+#include "benemyobject.h"
 #include "healthpackobject.h"
 #include "levelobject.h"
-#include "giugameconfig.h"
-#include "autoplaycomponent.h"
-#include "benemyobject.h"
 
-PlayerObject::PlayerObject(std::unique_ptr<Protagonist> playerModel): playerModel(std::move(playerModel)), GameObject("Player") {}
+#include "giugameconfig.h"
+
+#include "pathtracercomponent.h"
+#include "collidercomponent.h"
+#include "autoplaycomponent.h"
+
+PlayerObject::PlayerObject(std::unique_ptr<Protagonist> playerModel): playerModel(std::move(playerModel)), TileObject("Player") {}
 
 void PlayerObject::init()
 {
@@ -24,6 +28,10 @@ void PlayerObject::init()
     ));
 
     this->components.emplace_back(new AutoPlayComponent());
+    this->getComponent<AutoPlayComponent>()->setActive(false);
+
+    this->components.emplace_back(new PathTracerComponent());
+    this->getComponent<PathTracerComponent>()->setCurrent(this->getTile());
 
     this->moveCooldownLeft = 0;
     this->poisonCooldownLeft = 0;
@@ -41,7 +49,7 @@ void PlayerObject::step(qint64 deltaT, std::set<GameInput> inputs)
             this->move(input.parameter);
         }
         else if(input.type == GameInputType::AUTOPLAY) {
-            this->getComponent<AutoPlayComponent>()->toggleAutoplay();
+            this->getComponent<AutoPlayComponent>()->toggle();
         }
     }
 
@@ -91,7 +99,20 @@ void PlayerObject::move(int dir) { // TODO CHECK MOVE VALID
         this->playerModel->setEnergy(energy - targetValue);
         this->moveCooldownLeft = GiuGameConfig::getInstance().movementCooldown;
     }
+}
 
+void PlayerObject::setShowPath(bool showPath)
+{
+    this->showPath = showPath;
+}
+
+bool PlayerObject::isShowPath() const
+{
+    return this->showPath;
+}
+
+const Tile& PlayerObject::getTile() const {
+    return *this->playerModel;
 }
 
 

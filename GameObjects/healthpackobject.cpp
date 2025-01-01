@@ -1,7 +1,7 @@
 #include "healthpackobject.h"
 #include "collidercomponent.h"
 
-HealthPackObject::HealthPackObject(std::unique_ptr<Tile> tile): tile(std::move(tile)), GameObject("Health Pack") {}
+HealthPackObject::HealthPackObject(std::unique_ptr<Tile> tile): tile(std::move(tile)), TileObject("Health Pack") {}
 
 void HealthPackObject::init()
 {
@@ -16,6 +16,10 @@ void HealthPackObject::init()
         }
     ));
 
+}
+
+const Tile& HealthPackObject::getTile() const {
+    return *this->tile;
 }
 
 void HealthPackObject::step(qint64 deltaT, std::set<GameInput> inputs)

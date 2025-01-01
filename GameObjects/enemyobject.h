@@ -1,11 +1,9 @@
 #ifndef ENEMYOBJECT_H
 #define ENEMYOBJECT_H
 
-#include "GameObject.h"
-#include "world.h"
-#include <memory>
+#include "tileobject.h"
 
-class EnemyObject : public GameObject
+class EnemyObject : public TileObject
 {
 
 private:
@@ -23,7 +21,9 @@ public:
 
     std::string dumpData() const override;
 
-    const Enemy &getEnemy() const {return *enemyModel;}
+    const Enemy& getEnemy() const {return *enemyModel;}
+
+    const Tile& getTile() const override;
 
     friend class WorldLoader;
 };

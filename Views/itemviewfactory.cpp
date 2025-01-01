@@ -4,6 +4,7 @@
 #include "benemyview2d.h"
 #include "enemyview2d.h"
 #include "playerview2d.h"
+#include "pathview2d.h"
 #include "healthpackview2d.h"
 #include "tileview2d.h"
 
@@ -38,6 +39,18 @@ ItemView* ItemViewFactory::makePlayer() {
     }
     return out;
 }
+
+ItemView* ItemViewFactory::makePath() {
+    ItemView* out;
+    if(type == ViewType::VIEW2D) {
+        out = new PathView2d();
+    }
+    else if(type == ViewType::VIEWTEXT) {
+        out = new PathView2d();
+    }
+    return out;
+}
+
 
 ItemView* ItemViewFactory::makeEnemy() {
     ItemView* out;
