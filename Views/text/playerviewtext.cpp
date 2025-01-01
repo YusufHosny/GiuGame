@@ -1,6 +1,7 @@
 #include "playerviewtext.h"
 #include <QPainter>
 #include "playerobject.h"
+#include "giugameconfig.h"
 
 PlayerViewText::PlayerViewText(QGraphicsItem *parent) : ItemViewText(parent)  {}
 
@@ -21,7 +22,12 @@ QRectF PlayerViewText::boundingRect() const {
 }
 
 void PlayerViewText::paint(QPainter *painter, const QStyleOptionGraphicsItem *, QWidget *) {
-    painter->setBrush(Qt::gray);
-    painter->setPen(Qt::NoPen);
-    painter->drawEllipse(-10,-10, 20, 20);
+    painter->setBrush(GiuGameConfig::getInstance().configText.bgColor);
+    painter->setPen(GiuGameConfig::getInstance().configText.bgColor);
+    painter->drawRect(-25,-25, 50, 50);
+
+    painter->setBrush(Qt::blue);
+    painter->setPen(Qt::blue);
+    painter->setFont(GiuGameConfig::getInstance().configText.textFont);
+    painter->drawText(-10,-10, 20, 20, Qt::AlignCenter, "P");
 }

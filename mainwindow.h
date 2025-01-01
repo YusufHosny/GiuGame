@@ -6,10 +6,6 @@
 class GiuGameController;
 class InputManager2d;
 
-namespace Ui {
-  class MainWindow;
-}
-
 class MainWindow : public QMainWindow
 {
     Q_OBJECT
@@ -21,7 +17,9 @@ public:
 private:
     GiuGameController *controller;
     InputManager2d *input;
-    Ui::MainWindow *ui;
+
+public slots:
+    void switchView();
   };
 
 #endif // MAINWINDOW_H

@@ -2,6 +2,7 @@
 
 #include <QPainter>
 #include "healthpackobject.h"
+#include "giugameconfig.h"
 
 HealthPackViewText::HealthPackViewText(QGraphicsItem *parent) : ItemViewText(parent)  {}
 
@@ -22,8 +23,12 @@ QRectF HealthPackViewText::boundingRect() const {
 }
 
 void HealthPackViewText::paint(QPainter *painter, const QStyleOptionGraphicsItem *, QWidget *) {
-    painter->setBrush(Qt::NoBrush);
-    painter->setPen(QPen(Qt::red, 2));
-    painter->drawLine(-10, 0, 10, 0);
-    painter->drawLine(0, -10, 0, 10);
+    painter->setBrush(GiuGameConfig::getInstance().configText.bgColor);
+    painter->setPen(GiuGameConfig::getInstance().configText.bgColor);
+    painter->drawRect(-25,-25, 50, 50);
+
+    painter->setBrush(Qt::red);
+    painter->setPen(Qt::red);
+    painter->setFont(GiuGameConfig::getInstance().configText.textFont);
+    painter->drawText(-10,-10, 20, 20, Qt::AlignCenter, "H");
 }

@@ -8,6 +8,7 @@
 #include "penemyviewtext.h"
 #include "healthpackobject.h"
 #include "healthpackviewtext.h"
+#include "tileviewtext.h"
 #include "giugameconfig.h"
 #include <QWheelEvent>
 
@@ -62,12 +63,15 @@ void GameViewText::drawTiles(std::shared_ptr<const LevelObject> levelObject ) {
         // check if tile is in viewport bounds and should be drawn, if not skip
         if(!viewportBounds.contains(tile->getXPos(), tile->getYPos())) continue;
 
-        // draw tile
+        // draw tile as char from ascii map
         float value = tile->getValue();
-        int grayScale = static_cast<int>( (std::isinf(value) ? 0 : value) * 255);
-        QBrush brush(QColor(grayScale, grayScale, grayScale));
-        auto rectItem = this->scene()->addRect(tile->getXPos() * tileSideLen, tile->getYPos() * tileSideLen, tileSideLen, tileSideLen, QPen(Qt::NoPen), brush);
-        tileViews.push_back(rectItem);
+        float luminance = std::isinf(value) ? 0 : value;
+
+        TileViewText *t = new TileViewText(tile->getXPos(), tile->getYPos(), luminance);
+        this->scene()->addItem(t);
+        t->draw(levelObject);
+
+        tileViews.push_back(t);
     }
 }
 

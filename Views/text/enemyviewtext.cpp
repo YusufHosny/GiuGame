@@ -1,6 +1,7 @@
 #include "enemyviewtext.h"
 #include <QPainter>
 #include "enemyobject.h"
+#include "giugameconfig.h"
 
 EnemyViewText::EnemyViewText(QGraphicsItem *parent) : ItemViewText(parent)  {}
 
@@ -21,7 +22,12 @@ QRectF EnemyViewText::boundingRect() const {
 }
 
 void EnemyViewText::paint(QPainter *painter, const QStyleOptionGraphicsItem *, QWidget *) {
+    painter->setBrush(GiuGameConfig::getInstance().configText.bgColor);
+    painter->setPen(GiuGameConfig::getInstance().configText.bgColor);
+    painter->drawRect(-25,-25, 50, 50);
+
     painter->setBrush(Qt::red);
-    painter->setPen(Qt::NoPen);
-    painter->drawEllipse(-10,-10, 20, 20);
+    painter->setPen(Qt::red);
+    painter->setFont(GiuGameConfig::getInstance().configText.textFont);
+    painter->drawText(-10,-10, 20, 20, Qt::AlignCenter, "E");
 }

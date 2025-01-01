@@ -8,6 +8,7 @@
 #include "penemyviewtext.h"
 #include "enemyviewtext.h"
 #include "healthpackviewtext.h"
+#include "tileviewtext.h"
 #include "levelobject.h"
 
 class GameViewText:  public GameView, public QGraphicsView
@@ -25,7 +26,7 @@ private:
     PlayerViewText *playerView;
     std::vector<EnemyViewText*> enemyViews;
     std::vector<PEnemyViewText*> penemyViews;
-    std::vector<QGraphicsRectItem*> tileViews;
+    std::vector<TileViewText*> tileViews;
     std::vector<HealthPackViewText*> healthPackViews;
 
     QGraphicsRectItem *healthBar;

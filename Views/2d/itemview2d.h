@@ -10,8 +10,6 @@ public:
 
     ItemView2d(QGraphicsItem *parent = nullptr): QGraphicsItem(parent){};
 
-    virtual void draw(std::shared_ptr<const GameObject> go) override = 0;
-
     virtual QRectF boundingRect() const override = 0;
     virtual void paint(QPainter *painter, const QStyleOptionGraphicsItem *option, QWidget *widget) override = 0;
 

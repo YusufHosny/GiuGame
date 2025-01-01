@@ -2,6 +2,7 @@
 #define GIUGAMECONTROLLER_H
 
 #include "gamecontroller.h"
+#include "giugameconfig.h"
 
 class GiuGameController : public GameController
 {
@@ -13,8 +14,11 @@ public:
 
     void init(QWidget* parent);
 
-    QGraphicsView changeView(ViewType vt);
+    GameView* changeView();
 
+private:
+    std::map<ViewType, GameView*> views;
+    ViewType currentView;
 };
 
 

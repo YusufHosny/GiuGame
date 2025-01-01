@@ -30,12 +30,31 @@ MainWindow::MainWindow(QWidget *parent) :
 
     bl->addWidget(controller->getView());
 
-    // add side menu
+    // add menu
     QButtonGroup *buttons = new QButtonGroup(central);
     buttons->addButton(new QPushButton("Switch View", central));
+
+    connect(buttons, SIGNAL(buttonClicked(QAbstractButton*)), this, SLOT(switchView()));
 
     this->setCentralWidget(central);
 
 }
+
+void MainWindow::switchView() {
+    QGraphicsView *prev = this->controller->getView();
+    QTransform t = prev->transform();
+    QRectF r = prev->mapToScene(prev->viewport()->geometry()).boundingRect();
+    this->centralWidget()->layout()->removeWidget(prev);
+    this->controller->getView()->hide();
+
+    this->controller->changeView();
+    QGraphicsView *next = this->controller->getView();
+    next->setTransform(t);
+    next->ensureVisible(r);
+    this->centralWidget()->layout()->addWidget(next);
+    this->controller->getView()->show();
+}
+
+
 
 MainWindow::~MainWindow() {}

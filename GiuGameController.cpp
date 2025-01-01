@@ -15,8 +15,32 @@ void GiuGameController::init(QWidget* viewparent)  {
     this->gameState = lo;
 
     // create and configure default gameview
-    auto gv = new GameView2d(viewparent, lo);
-    gv->installEventFilter(viewparent); // event filter to reroute events to input manager
+    GameView2d* gv2d = new GameView2d(viewparent, lo);
+    gv2d->installEventFilter(viewparent); // event filter to reroute events to input manager
+    this->views.emplace(ViewType::VIEW2D, gv2d);
 
-    this->view = gv;
+    // craete textview
+    GameViewText* gvtext = new GameViewText(viewparent, lo);
+    gvtext->installEventFilter(viewparent); // event filter to reroute events to input manager
+    this->views.emplace(ViewType::VIEWTEXT, gvtext);
+
+    this->currentView = ViewType::VIEW2D;
+    this->view = this->views.at(this->currentView);
+}
+
+GameView* GiuGameController::changeView() {
+    switch(this->currentView) {
+    case ViewType::VIEW2D:
+        this->currentView = ViewType::VIEWTEXT;
+        break;
+    case ViewType::VIEWTEXT:
+        this->currentView = ViewType::VIEW2D;
+        break;
+    case ViewType::VIEW3D:
+        this->currentView = ViewType::VIEW2D;
+        break;
+    }
+
+    this->view = this->views.at(this->currentView);
+    return this->view;
 }

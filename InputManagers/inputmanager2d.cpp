@@ -3,6 +3,7 @@
 #include <QKeyEvent>
 #include <QWheelEvent>
 #include "GameInput.h"
+#include <iostream>
 
 InputManager2d::InputManager2d(QWidget *parent) : InputManager(parent) {}
 
@@ -16,7 +17,7 @@ bool InputManager2d::eventFilter(QObject *o, QEvent *e) {
             inputs.insert(GameInput(GameInputType::AUTOPLAY));
         }
         else if(me->button() == Qt::MouseButton::MiddleButton) {
-            inputs.insert(GameInput(GameInputType::SWITCHVIEW, 2));
+            std::cout << "mmbutton not used yet" << std::endl;
         }
     }
     else if(e->type() == QEvent::KeyPress) {

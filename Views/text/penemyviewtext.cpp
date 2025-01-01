@@ -1,6 +1,7 @@
 #include "penemyviewtext.h"
 #include <QPainter>
 #include "penemyobject.h"
+#include "giugameconfig.h"
 
 PEnemyViewText::PEnemyViewText(QGraphicsItem *parent) : ItemViewText(parent)  {}
 
@@ -21,7 +22,12 @@ QRectF PEnemyViewText::boundingRect() const {
 }
 
 void PEnemyViewText::paint(QPainter *painter, const QStyleOptionGraphicsItem *, QWidget *) {
+    painter->setBrush(GiuGameConfig::getInstance().configText.bgColor);
+    painter->setPen(GiuGameConfig::getInstance().configText.bgColor);
+    painter->drawRect(-25,-25, 50, 50);
+
     painter->setBrush(QColorConstants::Svg::purple);
-    painter->setPen(Qt::NoPen);
-    painter->drawEllipse(-10,-10, 20, 20);
+    painter->setPen(QColorConstants::Svg::purple);
+    painter->setFont(GiuGameConfig::getInstance().configText.textFont);
+    painter->drawText(-10,-10, 20, 20, Qt::AlignCenter, "V");
 }
