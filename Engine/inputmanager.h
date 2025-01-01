@@ -3,7 +3,7 @@
 
 #include <set>
 #include <QWidget>
-#include "GameInput.h"
+#include "gameinput.h"
 
 class InputManager: public QWidget
 {

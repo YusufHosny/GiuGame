@@ -3,9 +3,9 @@
 #include "giugameconfig.h"
 #include <QPainter>
 
-BEnemyView2D::BEnemyView2D(QGraphicsItem *parent) : ItemView(parent)  {}
+BEnemyView2d::BEnemyView2d(QGraphicsItem *parent) : ItemView(parent)  {}
 
-void BEnemyView2D::draw(std::shared_ptr<const GameObject> go) {
+void BEnemyView2d::draw(std::shared_ptr<const GameObject> go) {
 
     auto benemyObject = std::dynamic_pointer_cast<const BEnemyObject>(go);
     assert(benemyObject);
@@ -20,7 +20,7 @@ void BEnemyView2D::draw(std::shared_ptr<const GameObject> go) {
 }
 
 
-void BEnemyView2D::paint(QPainter *painter, const QStyleOptionGraphicsItem *, QWidget *) {
+void BEnemyView2d::paint(QPainter *painter, const QStyleOptionGraphicsItem *, QWidget *) {
     painter->setBrush(Qt::red);
     painter->setPen(Qt::NoPen);
     painter->drawEllipse(-10,-10, 20, 20);

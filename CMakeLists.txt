@@ -11,11 +11,11 @@ qt_standard_project_setup()
 
 
 add_library(GIUENGINE
-    Engine/GameObject.h             Engine/GameObject.cpp
+    Engine/gameobject.h             Engine/gameobject.cpp
     Engine/gameview.h
     Engine/gamecontroller.h         Engine/gamecontroller.cpp
-    Engine/IdGenerator.h            Engine/IdGenerator.cpp
-    Engine/GameInput.h
+    Engine/idgenerator.h            Engine/idgenerator.cpp
+    Engine/gameinput.h
     Engine/inputmanager.h           Engine/inputmanager.cpp
     Engine/gameloader.h
 
@@ -38,7 +38,7 @@ add_executable(GIUGAME
 
                 giugameconfig.h giugameconfig.cpp
 
-                GiuGameController.h GiuGameController.cpp
+                giugamecontroller.h giugamecontroller.cpp
 
                 Components/autoplaycomponent.h      Components/autoplaycomponent.cpp
                 Components/pathtracercomponent.h    Components/pathtracercomponent.cpp
@@ -57,7 +57,7 @@ add_executable(GIUGAME
                 Views/itemview.h            Views/itemview.cpp
                 Views/itemviewfactory.h     Views/itemviewfactory.cpp
 
-                Views/2d/GameView2d.h       Views/2d/GameView2d.cpp
+                Views/2d/gameview2d.h       Views/2d/gameview2d.cpp
                 Views/2d/playerview2d.h     Views/2d/playerview2d.cpp
                 Views/2d/pathview2d.h       Views/2d/pathview2d.cpp
                 Views/2d/enemyview2d.h      Views/2d/enemyview2d.cpp
@@ -67,7 +67,7 @@ add_executable(GIUGAME
                 Views/2d/tileview2d.h       Views/2d/tileview2d.cpp
 
 
-                Views/text/GameViewText.h           Views/text/GameViewText.cpp
+                Views/text/gameviewtext.h           Views/text/gameviewtext.cpp
                 Views/text/playerviewtext.h         Views/text/playerviewtext.cpp
                 Views/text/enemyviewtext.h          Views/text/enemyviewtext.cpp
                 Views/text/penemyviewtext.h         Views/text/penemyviewtext.cpp

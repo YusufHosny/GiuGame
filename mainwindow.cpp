@@ -7,7 +7,7 @@
 #include <QButtonGroup>
 #include <QPushButton>
 #include "worldloader.h"
-#include "GiuGameController.h"
+#include "giugamecontroller.h"
 #include "inputmanager2d.h"
 
 MainWindow::MainWindow(QWidget *parent) :

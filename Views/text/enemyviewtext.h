@@ -3,7 +3,7 @@
 
 #include "enemyview2d.h"
 
-class EnemyViewText: public EnemyView2D
+class EnemyViewText: public EnemyView2d
 {
 public:
     EnemyViewText(QGraphicsItem *parent = nullptr);

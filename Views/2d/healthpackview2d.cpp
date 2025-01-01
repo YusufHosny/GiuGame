@@ -3,9 +3,9 @@
 #include "giugameconfig.h"
 #include <QPainter>
 
-HealthPackView2D::HealthPackView2D(QGraphicsItem *parent) : ItemView(parent)  {}
+HealthPackView2d::HealthPackView2d(QGraphicsItem *parent) : ItemView(parent)  {}
 
-void HealthPackView2D::draw(std::shared_ptr<const GameObject> go) {
+void HealthPackView2d::draw(std::shared_ptr<const GameObject> go) {
 
     auto HPObject = std::dynamic_pointer_cast<const HealthPackObject>(go);
     assert(HPObject);
@@ -19,7 +19,7 @@ void HealthPackView2D::draw(std::shared_ptr<const GameObject> go) {
     QGraphicsItem::update();
 }
 
-void HealthPackView2D::paint(QPainter *painter, const QStyleOptionGraphicsItem *, QWidget *) {
+void HealthPackView2d::paint(QPainter *painter, const QStyleOptionGraphicsItem *, QWidget *) {
     painter->setBrush(Qt::NoBrush);
     painter->setPen(QPen(Qt::red, 2));
     int tileSideLen = GiuGameConfig::getInstance().config2d.tileSideLen;

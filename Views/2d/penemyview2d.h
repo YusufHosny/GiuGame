@@ -3,10 +3,10 @@
 
 #include "itemview.h"
 
-class PEnemyView2D: public ItemView
+class PEnemyView2d: public ItemView
 {
 public:
-    PEnemyView2D(QGraphicsItem *parent = nullptr);
+    PEnemyView2d(QGraphicsItem *parent = nullptr);
 
     void draw(std::shared_ptr<const GameObject> go) override;
 

@@ -3,9 +3,9 @@
 #include "giugameconfig.h"
 #include <QPainter>
 
-EnemyView2D::EnemyView2D(QGraphicsItem *parent) : ItemView(parent)  {}
+EnemyView2d::EnemyView2d(QGraphicsItem *parent) : ItemView(parent)  {}
 
-void EnemyView2D::draw(std::shared_ptr<const GameObject> go) {
+void EnemyView2d::draw(std::shared_ptr<const GameObject> go) {
 
     auto enemyObject = std::dynamic_pointer_cast<const EnemyObject>(go);
     assert(enemyObject);
@@ -19,7 +19,7 @@ void EnemyView2D::draw(std::shared_ptr<const GameObject> go) {
     QGraphicsItem::update();
 }
 
-void EnemyView2D::paint(QPainter *painter, const QStyleOptionGraphicsItem *, QWidget *) {
+void EnemyView2d::paint(QPainter *painter, const QStyleOptionGraphicsItem *, QWidget *) {
     painter->setBrush(Qt::red);
     painter->setPen(Qt::NoPen);
     painter->drawEllipse(-10,-10, 20, 20);

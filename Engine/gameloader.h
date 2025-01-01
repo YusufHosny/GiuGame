@@ -2,7 +2,7 @@
 #define GAMELOADER_H
 
 #include <qstring.h>
-#include "GameObject.h"
+#include "gameobject.h"
 
 class GameLoader
 {

@@ -1,5 +1,5 @@
-#include "GameObject.h"
-#include "IdGenerator.h"
+#include "gameobject.h"
+#include "idgenerator.h"
 #include "gameobjectcomponent.h"
 
 GameObject::GameObject(): id(IdGenerator::generateId()) {}

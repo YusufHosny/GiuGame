@@ -3,9 +3,9 @@
 #include "penemyobject.h"
 #include <QPainter>
 
-PEnemyView2D::PEnemyView2D(QGraphicsItem *parent) : ItemView(parent)  {}
+PEnemyView2d::PEnemyView2d(QGraphicsItem *parent) : ItemView(parent)  {}
 
-void PEnemyView2D::draw(std::shared_ptr<const GameObject> go) {
+void PEnemyView2d::draw(std::shared_ptr<const GameObject> go) {
 
     auto penemyObject = std::dynamic_pointer_cast<const PEnemyObject>(go);
     assert(penemyObject);
@@ -19,7 +19,7 @@ void PEnemyView2D::draw(std::shared_ptr<const GameObject> go) {
     QGraphicsItem::update();
 }
 
-void PEnemyView2D::paint(QPainter *painter, const QStyleOptionGraphicsItem *, QWidget *) {
+void PEnemyView2d::paint(QPainter *painter, const QStyleOptionGraphicsItem *, QWidget *) {
     painter->setBrush(Qt::green);
     painter->setPen(Qt::NoPen);
     painter->drawEllipse(-10,-10, 20, 20);

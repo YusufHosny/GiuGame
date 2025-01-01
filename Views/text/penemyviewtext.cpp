@@ -2,7 +2,7 @@
 #include "giugameconfig.h"
 #include <QPainter>
 
-PEnemyViewText::PEnemyViewText(QGraphicsItem *parent) : PEnemyView2D(parent)  {}
+PEnemyViewText::PEnemyViewText(QGraphicsItem *parent) : PEnemyView2d(parent)  {}
 
 void PEnemyViewText::paint(QPainter *painter, const QStyleOptionGraphicsItem *, QWidget *) {
     painter->setBrush(GiuGameConfig::getInstance().configText.bgColor);

@@ -1,7 +1,7 @@
 #ifndef GAMEVIEWTEXT_H
 #define GAMEVIEWTEXT_H
 
-#include "GameView2d.h"
+#include "gameview2d.h"
 
 class GameViewText:  public GameView2d
 {

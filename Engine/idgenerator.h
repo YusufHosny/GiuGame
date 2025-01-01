@@ -1,5 +1,5 @@
-#ifndef IDGENERATOR_HPP
-#define IDGENERATOR_HPP
+#ifndef IDGENERATOR_H
+#define IDGENERATOR_H
 
 class IdGenerator
 {
@@ -13,4 +13,4 @@ class IdGenerator
         static unsigned int nextId;
 };
 
-#endif // IDGENERATOR_HPP
+#endif // IDGENERATOR_H

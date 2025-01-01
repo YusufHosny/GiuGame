@@ -2,7 +2,7 @@
 #include <QMouseEvent>
 #include <QKeyEvent>
 #include <QWheelEvent>
-#include "GameInput.h"
+#include "gameinput.h"
 #include <iostream>
 
 InputManager2d::InputManager2d(QWidget *parent) : InputManager(parent) {}

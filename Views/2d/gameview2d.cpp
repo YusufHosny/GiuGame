@@ -1,4 +1,4 @@
-#include "GameView2d.h"
+#include "gameview2d.h"
 
 #include "giugameconfig.h"
 

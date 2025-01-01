@@ -1,6 +1,6 @@
 #include "collisionmanagercomponent.h"
 #include "collidercomponent.h"
-#include "GameObject.h"
+#include "gameobject.h"
 
 CollisionManagerComponent::CollisionManagerComponent() {}
 

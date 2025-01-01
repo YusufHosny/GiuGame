@@ -3,9 +3,9 @@
 #include "playerobject.h"
 #include <QPainter>
 
-PlayerView2D::PlayerView2D(QGraphicsItem *parent) : ItemView(parent)  {}
+PlayerView2d::PlayerView2d(QGraphicsItem *parent) : ItemView(parent)  {}
 
-void PlayerView2D::draw(std::shared_ptr<const GameObject> go) {
+void PlayerView2d::draw(std::shared_ptr<const GameObject> go) {
 
     auto playerObject = std::dynamic_pointer_cast<const PlayerObject>(go);
     assert(playerObject);
@@ -20,7 +20,7 @@ void PlayerView2D::draw(std::shared_ptr<const GameObject> go) {
 }
 
 
-void PlayerView2D::paint(QPainter *painter, const QStyleOptionGraphicsItem *, QWidget *) {
+void PlayerView2d::paint(QPainter *painter, const QStyleOptionGraphicsItem *, QWidget *) {
     painter->setBrush(Qt::blue);
     painter->setPen(Qt::NoPen);
     painter->drawEllipse(-10,-10, 20, 20);

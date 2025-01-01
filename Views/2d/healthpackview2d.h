@@ -3,10 +3,10 @@
 
 #include "itemview.h"
 
-class HealthPackView2D : public ItemView {
+class HealthPackView2d : public ItemView {
 public:
 
-    HealthPackView2D(QGraphicsItem *parent = nullptr);
+    HealthPackView2d(QGraphicsItem *parent = nullptr);
 
     void draw(std::shared_ptr<const GameObject> go) override;
 

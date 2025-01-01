@@ -3,7 +3,7 @@
 
 #include <QPainter>
 
-BEnemyViewText::BEnemyViewText(QGraphicsItem *parent) : BEnemyView2D(parent)  {}
+BEnemyViewText::BEnemyViewText(QGraphicsItem *parent) : BEnemyView2d(parent)  {}
 
 void BEnemyViewText::paint(QPainter *painter, const QStyleOptionGraphicsItem *, QWidget *) {
     painter->setBrush(GiuGameConfig::getInstance().configText.bgColor);

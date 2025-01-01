@@ -3,7 +3,7 @@
 
 #include "playerview2d.h"
 
-class PlayerViewText : public PlayerView2D
+class PlayerViewText : public PlayerView2d
 {
 public:
     PlayerViewText(QGraphicsItem *parent = nullptr);

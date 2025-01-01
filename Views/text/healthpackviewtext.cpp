@@ -2,7 +2,7 @@
 #include "giugameconfig.h"
 #include <QPainter>
 
-HealthPackViewText::HealthPackViewText(QGraphicsItem *parent) : HealthPackView2D(parent)  {}
+HealthPackViewText::HealthPackViewText(QGraphicsItem *parent) : HealthPackView2d(parent)  {}
 
 void HealthPackViewText::paint(QPainter *painter, const QStyleOptionGraphicsItem *, QWidget *) {
     painter->setBrush(GiuGameConfig::getInstance().configText.bgColor);

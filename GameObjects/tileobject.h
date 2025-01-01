@@ -1,7 +1,7 @@
 #ifndef TILEOBJECT_H
 #define TILEOBJECT_H
 
-#include "GameObject.h"
+#include "gameobject.h"
 #include "world.h"
 
 class TileObject : public GameObject

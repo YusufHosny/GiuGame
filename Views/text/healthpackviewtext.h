@@ -3,7 +3,8 @@
 
 #include "healthpackview2d.h"
 
-class HealthPackViewText : public HealthPackView2D {
+class HealthPackViewText : public HealthPackView2d
+{
 public:
 
     HealthPackViewText(QGraphicsItem *parent = nullptr);

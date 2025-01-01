@@ -1,7 +1,7 @@
-#include "GiuGameController.h"
+#include "giugamecontroller.h"
 #include "levelobject.h"
-#include "GameViewText.h"
-#include "GameView2d.h"
+#include "gameviewtext.h"
+#include "gameview2d.h"
 #include "giugameconfig.h"
 
 GiuGameController::GiuGameController(QObject *parent) : GameController(parent) {}

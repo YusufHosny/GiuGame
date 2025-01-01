@@ -2,7 +2,7 @@
 #include "giugameconfig.h"
 #include <QPainter>
 
-PlayerViewText::PlayerViewText(QGraphicsItem *parent) : PlayerView2D(parent)  {}
+PlayerViewText::PlayerViewText(QGraphicsItem *parent) : PlayerView2d(parent)  {}
 
 void PlayerViewText::paint(QPainter *painter, const QStyleOptionGraphicsItem *, QWidget *) {
     painter->setBrush(GiuGameConfig::getInstance().configText.bgColor);

@@ -1,7 +1,7 @@
 #ifndef GAMEVIEW_H
 #define GAMEVIEW_H
 
-#include "GameObject.h"
+#include "gameobject.h"
 
 class GameView
 {

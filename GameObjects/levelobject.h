@@ -1,7 +1,7 @@
 #ifndef LEVELOBJECT_H
 #define LEVELOBJECT_H
 
-#include "GameObject.h"
+#include "gameobject.h"
 #include "world.h"
 #include <memory>
 #include <vector>

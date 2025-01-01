@@ -2,7 +2,7 @@
 #include "giugameconfig.h"
 #include <QPainter>
 
-EnemyViewText::EnemyViewText(QGraphicsItem *parent) : EnemyView2D(parent)  {}
+EnemyViewText::EnemyViewText(QGraphicsItem *parent) : EnemyView2d(parent)  {}
 
 
 void EnemyViewText::paint(QPainter *painter, const QStyleOptionGraphicsItem *, QWidget *) {

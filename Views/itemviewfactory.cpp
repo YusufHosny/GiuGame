@@ -32,7 +32,7 @@ ItemView* ItemViewFactory::makeTile(int x, int y, float luminance) {
 ItemView* ItemViewFactory::makePlayer() {
     ItemView* out;
     if(type == ViewType::VIEW2D) {
-        out = new PlayerView2D();
+        out = new PlayerView2d();
     }
     else if(type == ViewType::VIEWTEXT) {
         out = new PlayerViewText();
@@ -55,7 +55,7 @@ ItemView* ItemViewFactory::makePath() {
 ItemView* ItemViewFactory::makeEnemy() {
     ItemView* out;
     if(type == ViewType::VIEW2D) {
-        out = new EnemyView2D();
+        out = new EnemyView2d();
     }
     else if(type == ViewType::VIEWTEXT) {
         out = new EnemyViewText();
@@ -66,7 +66,7 @@ ItemView* ItemViewFactory::makeEnemy() {
 ItemView* ItemViewFactory::makePEnemy() {
     ItemView* out;
     if(type == ViewType::VIEW2D) {
-        out = new PEnemyView2D();
+        out = new PEnemyView2d();
     }
     else if(type == ViewType::VIEWTEXT) {
         out = new PEnemyViewText();
@@ -77,7 +77,7 @@ ItemView* ItemViewFactory::makePEnemy() {
 ItemView* ItemViewFactory::makeBEnemy() {
     ItemView* out;
     if(type == ViewType::VIEW2D) {
-        out = new BEnemyView2D();
+        out = new BEnemyView2d();
     }
     else if(type == ViewType::VIEWTEXT) {
         out = new BEnemyViewText();
@@ -88,7 +88,7 @@ ItemView* ItemViewFactory::makeBEnemy() {
 ItemView* ItemViewFactory::makeHealthPack() {
     ItemView* out;
     if(type == ViewType::VIEW2D) {
-        out = new HealthPackView2D();
+        out = new HealthPackView2d();
     }
     else if(type == ViewType::VIEWTEXT) {
         out = new HealthPackViewText();

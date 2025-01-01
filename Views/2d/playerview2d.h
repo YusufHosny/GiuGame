@@ -3,11 +3,11 @@
 
 #include "itemview.h"
 
-class PlayerView2D : public ItemView {
+class PlayerView2d : public ItemView {
 
 public:
 
-    PlayerView2D(QGraphicsItem *parent = nullptr);
+    PlayerView2d(QGraphicsItem *parent = nullptr);
 
     void draw(std::shared_ptr<const GameObject> go) override;
 

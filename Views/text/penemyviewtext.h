@@ -3,7 +3,7 @@
 
 #include "penemyview2d.h"
 
-class PEnemyViewText: public PEnemyView2D
+class PEnemyViewText: public PEnemyView2d
 {
 public:
     PEnemyViewText(QGraphicsItem *parent = nullptr);

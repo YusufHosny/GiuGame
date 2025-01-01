@@ -1,5 +1,5 @@
-#ifndef GAMEOBJECT_HPP
-#define GAMEOBJECT_HPP
+#ifndef GAMEOBJECT_H
+#define GAMEOBJECT_H
 
 #include <string>
 #include <memory>
@@ -7,7 +7,7 @@
 #include <vector>
 #include <iostream>
 #include <QIntegerForSize>
-#include "GameInput.h"
+#include "gameinput.h"
 #include "gameobjectcomponent.h"
 
 class GameObject : public std::enable_shared_from_this<GameObject> {
@@ -143,4 +143,4 @@ class GameObject : public std::enable_shared_from_this<GameObject> {
 
 };
 
-#endif // GAMEOBJECT_HPP
+#endif // GAMEOBJECT_H

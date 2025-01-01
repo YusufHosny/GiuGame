@@ -3,7 +3,7 @@
 
 #include "benemyview2d.h"
 
-class BEnemyViewText: public BEnemyView2D
+class BEnemyViewText: public BEnemyView2d
 {
 public:
 
