@@ -128,6 +128,17 @@ class GameObject : public std::enable_shared_from_this<GameObject> {
             return nullptr;
         }
 
+        template <class T>
+        std::shared_ptr<T> getComponent() const {
+
+            for(auto &component: this->components) {
+                if( auto c = std::dynamic_pointer_cast<T>(component) ) {
+                    return c;
+                }
+            }
+            return nullptr;
+        }
+
         std::shared_ptr<GameObject> get(const unsigned int index) const;
         std::shared_ptr<GameObject> operator[](int index) const;
 

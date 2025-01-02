@@ -57,6 +57,7 @@ add_executable(GIUGAME
 
                 Views/itemview.h            Views/itemview.cpp
                 Views/itemviewfactory.h     Views/itemviewfactory.cpp
+                Views/spriteloader.h        Views/spriteloader.cpp
 
                 Views/2d/gameview2d.h       Views/2d/gameview2d.cpp
                 Views/2d/playerview2d.h     Views/2d/playerview2d.cpp

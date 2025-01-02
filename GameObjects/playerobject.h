@@ -53,8 +53,15 @@ public:
     enum AnimationStates {
         IDLEUP, IDLEDOWN, IDLELEFT, IDLERIGHT,
         WALKUP, WALKDOWN, WALKLEFT, WALKRIGHT,
-        FIGHT,
+        FIGHTING,
         DYING,
+    };
+
+    const unsigned int AnimationFrameCounts[10] = {
+        1, 1, 1, 1,
+        10, 10, 10, 10,
+        4,
+        5
     };
 
     friend class WorldLoader;

@@ -3,5 +3,13 @@
         <file>img/worldmap.png</file>
         <file>img/maze1.png</file>
         <file>img/test.png</file>
+        <file>assets/sprites2d/player/dying.png</file>
+        <file>assets/sprites2d/player/fight.png</file>
+        <file>assets/sprites2d/player/idledown.png</file>
+        <file>assets/sprites2d/player/idleside.png</file>
+        <file>assets/sprites2d/player/idleup.png</file>
+        <file>assets/sprites2d/player/walkdown.png</file>
+        <file>assets/sprites2d/player/walkside.png</file>
+        <file>assets/sprites2d/player/walkup.png</file>
     </qresource>
 </RCC>

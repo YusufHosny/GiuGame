@@ -11,6 +11,7 @@
 #include "pathtracercomponent.h"
 #include "collidercomponent.h"
 #include "autoplaycomponent.h"
+#include "animationcomponent.h"
 
 PlayerObject::PlayerObject(std::unique_ptr<Protagonist> playerModel): playerModel(std::move(playerModel)), TileObject("Player") {}
 
@@ -32,6 +33,11 @@ void PlayerObject::init()
 
     this->components.emplace_back(new PathTracerComponent());
     this->getComponent<PathTracerComponent>()->setCurrent(this->getTile());
+
+    this->components.emplace_back(new AnimationComponent);
+    this->getComponent<AnimationComponent>()->setUpdateTime(200); // 5 fps
+    this->getComponent<AnimationComponent>()->setAnimation(PlayerObject::WALKRIGHT, this->AnimationFrameCounts[PlayerObject::WALKRIGHT]);
+    this->getComponent<AnimationComponent>()->setActive(true);
 
     this->moveCooldownLeft = 0;
     this->poisonCooldownLeft = 0;

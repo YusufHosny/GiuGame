@@ -7,6 +7,7 @@ void AnimationComponent::setUpdateTime(qint64 ut)
     this->updateTime = ut;
 }
 
+// This should be called before the animation component is used, otherwise undefined
 void AnimationComponent::setAnimation(unsigned int anim, unsigned int frameCnt)
 {
     this->currentAnimation = anim;
@@ -38,6 +39,7 @@ void AnimationComponent::step_component(GameObject& owner, qint64 deltaT)
     }
     else {
         this->frameId++;
+        this->updateTimeLeft = this->updateTime;
         // stop if one shot animation, otherwise reset
         if(this->frameId == this->frameCnt-1) {
             if(this->once) {
@@ -45,7 +47,6 @@ void AnimationComponent::step_component(GameObject& owner, qint64 deltaT)
             }
             else {
                 this->frameId = 0;
-                this->updateTimeLeft = this->updateTime;
             }
         }
     }

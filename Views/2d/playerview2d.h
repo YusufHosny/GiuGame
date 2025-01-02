@@ -13,6 +13,13 @@ public:
 
     void paint(QPainter *painter, const QStyleOptionGraphicsItem *option, QWidget *widget) override;
 
+private:
+    static std::map<unsigned int,  std::vector<QPixmap>> sprites;
+    unsigned int animationState;
+    unsigned int frameId;
+
+    static void loadSprites();
+
 };
 
 #endif // PLAYERVIEW2D_H
