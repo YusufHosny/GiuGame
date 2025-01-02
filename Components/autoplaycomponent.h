@@ -11,7 +11,7 @@ class AutoPlayComponent : public GameObjectComponent
 public:
     AutoPlayComponent();
 
-    void step_component(GameObject& owner) override;
+    void step_component(GameObject& owner, qint64 deltaT = 0) override;
 
 private:
     class Node : public Tile{

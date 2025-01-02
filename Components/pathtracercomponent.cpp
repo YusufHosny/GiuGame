@@ -14,7 +14,7 @@ void PathTracerComponent::reset(TileObject& owner) {
     }
 }
 
-void PathTracerComponent::step_component(GameObject &owner)
+void PathTracerComponent::step_component(GameObject &owner, qint64 deltaT)
 {
     TileObject& t = dynamic_cast<TileObject&>(owner); // throws if non-tileobject owns this component
 

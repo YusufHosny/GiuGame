@@ -1,6 +1,7 @@
 #ifndef GAMEOBJECTCOMPONENT_H
 #define GAMEOBJECTCOMPONENT_H
 
+#include <QIntegerForSize>
 
 class GameObject;
 
@@ -20,7 +21,7 @@ public:
 
     virtual ~GameObjectComponent() {};
 
-    virtual void step_component(GameObject& owner) = 0;
+    virtual void step_component(GameObject& owner, qint64 deltaT = 0) = 0;
 
     bool isActive();
     void setActive(bool active);

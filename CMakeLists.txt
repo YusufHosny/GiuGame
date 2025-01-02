@@ -42,6 +42,7 @@ add_executable(GIUGAME
 
                 Components/autoplaycomponent.h      Components/autoplaycomponent.cpp
                 Components/pathtracercomponent.h    Components/pathtracercomponent.cpp
+                Components/animationcomponent.h     Components/animationcomponent.cpp
 
                 InputManagers/inputmanager2d.h InputManagers/inputmanager2d.cpp
 

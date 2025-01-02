@@ -19,7 +19,7 @@ public:
 
     std::array<int, 2> getPosition();
 
-    void step_component(GameObject& owner) override;
+    void step_component(GameObject& owner, qint64 deltaT = 0) override;
 };
 
 #endif // COLLIDERCOMPONENT_H

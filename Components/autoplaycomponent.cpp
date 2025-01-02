@@ -23,7 +23,7 @@ AutoPlayComponent::AutoPlayComponent() {
 }
 
 
-void AutoPlayComponent::step_component(GameObject& owner) {
+void AutoPlayComponent::step_component(GameObject& owner, qint64 deltaT) {
     PlayerObject& player = dynamic_cast<PlayerObject&>(owner); // throws if non-player owns this component
 
     std::shared_ptr<LevelObject> lo = std::dynamic_pointer_cast<LevelObject>(player.getParent());

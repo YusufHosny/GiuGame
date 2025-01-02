@@ -7,7 +7,7 @@ const GiuGameConfig& GiuGameConfig::getInstance() {
 
 GiuGameConfig::GiuGameConfig() {
 
-    config2d.tileSideLen = 50;  // base tile side length
+    config2d.tileSideLen = 32;  // base tile side length
     config2d.zoomSpeed = 1; // zoom in/out speed
 
     configText.bgColor = Qt::GlobalColor::black;

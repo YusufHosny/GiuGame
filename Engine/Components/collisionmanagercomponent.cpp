@@ -4,7 +4,7 @@
 
 CollisionManagerComponent::CollisionManagerComponent() {}
 
-void CollisionManagerComponent::step_component(GameObject &owner)
+void CollisionManagerComponent::step_component(GameObject &owner, qint64 deltaT)
 {
     auto collisionObjects = owner.childrenWithActiveComponent<ColliderComponent>();
     for(auto first = collisionObjects.begin(); first != collisionObjects.end(); first++) {

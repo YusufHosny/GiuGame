@@ -41,7 +41,7 @@ void GameObject::step_impl(qint64 deltaT, std::set<GameInput> inputs) {
 
     for(auto &component: this->components) {
         if(component->isActive())
-            component->step_component(*this);
+            component->step_component(*this, deltaT);
     }
 }
 

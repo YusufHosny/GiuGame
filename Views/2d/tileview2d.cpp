@@ -24,5 +24,5 @@ void TileView2d::paint(QPainter *painter, const QStyleOptionGraphicsItem *, QWid
     QColor c(lum255, lum255, lum255);
     painter->setBrush(c);
     painter->setPen(Qt::NoPen);
-    painter->drawRect(-25,-25, 50, 50);
+    painter->drawRect(this->boundingRect());
 }
