@@ -37,16 +37,6 @@ void GameView2d::init(std::shared_ptr<const LevelObject> lo) {
     this->setVerticalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
     this->setFixedSize(GiuGameConfig::getInstance().gameWidth, GiuGameConfig::getInstance().gameHeight);
 
-    // draw all items
-    this->drawTiles(lo);
-    this->drawPlayer(lo);
-    this->drawEnemies(lo);
-    this->drawHealthPacks(lo);
-    this->drawGui(lo);
-
-    // center on player
-    this->centerOn(playerView);
-
 }
 
 void GameView2d::drawTiles(std::shared_ptr<const LevelObject> levelObject) {

@@ -32,6 +32,13 @@ private:
     std::unique_ptr<Protagonist> playerModel;
     PlayerObject(std::unique_ptr<Protagonist> playerModel);
 
+    void stepPoison(qint64 deltaT);
+    void updateAnimation();
+    void setState(unsigned int state);
+
+    Direction facing;
+    unsigned int state;
+
 public:
     void init() override;
     void step(qint64 deltaT, std::set<GameInput> inputs) override;
@@ -46,7 +53,6 @@ public:
     bool isShowPath() const;
 
     float getPoisonAmount() const { return poisonAmount; };
-    void stepPoison(qint64 deltaT);
 
     const Tile& getTile() const override;
 
@@ -65,7 +71,6 @@ public:
     };
 
     friend class WorldLoader;
-
 
 };
 

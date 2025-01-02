@@ -1,6 +1,5 @@
 #include "spriteloader.h"
 #include "giugameconfig.h"
-#include <iostream>
 
 SpriteLoader::SpriteLoader() {}
 
@@ -11,7 +10,6 @@ std::vector<QPixmap> SpriteLoader::load(QString path, bool flipped)
 
     int tileSideLen = GiuGameConfig::getInstance().config2d.tileSideLen;
     int frameCnt = spritesheet.size().width() / tileSideLen;
-    std::cout << path.toStdString() << "fc: " << frameCnt << std::endl;
 
     for(int i = 0; i < frameCnt; i++) {
         QPixmap sprite = spritesheet.copy(i*tileSideLen, 0, tileSideLen, tileSideLen);

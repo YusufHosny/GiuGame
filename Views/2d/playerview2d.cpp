@@ -44,15 +44,9 @@ void PlayerView2d::draw(std::shared_ptr<const GameObject> go) {
     float y = playerObject->getProtagonist().getYPos()*tileSideLen;
     this->setPos(x+tileSideLen/2,y+tileSideLen/2);
 
-    if(auto ac = playerObject->getComponent<AnimationComponent>()) {
-        this->animationState = ac->getAnimation();
-        this->frameId = ac->getFrame();
-    }
-    else {
-        this->animationState = PlayerObject::IDLEDOWN;
-        this->frameId = 0;
-    }
-
+    auto ac = playerObject->getComponent<AnimationComponent>();
+    this->animationState = ac->getAnimation();
+    this->frameId = ac->getFrame();
 
     QGraphicsItem::update();
 }

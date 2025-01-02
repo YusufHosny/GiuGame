@@ -35,23 +35,32 @@ void PlayerObject::init()
     this->getComponent<PathTracerComponent>()->setCurrent(this->getTile());
 
     this->components.emplace_back(new AnimationComponent);
-    this->getComponent<AnimationComponent>()->setUpdateTime(200); // 5 fps
-    this->getComponent<AnimationComponent>()->setAnimation(PlayerObject::WALKRIGHT, this->AnimationFrameCounts[PlayerObject::WALKRIGHT]);
-    this->getComponent<AnimationComponent>()->setActive(true);
+    this->getComponent<AnimationComponent>()->setUpdateTime(150); // 5 fps
+    this->facing = Direction::DOWN;
+    this->state = PlayerObject::IDLEUP;
+    this->getComponent<AnimationComponent>()->setAnimation(PlayerObject::IDLEUP + static_cast<int>(facing),
+                                                           this->AnimationFrameCounts[PlayerObject::IDLEUP + static_cast<int>(facing)]);
 
     this->moveCooldownLeft = 0;
     this->poisonCooldownLeft = 0;
+
 }
 
 void PlayerObject::step(qint64 deltaT, std::set<GameInput> inputs)
 {
     if(this->moveCooldownLeft > 0) {
+        this->setState(PlayerObject::WALKUP);
         this->moveCooldownLeft -= deltaT;
     }
+    else {
+        this->setState(PlayerObject::IDLEUP);
+    }
+
     this->stepPoison(deltaT);
 
     for(auto &input: inputs) {
         if(input.type == GameInputType::PLAYERMOVE) {
+            this->facing = static_cast<Direction>(input.parameter);
             this->move(input.parameter);
         }
         else if(input.type == GameInputType::AUTOPLAY) {
@@ -59,6 +68,35 @@ void PlayerObject::step(qint64 deltaT, std::set<GameInput> inputs)
         }
     }
 
+}
+
+void PlayerObject::setState(unsigned int state) {
+    if(this->state != state) {
+        this->state = state;
+        this->updateAnimation(); // only update on state change
+    }
+    else {
+        this->state = state;
+    }
+}
+
+void PlayerObject::updateAnimation() {
+    if(this->state == PlayerObject::DYING) {
+        this->getComponent<AnimationComponent>()->setAnimation(PlayerObject::DYING, this->AnimationFrameCounts[PlayerObject::DYING]);
+        this->getComponent<AnimationComponent>()->setOnce(true);
+    }
+    else if(this->state == PlayerObject::FIGHTING) {
+        this->getComponent<AnimationComponent>()->setAnimation(PlayerObject::FIGHTING, this->AnimationFrameCounts[PlayerObject::FIGHTING]);
+        this->getComponent<AnimationComponent>()->setOnce(true);
+    }
+    else if(this->state == PlayerObject::WALKUP) {
+        this->getComponent<AnimationComponent>()->setAnimation(PlayerObject::WALKUP + static_cast<int>(facing),
+                                                    this->AnimationFrameCounts[PlayerObject::WALKUP + static_cast<int>(facing)]);
+    }
+    else {
+        this->getComponent<AnimationComponent>()->setAnimation(PlayerObject::IDLEUP + static_cast<int>(facing),
+                                                    this->AnimationFrameCounts[PlayerObject::IDLEUP + static_cast<int>(facing)]);
+    }
 }
 
 void PlayerObject::stepPoison(qint64 deltaT) {
@@ -72,7 +110,9 @@ void PlayerObject::stepPoison(qint64 deltaT) {
 }
 
 void PlayerObject::move(int dir) { // TODO CHECK MOVE VALID
-    if(this->moveCooldownLeft > 0) return;
+    if(this->moveCooldownLeft > 0) {
+        return;
+    }
 
     int x = this->playerModel->getXPos(), y = this->playerModel->getYPos();
 
