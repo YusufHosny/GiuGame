@@ -1,6 +1,6 @@
 #include "animationcomponent.h"
 
-AnimationComponent::AnimationComponent() {}
+AnimationComponent::AnimationComponent() : once(false) {}
 
 void AnimationComponent::setUpdateTime(qint64 ut)
 {
@@ -25,13 +25,28 @@ const unsigned int AnimationComponent::getFrame() const
     return this->frameId;
 }
 
+void AnimationComponent::setOnce(bool once)
+{
+    this->once = once;
+}
+
+
 void AnimationComponent::step_component(GameObject& owner, qint64 deltaT)
 {
     if(this->updateTimeLeft > 0) {
         this->updateTimeLeft -= deltaT;
     }
     else {
-        this->frameId = (this->frameId + 1) % this->frameCnt;
-        this->updateTimeLeft = this->updateTime;
+        this->frameId++;
+        // stop if one shot animation, otherwise reset
+        if(this->frameId == this->frameCnt-1) {
+            if(this->once) {
+                this->setActive(false);
+            }
+            else {
+                this->frameId = 0;
+                this->updateTimeLeft = this->updateTime;
+            }
+        }
     }
 }

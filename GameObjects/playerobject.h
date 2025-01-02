@@ -51,10 +51,10 @@ public:
     const Tile& getTile() const override;
 
     enum AnimationStates {
-        IDLE,
+        IDLEUP, IDLEDOWN, IDLELEFT, IDLERIGHT,
         WALKUP, WALKDOWN, WALKLEFT, WALKRIGHT,
         FIGHT,
-        DYING, DEAD
+        DYING,
     };
 
     friend class WorldLoader;
