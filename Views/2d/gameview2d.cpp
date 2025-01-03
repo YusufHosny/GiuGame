@@ -108,6 +108,13 @@ void GameView2d::drawEnemies(std::shared_ptr<const LevelObject> levelObject ) {
         ItemView* ev = factory.makeEnemy();
         this->scene()->addItem(ev);
         ev->draw(enemy);
+
+        // draw enemy gui
+        int tileSideLen = GiuGameConfig::getInstance().config2d.tileSideLen;
+        QGraphicsTextItem* enemyDmgLabel = this->scene()->addText(QString::number(enemy->getEnemy().getValue(), 'g', 3));
+        enemyDmgLabel->setDefaultTextColor(Qt::red);
+        enemyDmgLabel->setFont(QFont("Arial", 8));
+        enemyDmgLabel->setPos((enemy->getEnemy().getXPos()+.1)*tileSideLen, (enemy->getEnemy().getYPos()-.5)*tileSideLen);
     }
 
     // draw penemies
@@ -116,6 +123,13 @@ void GameView2d::drawEnemies(std::shared_ptr<const LevelObject> levelObject ) {
         ItemView* pev = factory.makePEnemy();
         this->scene()->addItem(pev);
         pev->draw(penemy);
+
+        // draw enemy gui
+        int tileSideLen = GiuGameConfig::getInstance().config2d.tileSideLen;
+        QGraphicsTextItem* enemyDmgLabel = this->scene()->addText(QString::number(penemy->getPEnemy().getValue(), 'g', 3));
+        enemyDmgLabel->setDefaultTextColor(QColorConstants::Svg::purple);
+        enemyDmgLabel->setFont(QFont("Arial", 8));
+        enemyDmgLabel->setPos((penemy->getPEnemy().getXPos()+.1)*tileSideLen, (penemy->getPEnemy().getYPos()-.5)*tileSideLen);
     }
 
     // draw benemies
@@ -124,6 +138,14 @@ void GameView2d::drawEnemies(std::shared_ptr<const LevelObject> levelObject ) {
         ItemView* bev = factory.makeBEnemy();
         this->scene()->addItem(bev);
         bev->draw(benemy);
+
+        // draw enemy gui
+        int tileSideLen = GiuGameConfig::getInstance().config2d.tileSideLen;
+        QGraphicsTextItem* enemyDmgLabel = this->scene()->addText(QString::number(benemy->getEnemy().getValue(), 'g', 3));
+        enemyDmgLabel->setDefaultTextColor(Qt::red);
+        enemyDmgLabel->setFont(QFont("Arial", 8));
+        enemyDmgLabel->setPos((benemy->getEnemy().getXPos()+.1)*tileSideLen, (benemy->getEnemy().getYPos()-.5)*tileSideLen);
+
     }
 }
 
@@ -133,6 +155,13 @@ void GameView2d::drawHealthPacks(std::shared_ptr<const LevelObject> levelObject 
         ItemView* hpv = factory.makeHealthPack();
         this->scene()->addItem(hpv);
         hpv->draw(hp);
+
+        // draw hp gui
+        int tileSideLen = GiuGameConfig::getInstance().config2d.tileSideLen;
+        QGraphicsTextItem* healthLabel = this->scene()->addText(QString::number(hp->getHP().getValue(), 'g', 3));
+        healthLabel->setDefaultTextColor(Qt::green);
+        healthLabel->setFont(QFont("Arial", 8));
+        healthLabel->setPos((hp->getHP().getXPos()+.1)*tileSideLen, (hp->getHP().getYPos()-.5)*tileSideLen);
     }
 }
 

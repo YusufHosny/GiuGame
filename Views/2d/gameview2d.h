@@ -32,7 +32,6 @@ private:
     virtual void drawEnemies(std::shared_ptr<const LevelObject> levelObject);
     virtual void drawTiles(std::shared_ptr<const LevelObject> levelObject);
     virtual void drawHealthPacks(std::shared_ptr<const LevelObject> levelObject);
-    virtual void drawGui(std::shared_ptr<const LevelObject> levelObject);
 
     virtual void updateCamera(int zoomStatus, bool reset);
 
