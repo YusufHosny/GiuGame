@@ -47,6 +47,7 @@ add_executable(GIUGAME
                 Components/animationcomponent.h     Components/animationcomponent.cpp
 
                 InputManagers/inputmanager2d.h InputManagers/inputmanager2d.cpp
+                InputManagers/inputmanagertext.h InputManagers/inputmanagertext.cpp
 
                 GameObjects/tileobject.h        GameObjects/tileobject.cpp
                 GameObjects/playerobject.h      GameObjects/playerobject.cpp

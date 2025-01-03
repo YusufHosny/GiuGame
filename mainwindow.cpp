@@ -9,18 +9,27 @@
 #include "worldloader.h"
 #include "giugamecontroller.h"
 #include "inputmanager2d.h"
+#include "inputmanagertext.h"
 
 MainWindow::MainWindow(QWidget *parent) :
     QMainWindow(parent)
 {
     // create central widget and layout
     QWidget *central = new QWidget;
-    QBoxLayout *bl = new QBoxLayout(QBoxLayout::LeftToRight, central);
+    QBoxLayout *bl = new QBoxLayout(QBoxLayout::TopToBottom, central);
+
+    // add menu
+    QPushButton* svButton = new QPushButton("Switch View", central);
+    bl->addWidget(svButton);
+    connect(svButton, SIGNAL(clicked(bool)), this, SLOT(switchView()));
 
     // create input manager
     this->input = new CompositeInputManager(this);
     InputManager2d* im2d = new InputManager2d(this);
+    InputManagerText* imt = new InputManagerText(central);
     this->input->addInputManager(im2d);
+    this->input->addInputManager(imt);
+    bl->addWidget(imt->getTextBar());
 
     // create main controller and bind to input manager
     this->controller = new GiuGameController(this->input);
@@ -31,12 +40,6 @@ MainWindow::MainWindow(QWidget *parent) :
     this->controller->start();
 
     bl->addWidget(controller->getView());
-
-    // add menu
-    QButtonGroup *buttons = new QButtonGroup(central);
-    buttons->addButton(new QPushButton("Switch View", central));
-
-    connect(buttons, SIGNAL(buttonClicked(QAbstractButton*)), this, SLOT(switchView()));
 
     this->setCentralWidget(central);
 
