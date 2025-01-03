@@ -17,6 +17,8 @@ add_library(GIUENGINE
     Engine/idgenerator.h            Engine/idgenerator.cpp
     Engine/gameinput.h
     Engine/inputmanager.h           Engine/inputmanager.cpp
+    Engine/compositeinputmanager.h  Engine/compositeinputmanager.cpp
+
     Engine/gameloader.h
 
     Engine/Components/gameobjectcomponent.h         Engine/Components/gameobjectcomponent.cpp

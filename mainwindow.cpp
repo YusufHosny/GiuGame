@@ -18,14 +18,16 @@ MainWindow::MainWindow(QWidget *parent) :
     QBoxLayout *bl = new QBoxLayout(QBoxLayout::LeftToRight, central);
 
     // create input manager
-    this->input = new InputManager2d(this);
+    this->input = new CompositeInputManager(this);
+    InputManager2d* im2d = new InputManager2d(this);
+    this->input->addInputManager(im2d);
 
     // create main controller and bind to input manager
     this->controller = new GiuGameController(this->input);
     this->controller
         ->setGameLoader(std::make_unique<WorldLoader>())
         .setInputManager(this->input);
-    this->controller->init(this->input);
+    this->controller->init(im2d);
     this->controller->start();
 
     bl->addWidget(controller->getView());

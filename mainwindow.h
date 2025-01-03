@@ -2,9 +2,9 @@
 #define MAINWINDOW_H
 
 #include <QMainWindow>
+#include "compositeinputmanager.h"
 
 class GiuGameController;
-class InputManager2d;
 
 class MainWindow : public QMainWindow
 {
@@ -16,7 +16,7 @@ public:
 
 private:
     GiuGameController *controller;
-    InputManager2d *input;
+    CompositeInputManager *input;
 
 public slots:
     void switchView();
