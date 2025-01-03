@@ -4,7 +4,7 @@
 #include <functional>
 
 enum Direction {
-    UP, DOWN, LEFT, RIGHT
+    UP, DOWN, LEFT, RIGHT, NONE
 };
 
 enum class GameInputType {

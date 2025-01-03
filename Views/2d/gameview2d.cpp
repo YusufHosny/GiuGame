@@ -167,22 +167,48 @@ void GameView2d::drawHealthPacks(std::shared_ptr<const LevelObject> levelObject 
 
 void GameView2d::wheelEvent(QWheelEvent* e) { e->ignore(); }; // ignore wheel event, just to be safe
 
-void GameView2d::updateCamera(int zoomStatus, bool reset) {
-    // zoom in out
+void GameView2d::updateCamera(std::shared_ptr<const LevelObject> levelObject) {
+
+    // zoom
     float zoomSpeed = GiuGameConfig::getInstance().config2d.zoomSpeed;
 
     this->setResizeAnchor(AnchorUnderMouse);
     this->setTransformationAnchor(AnchorUnderMouse);
-    if(zoomStatus == 1 && this->transform().m11() > 0.3) {
+    if(levelObject->getZoomStatus() == 1 && this->transform().m11() > 0.3) {
         this->scale(0.9 * zoomSpeed, 0.9 * zoomSpeed);
     }
-    else if(zoomStatus == -1 && this->transform().m11() < 3) {
+    else if(levelObject->getZoomStatus() == -1 && this->transform().m11() < 3) {
         this->scale(1.1 * zoomSpeed, 1.1 * zoomSpeed);
     }
 
-    if(reset) {
+    // camera pan
+    float panSpeed = GiuGameConfig::getInstance().config2d.panSpeed;
+    this->setResizeAnchor(NoAnchor);
+    this->setTransformationAnchor(NoAnchor);
+    switch(levelObject->getCameraMovement()) {
+
+    case(Direction::UP):
+        this->translate(0, 1 * panSpeed);
+        break;
+    case(Direction::DOWN):
+        this->translate(0, -1 * panSpeed);
+        break;
+    case(Direction::LEFT):
+        this->translate(1 * panSpeed, 0);
+        break;
+    case(Direction::RIGHT):
+        this->translate(-1 * panSpeed, 0);
+        break;
+    default:
+        break;
+
+    }
+
+    // camera reset
+    if(levelObject->getCameraReset()) {
         this->centerOn(playerView);
     }
+
 }
 
 void GameView2d::draw(std::shared_ptr<const GameObject> state) {
@@ -198,7 +224,7 @@ void GameView2d::draw(std::shared_ptr<const GameObject> state) {
     this->drawHealthPacks(levelObject);
     this->drawPlayer(levelObject);
 
-    this->updateCamera(levelObject->getZoomStatus(), levelObject->getCameraReset());
+    this->updateCamera(levelObject);
 
 }
 

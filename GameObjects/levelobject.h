@@ -17,6 +17,7 @@ private:
 
     int zoomStatus; // -1: zoom in, 0: no change, 1: zoom out
     bool cameraReset;
+    Direction cameraMovement;
 
     LevelObject(std::vector<std::unique_ptr<Tile>> tiles, int rows, int cols);
     int cols, rows;
@@ -29,14 +30,15 @@ public:
 
     friend class WorldLoader;
 
-    const std::vector<std::unique_ptr<Tile>> &getTiles() const {return tiles;}
-    const std::unique_ptr<Tile> &getTile(int x, int y) {return tiles.at(y*cols + x);}
+    const std::vector<std::unique_ptr<Tile>> &getTiles() const;
+    const std::unique_ptr<Tile> &getTile(int x, int y);
 
-    const int getRows() const {return rows;}
-    const int getCols() const {return cols;}
+    const int getRows() const;
+    const int getCols() const;
 
-    int getZoomStatus() const {return zoomStatus;}
-    bool getCameraReset() const {return cameraReset;}
+    int getZoomStatus() const;
+    bool getCameraReset() const;
+    Direction getCameraMovement() const;
 };
 
 #endif // LEVELOBJECT_H

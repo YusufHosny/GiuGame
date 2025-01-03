@@ -43,6 +43,26 @@ bool InputManager2d::eventFilter(QObject *o, QEvent *e) {
             break;
         }
 
+        case Qt::Key_Up: {
+            inputs.insert(GameInput(GameInputType::CAMERAMOVE, Direction::UP));
+            break;
+        }
+
+        case Qt::Key_Down: {
+            inputs.insert(GameInput(GameInputType::CAMERAMOVE, Direction::DOWN));
+            break;
+        }
+
+        case Qt::Key_Left: {
+            inputs.insert(GameInput(GameInputType::CAMERAMOVE, Direction::LEFT));
+            break;
+        }
+
+        case Qt::Key_Right: {
+            inputs.insert(GameInput(GameInputType::CAMERAMOVE, Direction::RIGHT));
+            break;
+        }
+
         case Qt::Key_R: {
             inputs.insert(GameInput(GameInputType::RESETCAMERA));
             break;

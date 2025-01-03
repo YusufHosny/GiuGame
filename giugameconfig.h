@@ -24,6 +24,7 @@ public:
     public:
         int tileSideLen;  // base tile side length
         float zoomSpeed; // zoom in/out speed
+        float panSpeed; // panning speed
     };
 
     class ConfigText

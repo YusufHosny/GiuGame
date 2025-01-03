@@ -7,8 +7,9 @@ const GiuGameConfig& GiuGameConfig::getInstance() {
 
 GiuGameConfig::GiuGameConfig() {
 
-    config2d.tileSideLen = 32;  // base tile side length
-    config2d.zoomSpeed = 1; // zoom in/out speed
+    config2d.tileSideLen = 32;
+    config2d.zoomSpeed = 1;
+    config2d.panSpeed = 10;
 
     configText.bgColor = Qt::GlobalColor::black;
     configText.textFont = QFont("Arial", 20);

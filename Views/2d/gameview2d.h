@@ -32,7 +32,7 @@ protected:
     virtual void drawTiles(std::shared_ptr<const LevelObject> levelObject);
     virtual void drawHealthPacks(std::shared_ptr<const LevelObject> levelObject);
 
-    virtual void updateCamera(int zoomStatus, bool reset);
+    virtual void updateCamera(std::shared_ptr<const LevelObject> levelObject);
 
     void wheelEvent(QWheelEvent* e) override;
 
