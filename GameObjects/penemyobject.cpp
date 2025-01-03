@@ -1,5 +1,6 @@
 #include "penemyobject.h"
 #include "collidercomponent.h"
+#include "animationcomponent.h"
 
 PEnemyObject::PEnemyObject(std::unique_ptr<PEnemy> pEnemyModel): pEnemyModel(std::move(pEnemyModel)), TileObject("PEnemy") {}
 
@@ -15,6 +16,11 @@ void PEnemyObject::init()
             return out;
         }
         ));
+
+    this->components.emplace_back(new AnimationComponent);
+    this->getComponent<AnimationComponent>()->setUpdateTime(200);
+    this->getComponent<AnimationComponent>()->setAnimation(PEnemyObject::LEFT,
+                                                           this->AnimationFrameCounts[PEnemyObject::LEFT]);
 }
 
 const Tile& PEnemyObject::getTile() const {
@@ -34,4 +40,9 @@ void PEnemyObject::onCollision(std::shared_ptr<GameObject> other) {
 std::string PEnemyObject::dumpData() const
 {
     return ""; // TODO
+}
+
+const PEnemy &PEnemyObject::getPEnemy() const
+{
+    return *this->pEnemyModel;
 }

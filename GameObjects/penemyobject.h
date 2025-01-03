@@ -21,9 +21,18 @@ public:
 
     std::string dumpData() const override;
 
-    const PEnemy &getPEnemy() const {return *pEnemyModel;}
+    const PEnemy &getPEnemy() const;
 
     const Tile& getTile() const override;
+
+    enum AnimationStates {
+        UP, DOWN, LEFT, RIGHT
+    };
+
+    const unsigned int AnimationFrameCounts[4] = {
+        4, 4, 4, 4
+    };
+
 
     friend class WorldLoader;
 };

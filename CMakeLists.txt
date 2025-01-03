@@ -67,7 +67,7 @@ add_executable(GIUGAME
                 Views/2d/healthpackview2d.h Views/2d/healthpackview2d.cpp
                 Views/2d/benemyview2d.h     Views/2d/benemyview2d.cpp
                 Views/2d/tileview2d.h       Views/2d/tileview2d.cpp
-
+                Views/2d/animateditemview.h Views/2d/animateditemview.cpp
 
                 Views/text/gameviewtext.h           Views/text/gameviewtext.cpp
                 Views/text/playerviewtext.h         Views/text/playerviewtext.cpp

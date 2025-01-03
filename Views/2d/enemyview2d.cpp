@@ -1,9 +1,14 @@
-#include "EnemyView2D.h"
+#include "enemyview2d.h"
 #include "enemyobject.h"
 #include "giugameconfig.h"
+#include "spriteloader.h"
+#include "animationcomponent.h"
 #include <QPainter>
 
-EnemyView2d::EnemyView2d(QGraphicsItem *parent) : ItemView(parent)  {}
+EnemyView2d::EnemyView2d(QGraphicsItem *parent) : AnimatedItemView(parent)  {
+    if(this->getSprites().empty())
+        this->loadSprites();
+}
 
 void EnemyView2d::draw(std::shared_ptr<const GameObject> go) {
 
@@ -16,11 +21,23 @@ void EnemyView2d::draw(std::shared_ptr<const GameObject> go) {
     float y = enemyObject->getEnemy().getYPos()*tileSideLen;
     setPos(x+tileSideLen/2,y+tileSideLen/2);
 
+    auto ac = enemyObject->getComponent<AnimationComponent>();
+    this->animationState = ac->getAnimation();
+    this->frameId = ac->getFrame();
+
     QGraphicsItem::update();
 }
 
-void EnemyView2d::paint(QPainter *painter, const QStyleOptionGraphicsItem *, QWidget *) {
-    painter->setBrush(Qt::red);
-    painter->setPen(Qt::NoPen);
-    painter->drawEllipse(-10,-10, 20, 20);
+std::map<unsigned int, std::vector<QPixmap>> EnemyView2d::sprites;
+std::map<unsigned int, std::vector<QPixmap>>& EnemyView2d::getSprites() {
+    return EnemyView2d::sprites;
+}
+
+// sprites loaded in enum order
+void EnemyView2d::loadSprites() {
+    this->getSprites().emplace(EnemyObject::UP, SpriteLoader::load(":/assets/sprites2d/enemies/enemy/up.png"));
+    this->getSprites().emplace(EnemyObject::DOWN, SpriteLoader::load(":/assets/sprites2d/enemies/enemy/down.png"));
+    this->getSprites().emplace(EnemyObject::LEFT, SpriteLoader::load(":/assets/sprites2d/enemies/enemy/side.png"));
+    this->getSprites().emplace(EnemyObject::RIGHT, SpriteLoader::load(":/assets/sprites2d/enemies/enemy/side.png", true)); // flip for right frame
+
 }

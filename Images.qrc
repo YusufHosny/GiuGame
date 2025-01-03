@@ -1,8 +1,14 @@
 <RCC>
     <qresource prefix="/">
-        <file>img/worldmap.png</file>
-        <file>img/maze1.png</file>
-        <file>img/test.png</file>
+        <file>assets/sprites2d/enemies/benemy/down.png</file>
+        <file>assets/sprites2d/enemies/benemy/idle.png</file>
+        <file>assets/sprites2d/enemies/enemy/down.png</file>
+        <file>assets/sprites2d/enemies/enemy/side.png</file>
+        <file>assets/sprites2d/enemies/enemy/up.png</file>
+        <file>assets/sprites2d/enemies/penemy/down.png</file>
+        <file>assets/sprites2d/enemies/penemy/side.png</file>
+        <file>assets/sprites2d/enemies/penemy/up.png</file>
+        <file>assets/sprites2d/items/health.png</file>
         <file>assets/sprites2d/player/dying.png</file>
         <file>assets/sprites2d/player/fight.png</file>
         <file>assets/sprites2d/player/idledown.png</file>
@@ -11,5 +17,8 @@
         <file>assets/sprites2d/player/walkdown.png</file>
         <file>assets/sprites2d/player/walkside.png</file>
         <file>assets/sprites2d/player/walkup.png</file>
+        <file>img/maze1.png</file>
+        <file>img/test.png</file>
+        <file>img/worldmap.png</file>
     </qresource>
 </RCC>

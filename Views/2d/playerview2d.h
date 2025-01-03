@@ -1,9 +1,9 @@
 #ifndef PLAYERVIEW2D_H
 #define PLAYERVIEW2D_H
 
-#include "itemview.h"
+#include "animateditemview.h"
 
-class PlayerView2d : public ItemView {
+class PlayerView2d : public AnimatedItemView {
 
 public:
 
@@ -11,14 +11,12 @@ public:
 
     void draw(std::shared_ptr<const GameObject> go) override;
 
-    void paint(QPainter *painter, const QStyleOptionGraphicsItem *option, QWidget *widget) override;
-
 private:
-    static std::map<unsigned int,  std::vector<QPixmap>> sprites;
-    unsigned int animationState;
-    unsigned int frameId;
 
-    static void loadSprites();
+    static std::map<unsigned int,  std::vector<QPixmap>> sprites;
+
+    std::map<unsigned int,  std::vector<QPixmap>>& getSprites() override;
+    void loadSprites() override;
 
 };
 

@@ -24,6 +24,14 @@ public:
 
     const Tile& getTile() const override;
 
+    enum AnimationStates {
+        IDLE
+    };
+
+    const unsigned int AnimationFrameCounts[1] = {
+        9
+    };
+
     friend class WorldLoader;
 };
 

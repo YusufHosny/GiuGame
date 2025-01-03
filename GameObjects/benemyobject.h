@@ -29,7 +29,13 @@ public:
 
     const Tile& getTile() const override;
 
-    bool isBlinkVisible() const;
+    enum AnimationStates {
+        IDLE, BLINK
+    };
+
+    const unsigned int AnimationFrameCounts[2] = {
+        1, 9
+    };
 
     friend class WorldLoader;
 };

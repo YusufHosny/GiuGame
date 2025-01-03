@@ -35,7 +35,7 @@ void PlayerObject::init()
     this->getComponent<PathTracerComponent>()->setCurrent(this->getTile());
 
     this->components.emplace_back(new AnimationComponent);
-    this->getComponent<AnimationComponent>()->setUpdateTime(150); // 5 fps
+    this->getComponent<AnimationComponent>()->setUpdateTime(150);
     this->facing = Direction::DOWN;
     this->state = PlayerObject::IDLEUP;
     this->getComponent<AnimationComponent>()->setAnimation(PlayerObject::IDLEUP + static_cast<int>(facing),
@@ -164,6 +164,7 @@ const Tile& PlayerObject::getTile() const {
 
 void PlayerObject::onCollision(std::shared_ptr<GameObject> other)
 {
+    this->setState(PlayerObject::FIGHTING);
     if(auto e = std::dynamic_pointer_cast<EnemyObject>(other)) {
         this->onCollision(e);
     }

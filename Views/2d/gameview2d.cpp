@@ -76,6 +76,18 @@ void GameView2d::drawPlayer(std::shared_ptr<const LevelObject> levelObject) {
     playerView = factory.makePlayer();
     this->scene()->addItem(playerView);
     playerView->draw(po);
+
+    // draw player gui
+    int tileSideLen = GiuGameConfig::getInstance().config2d.tileSideLen;
+    QGraphicsTextItem* hpLabel = this->scene()->addText(QString::number(po->getProtagonist().getHealth(), 'g', 3));
+    hpLabel->setDefaultTextColor(Qt::green);
+    hpLabel->setFont(QFont("Arial", 8));
+    hpLabel->setPos((po->getProtagonist().getXPos()+.1)*tileSideLen, (po->getProtagonist().getYPos()-.5)*tileSideLen);
+    QGraphicsTextItem* energyLabel = this->scene()->addText(QString::number(po->getProtagonist().getEnergy(), 'g', 3));
+    energyLabel->setDefaultTextColor(Qt::cyan);
+    energyLabel->setFont(QFont("Arial", 8));
+    energyLabel->setPos((po->getProtagonist().getXPos()+.1)*tileSideLen, (po->getProtagonist().getYPos()-.9)*tileSideLen);
+
 }
 
 void GameView2d::drawPaths(std::shared_ptr<const LevelObject> levelObject)
@@ -109,7 +121,6 @@ void GameView2d::drawEnemies(std::shared_ptr<const LevelObject> levelObject ) {
     // draw benemies
     std::vector<std::shared_ptr<BEnemyObject>> benemies = levelObject->findChildren<BEnemyObject>();
     for (const auto &benemy : benemies) {
-        if (!benemy->isBlinkVisible()) continue;
         ItemView* bev = factory.makeBEnemy();
         this->scene()->addItem(bev);
         bev->draw(benemy);
@@ -123,31 +134,6 @@ void GameView2d::drawHealthPacks(std::shared_ptr<const LevelObject> levelObject 
         this->scene()->addItem(hpv);
         hpv->draw(hp);
     }
-}
-
-void GameView2d::drawGui(std::shared_ptr<const LevelObject> levelObject ) {
-    int tileSideLen = GiuGameConfig::getInstance().config2d.tileSideLen;
-
-    int barWidth = tileSideLen;
-    int leftMargin = (this->rows + 2) * tileSideLen;
-    int topOffset = 2 * tileSideLen;
-
-    int maxBarHeight = 200;
-    float playerEnergy = levelObject->findChildren<PlayerObject>().at(0)->getProtagonist().getEnergy() / 100;
-    float playerHealth = levelObject->findChildren<PlayerObject>().at(0)->getProtagonist().getHealth() / 100;
-
-    this->scene()->addRect(leftMargin, topOffset, barWidth, maxBarHeight * playerHealth, QPen(Qt::NoPen), QBrush(Qt::green));
-    this->scene()->addRect(leftMargin + 2*tileSideLen, topOffset, barWidth, maxBarHeight * playerEnergy, QPen(Qt::NoPen), QBrush(Qt::green));
-
-    QGraphicsTextItem* hpLabel = this->scene()->addText("Health");
-    hpLabel->setDefaultTextColor(Qt::white);
-    hpLabel->setFont(QFont("Arial", 12));
-    hpLabel->setPos(leftMargin + (tileSideLen/5), topOffset + maxBarHeight + (tileSideLen/5));
-
-    QGraphicsTextItem* energyLabel = this->scene()->addText("Energy");
-    energyLabel->setDefaultTextColor(Qt::white);
-    energyLabel->setFont(QFont("Arial", 12));
-    energyLabel->setPos(leftMargin + 2*tileSideLen - tileSideLen/5, topOffset + maxBarHeight + (tileSideLen/5));
 }
 
 void GameView2d::wheelEvent(QWheelEvent* e) { e->ignore(); }; // ignore wheel event, just to be safe
@@ -179,10 +165,9 @@ void GameView2d::draw(std::shared_ptr<const GameObject> state) {
 
     this->drawTiles(levelObject);
     this->drawPaths(levelObject);
-    this->drawPlayer(levelObject);
     this->drawEnemies(levelObject);
     this->drawHealthPacks(levelObject);
-    this->drawGui(levelObject);
+    this->drawPlayer(levelObject);
 
     this->updateCamera(levelObject->getZoomStatus(), levelObject->getCameraReset());
 

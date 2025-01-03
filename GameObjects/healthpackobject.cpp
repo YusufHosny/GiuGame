@@ -1,5 +1,6 @@
 #include "healthpackobject.h"
 #include "collidercomponent.h"
+#include "animationcomponent.h"
 
 HealthPackObject::HealthPackObject(std::unique_ptr<Tile> tile): tile(std::move(tile)), TileObject("Health Pack") {}
 
@@ -15,6 +16,11 @@ void HealthPackObject::init()
             return out;
         }
     ));
+
+    this->components.emplace_back(new AnimationComponent);
+    this->getComponent<AnimationComponent>()->setUpdateTime(200);
+    this->getComponent<AnimationComponent>()->setAnimation(HealthPackObject::IDLE,
+                                                           this->AnimationFrameCounts[HealthPackObject::IDLE]);
 
 }
 

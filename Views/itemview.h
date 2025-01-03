@@ -8,7 +8,7 @@
 class ItemView : public QGraphicsItem, public GameView {
 
 protected:
-    ItemView(QGraphicsItem *parent = nullptr) : QGraphicsItem(parent) {};
+    ItemView(QGraphicsItem *parent = nullptr);
 
 public:
     virtual ~ItemView() {};

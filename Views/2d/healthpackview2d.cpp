@@ -1,9 +1,25 @@
 #include "healthpackview2d.h"
 #include "healthpackobject.h"
 #include "giugameconfig.h"
+#include "animationcomponent.h"
+#include "spriteloader.h"
 #include <QPainter>
 
-HealthPackView2d::HealthPackView2d(QGraphicsItem *parent) : ItemView(parent)  {}
+HealthPackView2d::HealthPackView2d(QGraphicsItem *parent) : AnimatedItemView(parent)  {
+    if(this->getSprites().empty())
+        this->loadSprites();
+}
+
+// sprites loaded in enum order
+void HealthPackView2d::loadSprites() {
+    this->getSprites().emplace(HealthPackObject::IDLE, SpriteLoader::load(":/assets/sprites2d/items/health.png"));
+
+}
+
+std::map<unsigned int, std::vector<QPixmap>> HealthPackView2d::sprites;
+std::map<unsigned int, std::vector<QPixmap>>& HealthPackView2d::getSprites() {
+    return HealthPackView2d::sprites;
+}
 
 void HealthPackView2d::draw(std::shared_ptr<const GameObject> go) {
 
@@ -16,13 +32,9 @@ void HealthPackView2d::draw(std::shared_ptr<const GameObject> go) {
     float y = HPObject->getHP().getYPos()*tileSideLen;
     this->setPos(x+tileSideLen/2,y+tileSideLen/2);
 
-    QGraphicsItem::update();
-}
+    auto ac = HPObject->getComponent<AnimationComponent>();
+    this->animationState = ac->getAnimation();
+    this->frameId = ac->getFrame();
 
-void HealthPackView2d::paint(QPainter *painter, const QStyleOptionGraphicsItem *, QWidget *) {
-    painter->setBrush(Qt::NoBrush);
-    painter->setPen(QPen(Qt::red, 2));
-    int tileSideLen = GiuGameConfig::getInstance().config2d.tileSideLen;
-    painter->drawLine(-tileSideLen/5, 0, tileSideLen/5, 0);
-    painter->drawLine(0, -tileSideLen/5, 0, tileSideLen/5);
+    QGraphicsItem::update();
 }

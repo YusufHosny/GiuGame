@@ -1,5 +1,6 @@
 #include "enemyobject.h"
 #include "collidercomponent.h"
+#include "animationcomponent.h"
 
 EnemyObject::EnemyObject(std::unique_ptr<Enemy> enemyModel): enemyModel(std::move(enemyModel)), TileObject("Enemy") {}
 
@@ -15,6 +16,11 @@ void EnemyObject::init()
             return out;
         }
         ));
+
+    this->components.emplace_back(new AnimationComponent);
+    this->getComponent<AnimationComponent>()->setUpdateTime(200);
+    this->getComponent<AnimationComponent>()->setAnimation(EnemyObject::DOWN,
+                                                           this->AnimationFrameCounts[EnemyObject::DOWN]);
 }
 
 const Tile& EnemyObject::getTile() const {

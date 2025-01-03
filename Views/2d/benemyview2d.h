@@ -1,9 +1,9 @@
 #ifndef BENEMYVIEW2D_H
 #define BENEMYVIEW2D_H
 
-#include "itemview.h"
+#include "animateditemview.h"
 
-class BEnemyView2d: public ItemView
+class BEnemyView2d: public AnimatedItemView
 {
 
 public:
@@ -12,7 +12,12 @@ public:
 
     void draw(std::shared_ptr<const GameObject> go) override;
 
-    void paint(QPainter *painter, const QStyleOptionGraphicsItem *option, QWidget *widget) override;
+private:
+    static std::map<unsigned int,  std::vector<QPixmap>> sprites;
+
+    std::map<unsigned int,  std::vector<QPixmap>>& getSprites() override;
+    void loadSprites() override;
+
 
 };
 
