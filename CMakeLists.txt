@@ -76,6 +76,8 @@ add_executable(GIUGAME
                 Views/text/healthpackviewtext.h     Views/text/healthpackviewtext.cpp
                 Views/text/tileviewtext.h           Views/text/tileviewtext.cpp
                 Views/text/benemyviewtext.h         Views/text/benemyviewtext.cpp
+
+                Views/overlay/gameviewoverlay.h     Views/overlay/gameviewoverlay.cpp
     )
 
 
@@ -94,6 +96,7 @@ target_include_directories(GIUGAME PRIVATE ${CMAKE_SOURCE_DIR}/InputManagers)
 target_include_directories(GIUGAME PRIVATE ${CMAKE_SOURCE_DIR}/Views)
 target_include_directories(GIUGAME PRIVATE ${CMAKE_SOURCE_DIR}/Views/2d)
 target_include_directories(GIUGAME PRIVATE ${CMAKE_SOURCE_DIR}/Views/text)
+target_include_directories(GIUGAME PRIVATE ${CMAKE_SOURCE_DIR}/Views/overlay)
 
 target_link_libraries(GIUGAME PRIVATE Qt6::Widgets)
 

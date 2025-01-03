@@ -22,7 +22,6 @@ public:
 protected:
     ItemViewFactory factory;
 
-private:
     int rows, cols;
 
     ItemView* playerView;

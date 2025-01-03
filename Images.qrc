@@ -20,5 +20,6 @@
         <file>img/maze1.png</file>
         <file>img/test.png</file>
         <file>img/worldmap.png</file>
+        <file>img/testbg.png</file>
     </qresource>
 </RCC>

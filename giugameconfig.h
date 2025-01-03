@@ -6,7 +6,7 @@
 #include <QFont>
 
 enum ViewType {
-    VIEW2D, VIEW3D, VIEWTEXT
+    VIEW2D, VIEW3D, VIEWTEXT, VIEWOVERLAY
 };
 
 class GiuGameConfig {

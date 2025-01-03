@@ -2,6 +2,7 @@
 #include "levelobject.h"
 #include "gameviewtext.h"
 #include "gameview2d.h"
+#include "gameviewoverlay.h"
 #include "giugameconfig.h"
 
 GiuGameController::GiuGameController(QObject *parent) : GameController(parent) {}
@@ -24,6 +25,11 @@ void GiuGameController::init(QWidget* viewparent)  {
     gvtext->installEventFilter(viewparent); // event filter to reroute events to input manager
     this->views.emplace(ViewType::VIEWTEXT, gvtext);
 
+    // craete overlayview
+    GameViewOverlay* goverlay = new GameViewOverlay(viewparent, lo);
+    goverlay->installEventFilter(viewparent); // event filter to reroute events to input manager
+    this->views.emplace(ViewType::VIEWOVERLAY, goverlay);
+
     this->currentView = ViewType::VIEW2D;
     this->view = this->views.at(this->currentView);
 }
@@ -34,6 +40,9 @@ GameView* GiuGameController::changeView() {
         this->currentView = ViewType::VIEWTEXT;
         break;
     case ViewType::VIEWTEXT:
+        this->currentView = ViewType::VIEWOVERLAY;
+        break;
+    case ViewType::VIEWOVERLAY:
         this->currentView = ViewType::VIEW2D;
         break;
     case ViewType::VIEW3D:
