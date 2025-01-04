@@ -7,6 +7,7 @@
 #include "pathview2d.h"
 #include "healthpackview2d.h"
 #include "tileview2d.h"
+#include "doorview2d.h"
 
 #include "tileviewtext.h"
 #include "penemyviewtext.h"
@@ -14,6 +15,7 @@
 #include "enemyviewtext.h"
 #include "playerviewtext.h"
 #include "healthpackviewtext.h"
+#include "doorviewtext.h"
 
 ItemViewFactory::ItemViewFactory(ViewType t) : type(t) {}
 
@@ -92,6 +94,17 @@ ItemView* ItemViewFactory::makeHealthPack() {
     }
     else if(type == ViewType::VIEWTEXT) {
         out = new HealthPackViewText();
+    }
+    return out;
+}
+
+ItemView* ItemViewFactory::makeDoor() {
+    ItemView* out;
+    if(type == ViewType::VIEW2D) {
+        out = new DoorView2d();
+    }
+    else if(type == ViewType::VIEWTEXT) {
+        out = new DoorViewText();
     }
     return out;
 }

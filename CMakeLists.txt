@@ -57,6 +57,9 @@ add_executable(GIUGAME
                 GameObjects/healthpackobject.h  GameObjects/healthpackobject.cpp
                 GameObjects/benemyobject.h      GameObjects/benemyobject.cpp
                 GameObjects/pathobject.h        GameObjects/pathobject.cpp
+                GameObjects/doorobject.h        GameObjects/doorobject.cpp
+                GameObjects/giugameobject.h     GameObjects/giugameobject.cpp
+
 
                 Views/itemview.h            Views/itemview.cpp
                 Views/itemviewfactory.h     Views/itemviewfactory.cpp
@@ -71,6 +74,7 @@ add_executable(GIUGAME
                 Views/2d/benemyview2d.h     Views/2d/benemyview2d.cpp
                 Views/2d/tileview2d.h       Views/2d/tileview2d.cpp
                 Views/2d/animateditemview.h Views/2d/animateditemview.cpp
+                Views/2d/doorview2d.h       Views/2d/doorview2d.cpp
 
                 Views/text/gameviewtext.h           Views/text/gameviewtext.cpp
                 Views/text/playerviewtext.h         Views/text/playerviewtext.cpp
@@ -79,6 +83,7 @@ add_executable(GIUGAME
                 Views/text/healthpackviewtext.h     Views/text/healthpackviewtext.cpp
                 Views/text/tileviewtext.h           Views/text/tileviewtext.cpp
                 Views/text/benemyviewtext.h         Views/text/benemyviewtext.cpp
+                Views/text/doorviewtext.h           Views/text/doorviewtext.cpp
 
                 Views/overlay/gameviewoverlay.h     Views/overlay/gameviewoverlay.cpp
     )

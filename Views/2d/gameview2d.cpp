@@ -9,6 +9,8 @@
 #include "penemyobject.h"
 #include "healthpackobject.h"
 #include "benemyobject.h"
+#include "giugameobject.h"
+#include "doorobject.h"
 
 #include "itemviewfactory.h"
 
@@ -16,8 +18,8 @@
 
 GameView2d::GameView2d(QWidget* parent, std::shared_ptr<const GameObject> state, ViewType t): QGraphicsView(parent), factory(t) {
 
-    // cast input to a level object
-    std::shared_ptr<const LevelObject> levelObject = std::dynamic_pointer_cast<const LevelObject>(state);
+    std::shared_ptr<const GiuGameObject> gState = std::dynamic_pointer_cast<const GiuGameObject>(state);
+    std::shared_ptr<LevelObject> levelObject = gState->findChildren<LevelObject>().at(0);
     assert(levelObject); // assert correct type was passed in
 
     // initialize view
@@ -149,7 +151,7 @@ void GameView2d::drawEnemies(std::shared_ptr<const LevelObject> levelObject ) {
     }
 }
 
-void GameView2d::drawHealthPacks(std::shared_ptr<const LevelObject> levelObject ) {
+void GameView2d::drawItems(std::shared_ptr<const LevelObject> levelObject ) {
     std::vector<std::shared_ptr<HealthPackObject>> healthPacks = levelObject->findChildren<HealthPackObject>();
     for (const auto &hp : healthPacks) {
         ItemView* hpv = factory.makeHealthPack();
@@ -162,6 +164,13 @@ void GameView2d::drawHealthPacks(std::shared_ptr<const LevelObject> levelObject 
         healthLabel->setDefaultTextColor(Qt::green);
         healthLabel->setFont(QFont("Arial", 8));
         healthLabel->setPos((hp->getHP().getXPos()+.1)*tileSideLen, (hp->getHP().getYPos()-.5)*tileSideLen);
+    }
+
+    std::vector<std::shared_ptr<DoorObject>> doors = levelObject->findChildren<DoorObject>();
+    for (const auto &d : doors) {
+        ItemView* dv = factory.makeDoor();
+        this->scene()->addItem(dv);
+        dv->draw(d);
     }
 }
 
@@ -213,7 +222,8 @@ void GameView2d::updateCamera(std::shared_ptr<const LevelObject> levelObject) {
 
 void GameView2d::draw(std::shared_ptr<const GameObject> state) {
 
-    std::shared_ptr<const LevelObject> levelObject = std::dynamic_pointer_cast<const LevelObject>(state);
+    std::shared_ptr<const GiuGameObject> gState = std::dynamic_pointer_cast<const GiuGameObject>(state);
+    std::shared_ptr<LevelObject> levelObject = gState->findChildren<LevelObject>().at(0);
     assert(levelObject); // assert correct type was passed in
 
     this->scene()->clear();
@@ -221,7 +231,7 @@ void GameView2d::draw(std::shared_ptr<const GameObject> state) {
     this->drawTiles(levelObject);
     this->drawPaths(levelObject);
     this->drawEnemies(levelObject);
-    this->drawHealthPacks(levelObject);
+    this->drawItems(levelObject);
     this->drawPlayer(levelObject);
 
     this->updateCamera(levelObject);

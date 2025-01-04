@@ -21,5 +21,6 @@
         <file>img/test.png</file>
         <file>img/worldmap.png</file>
         <file>img/testbg.png</file>
+        <file>assets/sprites2d/items/portal.png</file>
     </qresource>
 </RCC>

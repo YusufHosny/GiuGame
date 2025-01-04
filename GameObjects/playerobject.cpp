@@ -5,6 +5,8 @@
 #include "benemyobject.h"
 #include "healthpackobject.h"
 #include "levelobject.h"
+#include "doorobject.h"
+#include "giugameobject.h"
 
 #include "giugameconfig.h"
 
@@ -189,6 +191,9 @@ void PlayerObject::onCollision(std::shared_ptr<GameObject> other)
     else if(auto hp = std::dynamic_pointer_cast<HealthPackObject>(other)) {
         this->onCollision(hp);
     }
+    else if(auto d = std::dynamic_pointer_cast<DoorObject>(other)) {
+        this->onCollision(d);
+    }
 }
 
 void PlayerObject::onCollision(std::shared_ptr<EnemyObject> e) {
@@ -231,6 +236,10 @@ void PlayerObject::onCollision(std::shared_ptr<HealthPackObject> hp) {
 
     std::shared_ptr<LevelObject> lo = std::dynamic_pointer_cast<LevelObject>(this->parent);
     lo->removeChild(hp);
+}
+
+void PlayerObject::onCollision(std::shared_ptr<DoorObject> d) {
+    std::dynamic_pointer_cast<GiuGameObject>(this->parent->getParent())->nextLevel(d->getTarget());
 }
 
 const Protagonist &PlayerObject::getProtagonist() const

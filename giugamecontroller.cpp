@@ -1,32 +1,32 @@
 #include "giugamecontroller.h"
-#include "levelobject.h"
 #include "gameviewtext.h"
 #include "gameview2d.h"
 #include "gameviewoverlay.h"
 #include "giugameconfig.h"
+#include "giugameobject.h"
 
 GiuGameController::GiuGameController(QObject *parent) : GameController(parent) {}
 
 void GiuGameController::init(QWidget* viewparent)  {
 
     // load first level
-    std::shared_ptr<LevelObject> lo = std::dynamic_pointer_cast<LevelObject>(gameLoader->load(GiuGameConfig::getInstance().startLevelPath));
-    assert(lo);
+    std::shared_ptr<GiuGameObject> baseState = std::make_shared<GiuGameObject>();
+    baseState->addChild(gameLoader->load(GiuGameConfig::getInstance().startLevelPath));
 
-    this->gameState = lo;
+    this->gameState = baseState;
 
     // create and configure default gameview
-    GameView2d* gv2d = new GameView2d(viewparent, lo);
+    GameView2d* gv2d = new GameView2d(viewparent, this->gameState);
     gv2d->installEventFilter(viewparent); // event filter to reroute events to input manager
     this->views.emplace(ViewType::VIEW2D, gv2d);
 
     // craete textview
-    GameViewText* gvtext = new GameViewText(viewparent, lo);
+    GameViewText* gvtext = new GameViewText(viewparent, this->gameState);
     gvtext->installEventFilter(viewparent); // event filter to reroute events to input manager
     this->views.emplace(ViewType::VIEWTEXT, gvtext);
 
     // craete overlayview
-    GameViewOverlay* goverlay = new GameViewOverlay(viewparent, lo);
+    GameViewOverlay* goverlay = new GameViewOverlay(viewparent, this->gameState);
     goverlay->installEventFilter(viewparent); // event filter to reroute events to input manager
     this->views.emplace(ViewType::VIEWOVERLAY, goverlay);
 

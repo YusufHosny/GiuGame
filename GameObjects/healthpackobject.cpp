@@ -8,7 +8,7 @@ void HealthPackObject::init()
 {
     this->components.emplace_back(new ColliderComponent(
         [this](std::shared_ptr<GameObject> other) {
-            this->onCollision(other);
+
         },
         [this]() {
             // getPosition
@@ -26,17 +26,6 @@ void HealthPackObject::init()
 
 const Tile& HealthPackObject::getTile() const {
     return *this->tile;
-}
-
-void HealthPackObject::step(qint64 deltaT, std::set<GameInput> inputs)
-{
-    // TODO
-}
-
-
-void HealthPackObject::onCollision(std::shared_ptr<GameObject> other)
-{
-    // TODO
 }
 
 

@@ -19,6 +19,7 @@ public:
     ItemView* makePEnemy();
     ItemView* makeBEnemy();
     ItemView* makeHealthPack();
+    ItemView* makeDoor();
 };
 
 #endif // ITEMVIEWFACTORY_H

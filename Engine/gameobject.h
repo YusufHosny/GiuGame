@@ -25,8 +25,8 @@ class GameObject : public std::enable_shared_from_this<GameObject> {
 
         std::vector<std::shared_ptr<GameObjectComponent>> components;
 
-        virtual void init() = 0;
-        virtual void step(qint64 deltaT, std::set<GameInput> inputs) = 0;
+        virtual void init() {};
+        virtual void step(qint64 deltaT, std::set<GameInput> inputs) {};
 
         GameObject(const std::string label);
         GameObject();

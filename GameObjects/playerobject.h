@@ -7,6 +7,7 @@ class EnemyObject;
 class BEnemyObject;
 class PEnemyObject;
 class HealthPackObject;
+class DoorObject;
 
 class PlayerObject : public TileObject
 {
@@ -21,6 +22,7 @@ private:
     void onCollision(std::shared_ptr<BEnemyObject> other);
     void onCollision(std::shared_ptr<PEnemyObject> other);
     void onCollision(std::shared_ptr<HealthPackObject> other);
+    void onCollision(std::shared_ptr<DoorObject> other);
 
     float poisonAmount;
 
