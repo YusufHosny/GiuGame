@@ -46,9 +46,19 @@ void AutoPlayComponent::step_component(GameObject& owner, qint64 deltaT) {
 
     // decide what target tile to go to
     if(this->target) {
-        if(this->target->getXPos() == player.getTile().getXPos() && this->target->getYPos() == player.getTile().getYPos()) this->target = nullptr;
+        if(this->target->getXPos() == player.getTile().getXPos() && this->target->getYPos() == player.getTile().getYPos()) {
+            this->target = nullptr;
+            if(this->once) {
+                this->once = false;
+                this->reset();
+                this->setActive(false);
+                return;
+            }
+        }
     }
-    if(!this->target || this->path.empty()) this->updatePath(player, lo);
+    if(!this->target || this->path.empty()) {
+        this->updatePath(player, lo);
+    }
 
     switch(this->path.at(0)) {
     case(0):
@@ -71,7 +81,7 @@ void AutoPlayComponent::step_component(GameObject& owner, qint64 deltaT) {
 
 void AutoPlayComponent::updatePath(PlayerObject& player, std::shared_ptr<LevelObject> lo)
 {
-    this->target = this->chooseTarget(player, lo);
+    if(!this->target) this->target = this->chooseTarget(player, lo);
 
     const std::vector<std::unique_ptr<Tile>> &tiles = lo->getTiles();
     nodes.clear();
@@ -140,4 +150,13 @@ const Tile *AutoPlayComponent::nearestHealth(PlayerObject& player, std::shared_p
 const Tile *AutoPlayComponent::nearestExit(PlayerObject& player, std::shared_ptr<LevelObject> lo)
 {
     return nullptr; // TODO
+}
+
+void AutoPlayComponent::setOnce(bool once) {
+    this->once = once;
+}
+
+void AutoPlayComponent::reset() {
+    this->target = nullptr;
+    this->path.clear();
 }

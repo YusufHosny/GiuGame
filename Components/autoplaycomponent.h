@@ -25,11 +25,14 @@ public:
 
     const Tile* getTarget() const;
     void setTarget(const Tile* t);
+    void setOnce(bool once);
+    void reset();
 
     void step_component(GameObject& owner, qint64 deltaT = 0) override;
 
 private:
 
+    bool once;
 
     const Tile* target;
     PathFinder<Node, Tile>* pf;

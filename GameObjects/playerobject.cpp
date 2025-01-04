@@ -64,7 +64,14 @@ void PlayerObject::step(qint64 deltaT, std::set<GameInput> inputs)
             this->move(input.parameter);
         }
         else if(input.type == GameInputType::AUTOPLAY) {
+            this->getComponent<AutoPlayComponent>()->reset();
             this->getComponent<AutoPlayComponent>()->toggle();
+        }
+        else if(input.type == GameInputType::GOTO) {
+            this->getComponent<AutoPlayComponent>()->reset();
+            this->getComponent<AutoPlayComponent>()->setTarget(std::dynamic_pointer_cast<LevelObject>(this->parent)->getTiles().at(input.parameter).get());
+            this->getComponent<AutoPlayComponent>()->setOnce(true);
+            this->getComponent<AutoPlayComponent>()->setActive(true);
         }
     }
 
