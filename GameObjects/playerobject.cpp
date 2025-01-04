@@ -143,9 +143,13 @@ void PlayerObject::move(int dir) { // TODO CHECK MOVE VALID
             break;
     }
 
+    // check if x and y are valid
+    auto lo = std::dynamic_pointer_cast<LevelObject>(this->parent);
+    int xbound = lo->getCols(), ybound = lo->getRows();
+    if(x < 0 || x >= xbound || y < 0 || y >= ybound) return;
+
     // get energy needed for target tile
     float energy = this->playerModel->getEnergy();
-    std::shared_ptr<LevelObject> lo = std::dynamic_pointer_cast<LevelObject>(this->parent);
     float targetValue = lo->getTile(x, y)->getValue();
 
     // block movement for inf tiles
