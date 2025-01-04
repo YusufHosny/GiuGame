@@ -181,6 +181,11 @@ public:
     void setDestination(const U *newDest){destination = newDest;};
     void setHeurWeight(float newHW){heurWeight = newHW;};
     void setNodes(std::vector<T> & newNodes){nodes = newNodes;};
+    void updateNodesWidth(std::vector<T> & newNodes, unsigned int width){
+        nodes = newNodes;
+        this->width = width;
+        this->height = nodes.size() / width;
+    };
 
   private:
     void checkNeighbour(int nX, int nY, T* parent)

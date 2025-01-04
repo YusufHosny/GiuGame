@@ -157,6 +157,11 @@ bool PlayerObject::isShowPath() const
     return this->showPath;
 }
 
+float PlayerObject::getPoisonAmount() const
+{
+    return this->poisonAmount;
+}
+
 const Tile& PlayerObject::getTile() const {
     return *this->playerModel;
 }
@@ -221,8 +226,14 @@ void PlayerObject::onCollision(std::shared_ptr<HealthPackObject> hp) {
     lo->removeChild(hp);
 }
 
+const Protagonist &PlayerObject::getProtagonist() const
+{
+    return *this->playerModel;
+}
+
 
 std::string PlayerObject::dumpData() const
 {
     return ""; // TODO
 }
+

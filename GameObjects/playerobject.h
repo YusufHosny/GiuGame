@@ -45,14 +45,14 @@ public:
 
     std::string dumpData() const override;
 
-    const Protagonist& getProtagonist() const { return *playerModel; }
+    const Protagonist& getProtagonist() const;
 
     void move(int dir);
 
     void setShowPath(bool showPath);
     bool isShowPath() const;
 
-    float getPoisonAmount() const { return poisonAmount; };
+    float getPoisonAmount() const;
 
     const Tile& getTile() const override;
 
