@@ -49,6 +49,8 @@ public:
 
     const Protagonist& getProtagonist() const;
 
+    bool isDead() const;
+
     bool move(int dir);
 
     void setShowPath(bool showPath);

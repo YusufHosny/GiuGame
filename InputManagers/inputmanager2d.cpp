@@ -3,7 +3,7 @@
 #include <QKeyEvent>
 #include <QWheelEvent>
 #include "gameinput.h"
-#include <QGraphicsView>
+#include "gameview2d.h"
 #include "giugameconfig.h"
 #include <iostream>
 
@@ -13,11 +13,10 @@ bool InputManager2d::eventFilter(QObject *o, QEvent *e) {
     if(e->type() == QEvent::MouseButtonPress) {
         auto me = dynamic_cast<QMouseEvent*>(e);
         if(me->button() == Qt::MouseButton::LeftButton) {
-            if(auto gv = dynamic_cast<QGraphicsView*>(o)) {
+            if(auto gv = dynamic_cast<GameView2d*>(o)) {
                 auto pos = gv->mapToScene(static_cast<QMouseEvent*>(e)->pos()).toPoint();
                 int tileSideLen = GiuGameConfig::getInstance().config2d.tileSideLen;
-                int ypart = (gv->scene()->itemsBoundingRect().width() / tileSideLen) * (pos.y() / tileSideLen);
-                int param = (pos.x()/ tileSideLen + ypart) ;
+                int param = (pos.x()/tileSideLen + pos.y()/tileSideLen*gv->getCols()) ;
                 inputs.insert(GameInput(GameInputType::GOTO, param));
             }
         }

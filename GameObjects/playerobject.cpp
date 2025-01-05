@@ -50,7 +50,11 @@ void PlayerObject::init()
 
 void PlayerObject::step(qint64 deltaT, std::set<GameInput> inputs)
 {
-    if(this->moveCooldownLeft > 0) {
+    if(this->isDead()) {
+        this->setState(PlayerObject::DYING);
+        this->getComponent<AutoPlayComponent>()->setActive(false);
+    }
+    else if(this->moveCooldownLeft > 0) {
         this->setState(PlayerObject::WALKUP);
         this->moveCooldownLeft -= deltaT;
     }
@@ -77,6 +81,10 @@ void PlayerObject::step(qint64 deltaT, std::set<GameInput> inputs)
         }
     }
 
+}
+
+bool PlayerObject::isDead() const {
+    return this->playerModel->getEnergy() < 0 || this->playerModel->getHealth() < 0;
 }
 
 void PlayerObject::setState(unsigned int state) {
@@ -119,7 +127,7 @@ void PlayerObject::stepPoison(qint64 deltaT) {
 }
 
 bool PlayerObject::move(int dir) { // TODO CHECK MOVE VALID
-    if(this->moveCooldownLeft > 0) {
+    if(this->moveCooldownLeft > 0 || this->isDead()) {
         return false;
     }
 

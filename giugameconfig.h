@@ -14,8 +14,6 @@ class GiuGameConfig {
 public:
     static const GiuGameConfig& getInstance();
 
-    static void loadFromFile(QString path);
-
     GiuGameConfig(GiuGameConfig const&) = delete;
     void operator=(GiuGameConfig const&) = delete;
 

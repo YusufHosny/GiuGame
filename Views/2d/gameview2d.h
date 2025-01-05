@@ -17,6 +17,8 @@ public:
 
     void init(std::shared_ptr<const LevelObject>);
 
+    int getCols() const;
+
     void draw(std::shared_ptr<const GameObject> state) override;
 
 protected:

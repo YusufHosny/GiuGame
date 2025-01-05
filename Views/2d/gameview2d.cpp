@@ -41,6 +41,10 @@ void GameView2d::init(std::shared_ptr<const LevelObject> lo) {
 
 }
 
+int GameView2d::getCols() const {
+    return this->cols;
+}
+
 void GameView2d::drawTiles(std::shared_ptr<const LevelObject> levelObject) {
     int tileSideLen = GiuGameConfig::getInstance().config2d.tileSideLen;
 
@@ -80,15 +84,25 @@ void GameView2d::drawPlayer(std::shared_ptr<const LevelObject> levelObject) {
     playerView->draw(po);
 
     // draw player gui
+    float health = po->getProtagonist().getHealth(), energy = po->getProtagonist().getEnergy();
+    bool dead = health < 0 || energy < 0;
     int tileSideLen = GiuGameConfig::getInstance().config2d.tileSideLen;
-    QGraphicsTextItem* hpLabel = this->scene()->addText(QString::number(po->getProtagonist().getHealth(), 'g', 3));
-    hpLabel->setDefaultTextColor(Qt::green);
-    hpLabel->setFont(QFont("Arial", 8));
-    hpLabel->setPos((po->getProtagonist().getXPos()+.1)*tileSideLen, (po->getProtagonist().getYPos()-.5)*tileSideLen);
-    QGraphicsTextItem* energyLabel = this->scene()->addText(QString::number(po->getProtagonist().getEnergy(), 'g', 3));
-    energyLabel->setDefaultTextColor(Qt::cyan);
-    energyLabel->setFont(QFont("Arial", 8));
-    energyLabel->setPos((po->getProtagonist().getXPos()+.1)*tileSideLen, (po->getProtagonist().getYPos()-.9)*tileSideLen);
+    if(dead) {
+        QGraphicsTextItem* hpLabel = this->scene()->addText("DEAD");
+        hpLabel->setDefaultTextColor(Qt::red);
+        hpLabel->setFont(QFont("Arial", 8));
+        hpLabel->setPos((po->getProtagonist().getXPos()+.1)*tileSideLen, (po->getProtagonist().getYPos()-.5)*tileSideLen);
+    }
+    else {
+        QGraphicsTextItem* hpLabel = this->scene()->addText(QString::number(health, 'g', 3));
+        hpLabel->setDefaultTextColor(Qt::green);
+        hpLabel->setFont(QFont("Arial", 8));
+        hpLabel->setPos((po->getProtagonist().getXPos()+.1)*tileSideLen, (po->getProtagonist().getYPos()-.5)*tileSideLen);
+        QGraphicsTextItem* energyLabel = this->scene()->addText(QString::number(energy, 'g', 3));
+        energyLabel->setDefaultTextColor(Qt::cyan);
+        energyLabel->setFont(QFont("Arial", 8));
+        energyLabel->setPos((po->getProtagonist().getXPos()+.1)*tileSideLen, (po->getProtagonist().getYPos()-.9)*tileSideLen);
+    }
 
 }
 
@@ -225,6 +239,9 @@ void GameView2d::draw(std::shared_ptr<const GameObject> state) {
     std::shared_ptr<const GiuGameObject> gState = std::dynamic_pointer_cast<const GiuGameObject>(state);
     std::shared_ptr<LevelObject> levelObject = gState->findChildren<LevelObject>().at(0);
     assert(levelObject); // assert correct type was passed in
+
+    this->rows = levelObject->getRows();
+    this->cols = levelObject->getCols();
 
     this->scene()->clear();
 
