@@ -16,7 +16,7 @@ bool InputManager2d::eventFilter(QObject *o, QEvent *e) {
             if(auto gv = dynamic_cast<QGraphicsView*>(o)) {
                 auto pos = gv->mapToScene(static_cast<QMouseEvent*>(e)->pos()).toPoint();
                 int tileSideLen = GiuGameConfig::getInstance().config2d.tileSideLen;
-                int ypart = (gv->sceneRect().width() / tileSideLen) * (pos.y() / tileSideLen);
+                int ypart = (gv->scene()->itemsBoundingRect().width() / tileSideLen) * (pos.y() / tileSideLen);
                 int param = (pos.x()/ tileSideLen + ypart) ;
                 inputs.insert(GameInput(GameInputType::GOTO, param));
             }

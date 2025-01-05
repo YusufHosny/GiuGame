@@ -49,7 +49,7 @@ public:
 
     const Protagonist& getProtagonist() const;
 
-    void move(int dir);
+    bool move(int dir);
 
     void setShowPath(bool showPath);
     bool isShowPath() const;

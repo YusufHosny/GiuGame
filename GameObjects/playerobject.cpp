@@ -118,9 +118,9 @@ void PlayerObject::stepPoison(qint64 deltaT) {
     }
 }
 
-void PlayerObject::move(int dir) { // TODO CHECK MOVE VALID
+bool PlayerObject::move(int dir) { // TODO CHECK MOVE VALID
     if(this->moveCooldownLeft > 0) {
-        return;
+        return false;
     }
 
     int x = this->playerModel->getXPos(), y = this->playerModel->getYPos();
@@ -146,7 +146,7 @@ void PlayerObject::move(int dir) { // TODO CHECK MOVE VALID
     // check if x and y are valid
     auto lo = std::dynamic_pointer_cast<LevelObject>(this->parent);
     int xbound = lo->getCols(), ybound = lo->getRows();
-    if(x < 0 || x >= xbound || y < 0 || y >= ybound) return;
+    if(x < 0 || x >= xbound || y < 0 || y >= ybound) return false;
 
     // get energy needed for target tile
     float energy = this->playerModel->getEnergy();
@@ -158,6 +158,8 @@ void PlayerObject::move(int dir) { // TODO CHECK MOVE VALID
         this->playerModel->setEnergy(energy - targetValue);
         this->moveCooldownLeft = GiuGameConfig::getInstance().movementCooldown;
     }
+
+    return true;
 }
 
 void PlayerObject::setShowPath(bool showPath)

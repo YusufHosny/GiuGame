@@ -20,7 +20,7 @@ std::function<bool(const Node& t1, const Node& t2)> compareNodes = [](const Node
 };
 
 AutoPlayComponent::AutoPlayComponent() {
-    this->pf = new PathFinder<Node, Tile>(this->nodes, nullptr, nullptr, compareNodes, 1, cost, manhattandist, 0.9f);
+    this->pf = new PathFinder<Node, Tile>(this->nodes, nullptr, nullptr, compareNodes, 1, cost, manhattandist, 0.7f);
     this->target = nullptr;
 }
 
@@ -61,22 +61,25 @@ void AutoPlayComponent::step_component(GameObject& owner, qint64 deltaT) {
         this->updatePath(player, lo);
     }
 
+    if(path.empty()) return;
+
+    bool ok;
     switch(this->path.at(0)) {
     case(0):
-        player.move(Direction::UP);
+        ok = player.move(Direction::UP);
         break;
     case(2):
-        player.move(Direction::RIGHT);
+        ok = player.move(Direction::RIGHT);
         break;
     case(4):
-        player.move(Direction::DOWN);
+        ok = player.move(Direction::DOWN);
         break;
     case(6):
-        player.move(Direction::LEFT);
+        ok = player.move(Direction::LEFT);
         break;
     }
 
-    this->path.erase(this->path.begin());
+    if(ok) this->path.erase(this->path.begin());
 
 }
 
@@ -94,20 +97,14 @@ void AutoPlayComponent::updatePath(PlayerObject& player, std::shared_ptr<LevelOb
     this->pf->setDestination(this->target);
 
     this->path = pf->A_star();
-    assert(!path.empty()); // path should never be empty
 }
 
 const Tile* AutoPlayComponent::chooseTarget(PlayerObject& player, std::shared_ptr<LevelObject> lo)
 {
-    if(player.getProtagonist().getHealth() < 30) {
-        if(auto out = this->nearestHealth(player, lo)) return out;
-        else if(auto out = this->nearestEnemy(player, lo)) return out;
-        else return this->nearestExit(player, lo);
-    }
-    else {
-        if(auto out = this->nearestEnemy(player, lo)) return out;
-        else return this->nearestExit(player, lo);
-    }
+    if(auto out = this->nearestHealth(player, lo)) return out;
+    else if(auto out = this->nearestEnemy(player, lo)) return out;
+    else if(auto out = this->nearestExit(player, lo)) return out;
+    else return &player.getTile();
 }
 
 const Tile *AutoPlayComponent::nearestEnemy(PlayerObject& player, std::shared_ptr<LevelObject> lo)
@@ -152,7 +149,7 @@ const Tile *AutoPlayComponent::nearestExit(PlayerObject& player, std::shared_ptr
 {
     std::vector<std::shared_ptr<DoorObject>> doors = lo->findChildren<DoorObject>();
 
-    return doors.empty() ? &player.getTile() : &doors.at(0)->getTile();
+    return doors.empty() ? nullptr : &doors.at(0)->getTile();
 }
 
 void AutoPlayComponent::setOnce(bool once) {

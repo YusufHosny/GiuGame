@@ -15,7 +15,7 @@ GiuGameConfig::GiuGameConfig() {
     configText.textFont = QFont("Arial", 20);
 
     levelPathPrefix = ":/levels/";
-    startLevel = "1";
+    startLevel = "2";
 
     gameWidth = 1200;
     gameHeight = 800;
