@@ -11,6 +11,8 @@ protected:
 
 public:
     virtual const Tile& getTile() const = 0;
+
+    virtual ~TileObject() {};
 };
 
 #endif // TILEOBJECT_H

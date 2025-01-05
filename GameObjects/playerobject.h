@@ -35,6 +35,7 @@ private:
     PlayerObject(std::unique_ptr<Protagonist> playerModel);
 
     void stepPoison(qint64 deltaT);
+    void stepState(qint64 deltaT);
     void updateAnimation();
     void setState(unsigned int state);
 
@@ -52,9 +53,6 @@ public:
     bool isDead() const;
 
     bool move(int dir);
-
-    void setShowPath(bool showPath);
-    bool isShowPath() const;
 
     float getPoisonAmount() const;
 

@@ -7,7 +7,7 @@
 class SpriteLoader
 {
 public:
-    SpriteLoader();
+    SpriteLoader() = delete;
 
     static std::vector<QPixmap> load(QString path, bool flipped = false);
     static QPixmap flipped(QPixmap in);

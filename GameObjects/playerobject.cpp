@@ -50,18 +50,7 @@ void PlayerObject::init()
 
 void PlayerObject::step(qint64 deltaT, std::set<GameInput> inputs)
 {
-    if(this->isDead()) {
-        this->setState(PlayerObject::DYING);
-        this->getComponent<AutoPlayComponent>()->setActive(false);
-    }
-    else if(this->moveCooldownLeft > 0) {
-        this->setState(PlayerObject::WALKUP);
-        this->moveCooldownLeft -= deltaT;
-    }
-    else {
-        this->setState(PlayerObject::IDLEUP);
-    }
-
+    this->stepState(deltaT);
     this->stepPoison(deltaT);
 
     for(auto &input: inputs) {
@@ -81,6 +70,20 @@ void PlayerObject::step(qint64 deltaT, std::set<GameInput> inputs)
         }
     }
 
+}
+
+void PlayerObject::stepState(qint64 deltaT) {
+    if(this->isDead()) {
+        this->setState(PlayerObject::DYING);
+        this->getComponent<AutoPlayComponent>()->setActive(false);
+    }
+    else if(this->moveCooldownLeft > 0) {
+        this->setState(PlayerObject::WALKUP);
+        this->moveCooldownLeft -= deltaT;
+    }
+    else {
+        this->setState(PlayerObject::IDLEUP);
+    }
 }
 
 bool PlayerObject::isDead() const {
@@ -170,16 +173,6 @@ bool PlayerObject::move(int dir) { // TODO CHECK MOVE VALID
     return true;
 }
 
-void PlayerObject::setShowPath(bool showPath)
-{
-    this->showPath = showPath;
-}
-
-bool PlayerObject::isShowPath() const
-{
-    return this->showPath;
-}
-
 float PlayerObject::getPoisonAmount() const
 {
     return this->poisonAmount;
@@ -253,7 +246,7 @@ void PlayerObject::onCollision(std::shared_ptr<HealthPackObject> hp) {
 }
 
 void PlayerObject::onCollision(std::shared_ptr<DoorObject> d) {
-    std::dynamic_pointer_cast<GiuGameObject>(this->parent->getParent())->nextLevel(d->getTarget());
+    std::dynamic_pointer_cast<GiuGameObject>(this->parent->getParent())->nextLevel(d->getTarget()); // go to grandparent and call next level
 }
 
 const Protagonist &PlayerObject::getProtagonist() const

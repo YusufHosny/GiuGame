@@ -23,7 +23,7 @@ MainWindow::MainWindow(QWidget *parent) :
     bl->addWidget(svButton);
     connect(svButton, SIGNAL(clicked(bool)), this, SLOT(switchView()));
 
-    // create input manager
+    // create input managers
     this->input = new CompositeInputManager(this);
     InputManager2d* im2d = new InputManager2d(this);
     InputManagerText* imt = new InputManagerText(central);
@@ -35,8 +35,8 @@ MainWindow::MainWindow(QWidget *parent) :
     this->controller = new GiuGameController(this->input);
     this->controller
         ->setGameLoader(std::make_unique<WorldLoader>())
-        .setInputManager(this->input);
-    this->controller->init(im2d);
+        .setInputManager(this->input); // inputs are retrieved from the composite IM
+    this->controller->init(im2d); // 2d input manager wraps the controller, to capture input
     this->controller->start();
 
     bl->addWidget(controller->getView());
@@ -45,6 +45,9 @@ MainWindow::MainWindow(QWidget *parent) :
 
 }
 
+
+// swaps the views and ensures that after the swap, the new view is looking at (roughly) the
+// the same area of the scene that the other view was visualizing
 void MainWindow::switchView() {
     QGraphicsView *prev = this->controller->getView();
     QTransform t = prev->transform();
