@@ -67,11 +67,20 @@ void InputManagerText::tryInput(QString in) {
             parameter = Direction::RIGHT;
         }
         break;
+    case GameInputType::ZOOM:
+        if(QString("in").contains(stringParameter, Qt::CaseInsensitive)) {
+            parameter = 0;
+        }
+        else if(QString("out").contains(stringParameter, Qt::CaseInsensitive)) {
+            parameter = 1;
+        }
+        break;
 
     default: {
         bool ok;
         parameter = stringParameter.toUInt(&ok);
         if(!ok) return; // invalid (failed to convert to int)
+        break;
     }
     }
 
@@ -90,6 +99,7 @@ TextInputBar::TextInputBar(QWidget *parent) : QWidget(parent)
     this->layout()->addWidget(this->submitButton);
 
     connect(submitButton, SIGNAL(clicked(bool)), this, SLOT(submit()));
+    connect(textBox, SIGNAL(returnPressed()), this, SLOT(submit()));
 
 }
 
