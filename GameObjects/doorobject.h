@@ -12,11 +12,8 @@ private:
 
     DoorObject(QString targetLevel, int x, int y);
     const QString target;
-    int x, y;
 
     Tile t;
-
-    bool loaded;
 
 public:
     void init() override;

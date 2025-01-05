@@ -34,7 +34,8 @@ public:
         QFont textFont;
     };
 
-    QString startLevelPath;
+    QString levelPathPrefix;
+    QString startLevel;
 
     int gameWidth;
     int gameHeight;

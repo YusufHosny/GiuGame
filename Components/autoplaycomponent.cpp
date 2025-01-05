@@ -7,6 +7,7 @@
 #include "penemyobject.h"
 #include "benemyobject.h"
 #include "tileobject.h"
+#include "doorobject.h"
 
 std::function<float(const Tile& t1, const Tile& t2)> manhattandist = [](const Tile& a, const Tile& b) {
           return std::abs(a.getXPos()-b.getXPos()) + std::abs(a.getYPos()-b.getYPos());
@@ -149,7 +150,9 @@ const Tile *AutoPlayComponent::nearestHealth(PlayerObject& player, std::shared_p
 
 const Tile *AutoPlayComponent::nearestExit(PlayerObject& player, std::shared_ptr<LevelObject> lo)
 {
-    return nullptr; // TODO
+    std::vector<std::shared_ptr<DoorObject>> doors = lo->findChildren<DoorObject>();
+
+    return doors.empty() ? &player.getTile() : &doors.at(0)->getTile();
 }
 
 void AutoPlayComponent::setOnce(bool once) {

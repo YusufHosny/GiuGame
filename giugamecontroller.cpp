@@ -11,7 +11,7 @@ void GiuGameController::init(QWidget* viewparent)  {
 
     // load first level
     std::shared_ptr<GiuGameObject> baseState = std::make_shared<GiuGameObject>();
-    baseState->addChild(gameLoader->load(GiuGameConfig::getInstance().startLevelPath));
+    baseState->addChild(gameLoader->load(GiuGameConfig::getInstance().startLevel));
 
     this->gameState = baseState;
 

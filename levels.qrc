@@ -1,0 +1,13 @@
+<RCC>
+    <qresource prefix="/">
+        <file>levels/1/config.txt</file>
+        <file>levels/1/data.png</file>
+        <file>levels/1/overlay.png</file>
+        <file>levels/2/config.txt</file>
+        <file>levels/2/data.png</file>
+        <file>levels/2/overlay.png</file>
+        <file>levels/3/config.txt</file>
+        <file>levels/3/data.png</file>
+        <file>levels/3/overlay.png</file>
+    </qresource>
+</RCC>

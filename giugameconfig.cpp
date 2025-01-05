@@ -14,7 +14,8 @@ GiuGameConfig::GiuGameConfig() {
     configText.bgColor = Qt::GlobalColor::black;
     configText.textFont = QFont("Arial", 20);
 
-    startLevelPath = ":img/worldmap.png";
+    levelPathPrefix = ":/levels/";
+    startLevel = "1";
 
     gameWidth = 1200;
     gameHeight = 800;

@@ -36,7 +36,7 @@ add_executable(GIUGAME
                 mainwindow.cpp  mainwindow.h
                 worldloader.h   worldloader.cpp
 
-                Images.qrc
+                assets.qrc      levels.qrc
 
                 giugameconfig.h giugameconfig.cpp
 

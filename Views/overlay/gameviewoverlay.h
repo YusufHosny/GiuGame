@@ -13,6 +13,7 @@ public:
 private:
 
     QPixmap overlayImage;
+    unsigned int currentLevel;
 
     void drawTiles(std::shared_ptr<const LevelObject> levelObject) override;
 

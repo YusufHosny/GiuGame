@@ -5,6 +5,7 @@
 #include "world.h"
 #include <memory>
 #include <vector>
+#include <QPixmap>
 
 class LevelObject : public GameObject
 {
@@ -19,8 +20,10 @@ private:
     bool cameraReset;
     Direction cameraMovement;
 
-    LevelObject(std::vector<std::unique_ptr<Tile>> tiles, int rows, int cols);
+    LevelObject(std::vector<std::unique_ptr<Tile>> tiles, int rows, int cols, QString overlaypath = "");
     int cols, rows;
+
+    const QPixmap overlayImage;
 
 public:
     void init() override;
@@ -39,6 +42,8 @@ public:
     int getZoomStatus() const;
     bool getCameraReset() const;
     Direction getCameraMovement() const;
+
+    const QPixmap& getOverlay() const;
 };
 
 #endif // LEVELOBJECT_H

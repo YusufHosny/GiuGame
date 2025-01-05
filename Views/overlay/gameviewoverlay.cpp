@@ -8,10 +8,15 @@ GameViewOverlay::GameViewOverlay(QWidget *parent, std::shared_ptr<const GameObje
     assert(levelObject); // assert correct type was passed in
 
     int tileSideLen = GiuGameConfig::getInstance().config2d.tileSideLen;
-    this->overlayImage = QPixmap(":/img/testbg.png").scaled(levelObject->getCols()*tileSideLen, levelObject->getRows()*tileSideLen);
+    this->currentLevel = levelObject->getId();
+    this->overlayImage = levelObject->getOverlay().scaled(levelObject->getCols()*tileSideLen, levelObject->getRows()*tileSideLen);
 }
 
 void GameViewOverlay::drawTiles(std::shared_ptr<const LevelObject> levelObject)
 {
+    if(!levelObject->getId() != this->currentLevel) {
+        int tileSideLen = GiuGameConfig::getInstance().config2d.tileSideLen;
+        this->overlayImage = levelObject->getOverlay().scaled(levelObject->getCols()*tileSideLen, levelObject->getRows()*tileSideLen);
+    }
     this->scene()->addItem(new QGraphicsPixmapItem(this->overlayImage));
 }

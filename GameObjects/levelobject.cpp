@@ -1,8 +1,8 @@
 #include "levelobject.h"
 #include "collisionmanagercomponent.h"
 
-LevelObject::LevelObject(std::vector<std::unique_ptr<Tile>> tiles, int rows, int cols):
-    tiles(std::move(tiles)), rows(rows), cols(cols), GameObject("Level") {}
+LevelObject::LevelObject(std::vector<std::unique_ptr<Tile>> tiles, int rows, int cols, QString overlaypath):
+    tiles(std::move(tiles)), rows(rows), cols(cols), GameObject("Level"), overlayImage(overlaypath) {}
 
 void LevelObject::init()
 {
@@ -36,6 +36,11 @@ std::string LevelObject::dumpData() const
 {
     return ""; // TODO
 }
+
+const QPixmap& LevelObject::getOverlay() const {
+    return this->overlayImage;
+};
+
 
 const std::vector<std::unique_ptr<Tile> > &LevelObject::getTiles() const
 {
