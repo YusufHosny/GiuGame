@@ -21,7 +21,7 @@ std::function<bool(const Node& t1, const Node& t2)> compareNodes = [](const Node
 
 AutoPlayComponent::AutoPlayComponent() {
     this->pf = new PathFinder<Node, Tile>(this->nodes, nullptr, nullptr, compareNodes, 1, cost, manhattandist, 0.7f);
-    this->target = nullptr;
+    this->reset();
 }
 
 AutoPlayComponent::~AutoPlayComponent() {
@@ -158,5 +158,6 @@ void AutoPlayComponent::setOnce(bool once) {
 
 void AutoPlayComponent::reset() {
     this->target = nullptr;
+    this->once = false;
     this->path.clear();
 }

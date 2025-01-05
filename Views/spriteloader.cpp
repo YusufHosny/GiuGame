@@ -1,8 +1,6 @@
 #include "spriteloader.h"
 #include "giugameconfig.h"
 
-SpriteLoader::SpriteLoader() {}
-
 std::vector<QPixmap> SpriteLoader::load(QString path, bool flipped)
 {
     std::vector<QPixmap> out;
