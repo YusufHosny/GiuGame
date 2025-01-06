@@ -69,6 +69,7 @@ Many parts of the architecture were constrained by the requirements of the proje
 	- The visualizations are all built around a direct mapping from GameObject to a GameView, which are managed by the top level GameView which draws and updates these GameViews.
 	- A basic frustrum culling functionality is implemented, to increase framerates by only drawing relevant objects.
 	- The game views are abstracted behind an itemview and an animated item view api, to generify as much as possible
+        - A rudimentary 3d view is included, but since the game is designed around 2d functionality, its more of an afterthought, and isn't very detailed. Its designed by transforming the 2d tile in world space into 3d space, then projecting them onto screen space via linear transformations.        
 
 # Credits
 Code: Yusuf Hussein
