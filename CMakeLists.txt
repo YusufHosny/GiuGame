@@ -62,6 +62,7 @@ add_executable(GIUGAME
 
 
                 Views/itemview.h            Views/itemview.cpp
+                Views/animateditemview.h    Views/animateditemview.cpp
                 Views/itemviewfactory.h     Views/itemviewfactory.cpp
                 Views/spriteloader.h        Views/spriteloader.cpp
 
@@ -73,7 +74,6 @@ add_executable(GIUGAME
                 Views/2d/healthpackview2d.h Views/2d/healthpackview2d.cpp
                 Views/2d/benemyview2d.h     Views/2d/benemyview2d.cpp
                 Views/2d/tileview2d.h       Views/2d/tileview2d.cpp
-                Views/2d/animateditemview.h Views/2d/animateditemview.cpp
                 Views/2d/doorview2d.h       Views/2d/doorview2d.cpp
 
                 Views/text/gameviewtext.h           Views/text/gameviewtext.cpp
@@ -86,6 +86,9 @@ add_executable(GIUGAME
                 Views/text/doorviewtext.h           Views/text/doorviewtext.cpp
 
                 Views/overlay/gameviewoverlay.h     Views/overlay/gameviewoverlay.cpp
+
+                Views/3d/gameview3d.h       Views/3d/gameview3d.cpp
+                Views/3d/polygonview3d.h    Views/3d/polygonview3d.cpp
     )
 
 
@@ -105,6 +108,7 @@ target_include_directories(GIUGAME PRIVATE ${CMAKE_SOURCE_DIR}/Views)
 target_include_directories(GIUGAME PRIVATE ${CMAKE_SOURCE_DIR}/Views/2d)
 target_include_directories(GIUGAME PRIVATE ${CMAKE_SOURCE_DIR}/Views/text)
 target_include_directories(GIUGAME PRIVATE ${CMAKE_SOURCE_DIR}/Views/overlay)
+target_include_directories(GIUGAME PRIVATE ${CMAKE_SOURCE_DIR}/Views/3d)
 
 target_link_libraries(GIUGAME PRIVATE Qt6::Widgets)
 

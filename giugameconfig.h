@@ -32,6 +32,13 @@ public:
         QFont textFont;
     };
 
+    class Config3d {
+    public:
+        float cameraZ;
+        float cameraFOV;
+        float nearPlane, farPlane;
+    };
+
     QString levelPathPrefix;
     QString startLevel;
 
@@ -49,6 +56,7 @@ public:
 
     Config2d config2d;
     ConfigText configText;
+    Config3d config3d;
 
 private:
     GiuGameConfig();

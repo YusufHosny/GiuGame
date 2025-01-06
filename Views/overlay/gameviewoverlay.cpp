@@ -14,7 +14,7 @@ GameViewOverlay::GameViewOverlay(QWidget *parent, std::shared_ptr<const GameObje
 
 void GameViewOverlay::drawTiles(std::shared_ptr<const LevelObject> levelObject)
 {
-    if(!levelObject->getId() != this->currentLevel) {
+    if(levelObject->getId() != this->currentLevel) {
         int tileSideLen = GiuGameConfig::getInstance().config2d.tileSideLen;
         this->overlayImage = levelObject->getOverlay().scaled(levelObject->getCols()*tileSideLen, levelObject->getRows()*tileSideLen);
     }

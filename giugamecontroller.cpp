@@ -2,6 +2,7 @@
 #include "gameviewtext.h"
 #include "gameview2d.h"
 #include "gameviewoverlay.h"
+#include "gameview3d.h"
 #include "giugameconfig.h"
 #include "giugameobject.h"
 
@@ -30,7 +31,12 @@ void GiuGameController::init(QWidget* viewparent)  {
     goverlay->installEventFilter(viewparent); // event filter to reroute events to input manager
     this->views.emplace(ViewType::VIEWOVERLAY, goverlay);
 
-    this->currentView = ViewType::VIEW2D;
+    // create 3d view
+    GameView3d* gv3d = new GameView3d(viewparent, this->gameState);
+    gv3d->installEventFilter(viewparent); // event filter to reroute events to input manager
+    this->views.emplace(ViewType::VIEW3D, gv3d);
+
+    this->currentView = ViewType::VIEW3D;
     this->view = this->views.at(this->currentView);
 }
 
