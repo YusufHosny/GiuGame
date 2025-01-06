@@ -38,7 +38,7 @@ private:
     // frustrum culling
     bool isCulled(QRectF in, QPointF camera, Direction cameraFacing);
 
-    std::array<float, 1*4> matmul(std::array<float, 1*4> a, std::array<float, 4*4> b);
+    std::array<float, 4> matmul(std::array<float, 4> a, std::array<float, 16> b);
 
     virtual void drawTiles(std::shared_ptr<const LevelObject> levelObject);
     virtual void drawPaths(std::shared_ptr<const LevelObject> levelObject);
