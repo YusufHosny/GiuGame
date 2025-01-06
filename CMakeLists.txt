@@ -88,7 +88,6 @@ add_executable(GIUGAME
                 Views/overlay/gameviewoverlay.h     Views/overlay/gameviewoverlay.cpp
 
                 Views/3d/gameview3d.h       Views/3d/gameview3d.cpp
-                Views/3d/polygonview3d.h    Views/3d/polygonview3d.cpp
     )
 
 

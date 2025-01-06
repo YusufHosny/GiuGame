@@ -53,6 +53,7 @@ public:
     bool isDead() const;
 
     bool move(int dir);
+    Direction getFacing() const;
 
     float getPoisonAmount() const;
 

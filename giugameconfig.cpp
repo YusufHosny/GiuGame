@@ -16,7 +16,7 @@ GiuGameConfig::GiuGameConfig() {
 
     config3d.cameraFOV = 120; // degrees fov
     config3d.cameraZ = 2*config2d.tileSideLen;
-    config3d.nearPlane = 10;
+    config3d.nearPlane = 1;
     config3d.farPlane = 12*config2d.tileSideLen;
 
     levelPathPrefix = ":/levels/";

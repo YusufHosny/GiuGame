@@ -49,7 +49,7 @@ GameView* GiuGameController::changeView() {
         this->currentView = ViewType::VIEWOVERLAY;
         break;
     case ViewType::VIEWOVERLAY:
-        this->currentView = ViewType::VIEW2D;
+        this->currentView = ViewType::VIEW3D;
         break;
     case ViewType::VIEW3D:
         this->currentView = ViewType::VIEW2D;

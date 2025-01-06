@@ -39,6 +39,8 @@ void GameView3d::init(std::shared_ptr<const LevelObject> lo) {
     this->setVerticalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
     this->setFixedSize(GiuGameConfig::getInstance().gameWidth, GiuGameConfig::getInstance().gameHeight);
 
+    this->setSceneRect(QRectF(0, 0, GiuGameConfig::getInstance().gameWidth, GiuGameConfig::getInstance().gameHeight));
+
 }
 
 int GameView3d::getCols() const {
@@ -46,118 +48,122 @@ int GameView3d::getCols() const {
 }
 
 void GameView3d::drawTiles(std::shared_ptr<const LevelObject> levelObject) {
+    // camera info
     int tileSideLen = GiuGameConfig::getInstance().config2d.tileSideLen;
-
-    // get viewport bounds to cull tiles outside of viewport for optimization
-    QRectF viewportBounds = this->mapToScene(this->viewport()->geometry()).boundingRect();
-    QPointF NW = viewportBounds.topLeft(), SE = viewportBounds.bottomRight();
-    // pad edges
-    NW = QPointF(
-        NW.x()/tileSideLen - 1,
-        NW.y()/tileSideLen - 1
-    );
-    SE = QPointF(
-        SE.x()/tileSideLen + 1,
-        SE.y()/tileSideLen + 1
-    );
-
-    viewportBounds = QRectF(NW, SE);
+    auto player = levelObject->findChildren<PlayerObject>().at(0);
+    QPointF camera = QPoint(player->getTile().getXPos()*tileSideLen, player->getTile().getYPos()*tileSideLen);
+    Direction cameraFacing = player->getFacing();
 
     for (const auto &tile : levelObject->getTiles()) {
-        // check if tile is in viewport bounds and should be drawn, if not skip
-        if(!viewportBounds.contains(tile->getXPos(), tile->getYPos())) continue;
+        // check for frustrum culling
+        auto tilerect = QRectF(tile->getXPos()*tileSideLen, tile->getYPos()*tileSideLen, tileSideLen, tileSideLen);
+        if(this->isCulled(tilerect, camera, cameraFacing)) continue;
 
         // draw tile
         float value = tile->getValue();
         float luminance = std::isinf(value) ? 0 : value;
 
-        ItemView* t = factory.makeTile(tile->getXPos(), tile->getYPos(), luminance);
-        this->scene()->addItem(t);
-        t->draw(levelObject);
+        this->scene()->addPolygon(this->toScreenSpace(this->toCameraSpace(tilerect, camera, cameraFacing), false, camera, cameraFacing)
+                                  , Qt::NoPen, QBrush(QColor(luminance*255,luminance*255,luminance*255)));
     }
 }
-
 
 
 void GameView3d::drawPaths(std::shared_ptr<const LevelObject> levelObject)
 {
+
+    // camera info
     std::shared_ptr<PlayerObject> po = levelObject->findChildren<PlayerObject>().at(0);
+    int tileSideLen = GiuGameConfig::getInstance().config2d.tileSideLen;
+    auto player = levelObject->findChildren<PlayerObject>().at(0);
+    QPointF camera = QPoint(player->getTile().getXPos()*tileSideLen, player->getTile().getYPos()*tileSideLen);
+    Direction cameraFacing = player->getFacing();
+
     std::vector<std::shared_ptr<PathObject>> paths = po->findChildren<PathObject>();
     for(const auto& path : paths) {
-        ItemView* pathView = factory.makePath();
-        this->scene()->addItem(pathView);
-        pathView->draw(path);
+        auto tilerect = QRectF(path->getTile().getXPos()*tileSideLen, path->getTile().getYPos()*tileSideLen, tileSideLen, tileSideLen);
+        if(this->isCulled(tilerect, camera, cameraFacing)) continue;
+
+        float value = path->getTile().getValue();
+
+        this->scene()->addPolygon(this->toScreenSpace(this->toCameraSpace(tilerect, camera, cameraFacing), false, camera, cameraFacing)
+                                  , Qt::NoPen, QBrush(QColor(value*255,value*255,0)));
     }
 }
 
 void GameView3d::drawEnemies(std::shared_ptr<const LevelObject> levelObject ) {
+    // camera info
+    std::shared_ptr<PlayerObject> po = levelObject->findChildren<PlayerObject>().at(0);
+    int tileSideLen = GiuGameConfig::getInstance().config2d.tileSideLen;
+    auto player = levelObject->findChildren<PlayerObject>().at(0);
+    QPointF camera = QPoint(player->getTile().getXPos()*tileSideLen, player->getTile().getYPos()*tileSideLen);
+    Direction cameraFacing = player->getFacing();
+
     // draw enemies
     std::vector<std::shared_ptr<EnemyObject>> enemies = levelObject->findChildren<EnemyObject>();
     for (const auto &enemy : enemies) {
-        ItemView* ev = factory.makeEnemy();
-        this->scene()->addItem(ev);
-        ev->draw(enemy);
+        auto tilerect = QRectF(enemy->getTile().getXPos()*tileSideLen, enemy->getTile().getYPos()*tileSideLen, tileSideLen, tileSideLen);
+        if(this->isCulled(tilerect, camera, cameraFacing)) continue;
 
-        // draw enemy gui
-        int tileSideLen = GiuGameConfig::getInstance().config2d.tileSideLen;
-        QGraphicsTextItem* enemyDmgLabel = this->scene()->addText(QString::number(enemy->getEnemy().getValue(), 'g', 3));
-        enemyDmgLabel->setDefaultTextColor(Qt::red);
-        enemyDmgLabel->setFont(QFont("Arial", 8));
-        enemyDmgLabel->setPos((enemy->getEnemy().getXPos()+.1)*tileSideLen, (enemy->getEnemy().getYPos()-.5)*tileSideLen);
+        float value = enemy->getTile().getValue();
+
+        this->scene()->addPolygon(this->toScreenSpace(this->toCameraSpace(tilerect, camera, cameraFacing), true, camera, cameraFacing)
+                                  , Qt::NoPen, QBrush(Qt::red));
     }
 
     // draw penemies
     std::vector<std::shared_ptr<PEnemyObject>> penemies = levelObject->findChildren<PEnemyObject>();
     for (const auto &penemy : penemies) {
-        ItemView* pev = factory.makePEnemy();
-        this->scene()->addItem(pev);
-        pev->draw(penemy);
+        auto tilerect = QRectF(penemy->getTile().getXPos()*tileSideLen, penemy->getTile().getYPos()*tileSideLen, tileSideLen, tileSideLen);
+        if(this->isCulled(tilerect, camera, cameraFacing)) continue;
 
-        // draw enemy gui
-        int tileSideLen = GiuGameConfig::getInstance().config2d.tileSideLen;
-        QGraphicsTextItem* enemyDmgLabel = this->scene()->addText(QString::number(penemy->getPEnemy().getValue(), 'g', 3));
-        enemyDmgLabel->setDefaultTextColor(QColorConstants::Svg::purple);
-        enemyDmgLabel->setFont(QFont("Arial", 8));
-        enemyDmgLabel->setPos((penemy->getPEnemy().getXPos()+.1)*tileSideLen, (penemy->getPEnemy().getYPos()-.5)*tileSideLen);
+        float value = penemy->getTile().getValue();
+
+        this->scene()->addPolygon(this->toScreenSpace(this->toCameraSpace(tilerect, camera, cameraFacing), true, camera, cameraFacing)
+                                  , Qt::NoPen, QBrush(QColorConstants::Svg::purple));
     }
 
     // draw benemies
     std::vector<std::shared_ptr<BEnemyObject>> benemies = levelObject->findChildren<BEnemyObject>();
     for (const auto &benemy : benemies) {
-        ItemView* bev = factory.makeBEnemy();
-        this->scene()->addItem(bev);
-        bev->draw(benemy);
+        auto tilerect = QRectF(benemy->getTile().getXPos()*tileSideLen, benemy->getTile().getYPos()*tileSideLen, tileSideLen, tileSideLen);
+        if(this->isCulled(tilerect, camera, cameraFacing)) continue;
 
-        // draw enemy gui
-        int tileSideLen = GiuGameConfig::getInstance().config2d.tileSideLen;
-        QGraphicsTextItem* enemyDmgLabel = this->scene()->addText(QString::number(benemy->getEnemy().getValue(), 'g', 3));
-        enemyDmgLabel->setDefaultTextColor(Qt::red);
-        enemyDmgLabel->setFont(QFont("Arial", 8));
-        enemyDmgLabel->setPos((benemy->getEnemy().getXPos()+.1)*tileSideLen, (benemy->getEnemy().getYPos()-.5)*tileSideLen);
+        float value = benemy->getTile().getValue();
+
+        this->scene()->addPolygon(this->toScreenSpace(this->toCameraSpace(tilerect, camera, cameraFacing), true, camera, cameraFacing)
+                                  , Qt::NoPen, QBrush(Qt::blue));
 
     }
 }
 
 void GameView3d::drawItems(std::shared_ptr<const LevelObject> levelObject ) {
+    // camera info
+    std::shared_ptr<PlayerObject> po = levelObject->findChildren<PlayerObject>().at(0);
+    int tileSideLen = GiuGameConfig::getInstance().config2d.tileSideLen;
+    auto player = levelObject->findChildren<PlayerObject>().at(0);
+    QPointF camera = QPoint(player->getTile().getXPos()*tileSideLen, player->getTile().getYPos()*tileSideLen);
+    Direction cameraFacing = player->getFacing();
+
     std::vector<std::shared_ptr<HealthPackObject>> healthPacks = levelObject->findChildren<HealthPackObject>();
     for (const auto &hp : healthPacks) {
-        ItemView* hpv = factory.makeHealthPack();
-        this->scene()->addItem(hpv);
-        hpv->draw(hp);
+        auto tilerect = QRectF(hp->getTile().getXPos()*tileSideLen, hp->getTile().getYPos()*tileSideLen, tileSideLen, tileSideLen);
+        if(this->isCulled(tilerect, camera, cameraFacing)) continue;
 
-        // draw hp gui
-        int tileSideLen = GiuGameConfig::getInstance().config2d.tileSideLen;
-        QGraphicsTextItem* healthLabel = this->scene()->addText(QString::number(hp->getHP().getValue(), 'g', 3));
-        healthLabel->setDefaultTextColor(Qt::green);
-        healthLabel->setFont(QFont("Arial", 8));
-        healthLabel->setPos((hp->getHP().getXPos()+.1)*tileSideLen, (hp->getHP().getYPos()-.5)*tileSideLen);
+        float value = hp->getTile().getValue();
+
+        this->scene()->addPolygon(this->toScreenSpace(this->toCameraSpace(tilerect, camera, cameraFacing), true, camera, cameraFacing)
+                                  , Qt::NoPen, QBrush(Qt::green));
     }
 
     std::vector<std::shared_ptr<DoorObject>> doors = levelObject->findChildren<DoorObject>();
     for (const auto &d : doors) {
-        ItemView* dv = factory.makeDoor();
-        this->scene()->addItem(dv);
-        dv->draw(d);
+        auto tilerect = QRectF(d->getTile().getXPos()*tileSideLen, d->getTile().getYPos()*tileSideLen, tileSideLen, tileSideLen);
+        if(this->isCulled(tilerect, camera, cameraFacing)) continue;
+        float value = d->getTile().getValue();
+
+        this->scene()->addPolygon(this->toScreenSpace(this->toCameraSpace(tilerect, camera, cameraFacing), true, camera, cameraFacing)
+                                  , Qt::NoPen, QBrush(Qt::cyan));
     }
 }
 
@@ -174,29 +180,10 @@ void GameView3d::draw(std::shared_ptr<const GameObject> state) {
 
     this->scene()->clear();
 
-    int tileSideLen = GiuGameConfig::getInstance().config2d.tileSideLen;
-    auto xstart = 3, ystart = 3;
-    auto r11 = QRect(xstart*tileSideLen, ystart*tileSideLen, tileSideLen, tileSideLen);
-    auto r12 = QRect((xstart+1)*tileSideLen, ystart*tileSideLen, tileSideLen, tileSideLen);
-    auto r21 = QRect(xstart*tileSideLen, (ystart+1)*tileSideLen, tileSideLen, tileSideLen);
-    auto r22 = QRect((xstart+1)*tileSideLen, (ystart+1)*tileSideLen, tileSideLen, tileSideLen);
-
-    auto camera = QPointF(4*tileSideLen, 8*tileSideLen);
-    auto cameraFacing = Direction::UP;
-
-    this->scene()->addPolygon(this->toScreenSpace(this->toCameraSpace(r11, camera, cameraFacing), false, camera, cameraFacing)
-                              , Qt::NoPen, QBrush(Qt::black));
-    this->scene()->addPolygon(this->toScreenSpace(this->toCameraSpace(r12, camera, cameraFacing), false, camera, cameraFacing)
-                              , Qt::NoPen, QBrush(Qt::white));
-    this->scene()->addPolygon(this->toScreenSpace(this->toCameraSpace(r21, camera, cameraFacing), false, camera, cameraFacing)
-                              , Qt::NoPen, QBrush(Qt::white));
-    this->scene()->addPolygon(this->toScreenSpace(this->toCameraSpace(r22, camera, cameraFacing), false, camera, cameraFacing)
-                              , Qt::NoPen, QBrush(Qt::black));
-
-    // this->drawTiles(levelObject);
-    // this->drawPaths(levelObject);
-    // this->drawEnemies(levelObject);
-    // this->drawItems(levelObject);
+    this->drawTiles(levelObject);
+    this->drawPaths(levelObject);
+    this->drawEnemies(levelObject);
+    this->drawItems(levelObject);
 }
 
 
@@ -242,13 +229,16 @@ QPolygonF GameView3d::toScreenSpace(QRectF in, bool upright, QPointF camera, Dir
     float x1 = in.x(), y1 = in.y(), x2 = x1 + in.width(), y2 = y1 + in.height();
     std::array<float, 1*4> p1, p2, p3, p4; // xyzw
 
-    // transform 2d to: x = x0, z = -y0
+    // transform 2d to: x = x0, z = y0
     //     y-axis
     //     ^
-    //     |  7 z-axis
-    //     | /
-    //     |/
+    //     |
+    //     |
+    //     |
     //     +-----------> x-axis
+    //    /
+    //   /
+    //  v  z-axis
 
     if(upright) {
         p1 = {x1, 0, y1, 1};
@@ -300,8 +290,10 @@ std::array<float, 1*4> GameView3d::matmul(std::array<float, 1*4> a, std::array<f
 
 
 
-bool GameView3d::isRendered(QRectF in, QPointF camera, Direction cameraFacing)
+bool GameView3d::isCulled(QRectF in, QPointF camera, Direction cameraFacing)
 {
-    return true; // for now
+    auto far = GiuGameConfig::getInstance().config3d.farPlane;
+    auto near = GiuGameConfig::getInstance().config3d.nearPlane;
+    return !this->toCameraSpace(in, camera, cameraFacing).intersects(QRect(-far, -far, 2*far, far-near));
 }
 

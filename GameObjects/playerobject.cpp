@@ -173,6 +173,10 @@ bool PlayerObject::move(int dir) { // TODO CHECK MOVE VALID
     return true;
 }
 
+Direction PlayerObject::getFacing() const {
+    return this->facing;
+}
+
 float PlayerObject::getPoisonAmount() const
 {
     return this->poisonAmount;

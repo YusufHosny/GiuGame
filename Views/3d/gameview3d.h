@@ -36,9 +36,7 @@ private:
     QPolygonF toScreenSpace(QRectF in, bool upright, QPointF camera, Direction cameraFacing);
 
     // frustrum culling
-    bool isRendered(QRectF in, QPointF camera, Direction cameraFacing);
-
-    float getPerspectiveFactor(float distance);
+    bool isCulled(QRectF in, QPointF camera, Direction cameraFacing);
 
     std::array<float, 1*4> matmul(std::array<float, 1*4> a, std::array<float, 4*4> b);
 

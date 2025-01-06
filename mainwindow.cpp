@@ -10,6 +10,7 @@
 #include "giugamecontroller.h"
 #include "inputmanager2d.h"
 #include "inputmanagertext.h"
+#include "gameview3d.h"
 
 MainWindow::MainWindow(QWidget *parent) :
     QMainWindow(parent)
@@ -57,8 +58,10 @@ void MainWindow::switchView() {
 
     this->controller->changeView();
     QGraphicsView *next = this->controller->getView();
-    next->setTransform(t);
-    next->ensureVisible(r);
+    if(!dynamic_cast<GameView3d*>(next)) {
+        next->setTransform(t);
+        next->ensureVisible(r);
+    }
     this->centralWidget()->layout()->addWidget(next);
     this->controller->getView()->show();
 }
