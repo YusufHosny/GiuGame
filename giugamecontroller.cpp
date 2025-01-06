@@ -36,7 +36,7 @@ void GiuGameController::init(QWidget* viewparent)  {
     gv3d->installEventFilter(viewparent); // event filter to reroute events to input manager
     this->views.emplace(ViewType::VIEW3D, gv3d);
 
-    this->currentView = ViewType::VIEW3D;
+    this->currentView = ViewType::VIEW2D;
     this->view = this->views.at(this->currentView);
 }
 

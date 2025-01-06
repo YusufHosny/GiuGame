@@ -90,7 +90,7 @@ void InputManagerText::tryInput(QString in) {
 TextInputBar::TextInputBar(QWidget *parent) : QWidget(parent)
 {
     this->textBox = new QLineEdit(this);
-    this->textBox->setPlaceholderText("woppa");
+    this->textBox->setPlaceholderText("Enter Commands Here");
     this->submitButton = new QPushButton("Submit", this);
 
     this->setLayout(new QBoxLayout(QBoxLayout::LeftToRight, this));
